@@ -17,10 +17,13 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { MainListItems, mainListItems2, secondaryListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 import Orders from './Orders';
+import Title from './Title';
+import { Route, Switch } from 'react-router-dom';
+
 
 function Copyright(props: any) {
   return (
@@ -146,7 +149,9 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+
+            <MainListItems />
+
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
@@ -163,9 +168,9 @@ function DashboardContent() {
             overflow: 'auto',
           }}
         >
-          <Toolbar/>
+          <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3}>
+            <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
@@ -195,7 +200,14 @@ function DashboardContent() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+
+                  <Switch>
+                    <Route exact path='/' component={Orders} />
+                    <Route exact path='/b' render={() => <Title > test...</Title>} />
+                    <Route path='' component={Orders} />
+
+                  </Switch>
+                  {/* <Orders /> */}
                 </Paper>
               </Grid>
             </Grid>

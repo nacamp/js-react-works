@@ -9,12 +9,54 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import Link from '@mui/material/Link';
+import { Redirect, Route, Switch, useHistory } from 'react-router';
 
-export const mainListItems = (
+
+export function MainListItems() {
+  const history = useHistory();
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  return (
+    <React.Fragment>
+      <ListItemButton selected={selectedIndex === 0} onClick={() => { setSelectedIndex(0); history.push('/') }}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="대쉬보드" />
+      </ListItemButton>
+      <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); history.push('/b') }}>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Orders" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Customers" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Reports" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Integrations" />
+      </ListItemButton>
+    </React.Fragment>
+  )
+};
+export const mainListItems2 = (
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton component={Link}  >
       <ListItemIcon>
-        <DashboardIcon/>
+        <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="대쉬보드" />
     </ListItemButton>
