@@ -22,7 +22,7 @@ import { MainListItems, mainListItems2, secondaryListItems } from './listItems';
 // import Deposits from './Deposits';
 import Orders from './Orders';
 import Title from './Title';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 
 function Copyright(props: any) {
@@ -200,22 +200,15 @@ function DashboardContent() {
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-
-                  <Switch>
-                    <Route exact path='/' component={Orders} />
-                    <Route exact path='/b' render={() => <Title > test...</Title>} />
-                    <Route path='' component={Orders} />
-
-                  </Switch>
+                  <Routes>
+                    <Route path='/' element={<Orders />} />
+                    <Route path='/b' element={<Title > test...</Title>} />
+                    <Route path='' element={<Orders />} />
+                  </Routes>
                   {/* <Orders /> */}
                 </Paper>
               </Grid>
             </Grid>
-
-
-
-
-
           </Container>
         </Box>
       </Box>

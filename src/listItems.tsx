@@ -10,22 +10,22 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Link from '@mui/material/Link';
-import { Redirect, Route, Switch, useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 
 export function MainListItems() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   return (
     <React.Fragment>
-      <ListItemButton selected={selectedIndex === 0} onClick={() => { setSelectedIndex(0); history.push('/') }}>
+      <ListItemButton selected={selectedIndex === 0} onClick={() => { setSelectedIndex(0); navigate('/') }}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="대쉬보드" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); history.push('/b') }}>
+      <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/b') }}>
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
