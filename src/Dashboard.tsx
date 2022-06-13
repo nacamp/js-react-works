@@ -23,6 +23,8 @@ import { MainListItems, mainListItems2, secondaryListItems } from './listItems';
 import Orders from './Orders';
 import Title from './Title';
 import { Route, Routes } from 'react-router-dom';
+import TodoTemplate from './components/TodoTemplate';
+
 
 
 function Copyright(props: any) {
@@ -202,7 +204,7 @@ function DashboardContent() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Routes>
                     <Route path='/' element={<Orders />} />
-                    <Route path='/b' element={<Title > test...</Title>} />
+                    <Route path='/b' element={<TodoTemplate > template...</TodoTemplate>} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}

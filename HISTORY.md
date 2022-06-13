@@ -1,4 +1,13 @@
 
+# textinput
+* icon
+* https://mui.com/material-ui/material-icons/
+* grid
+* https://smartdevpreneur.com/the-complete-guide-to-material-ui-grid-align-items/
+* typescript
+* https://www.typescriptlang.org/ko/docs/handbook/2/generics.html
+
+onClick={(e:any)=>handleChange4(e, row.id)}
 
 # react-router-dom v6
 * https://velog.io/@soryeongk/ReactRouterDomV6
