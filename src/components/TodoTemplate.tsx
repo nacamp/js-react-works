@@ -67,9 +67,7 @@ const initialTodos = [
     },
 ];
 
-interface ITodoTemplate {
-    children?: React.ReactNode;
-}
+
 interface ITodo {
     id: number, // Number error
     text: String,
@@ -149,10 +147,10 @@ interface ITodo {
 //   };
 
 type ITodoCreate = {
-    onChange: (todo: ITodo) => void;
+    onTodoCreate: (todo: ITodo) => void;
 }
 
-function TodoCreate({onChange}:ITodoCreate) {
+function TodoCreate({ onTodoCreate }: ITodoCreate) {
     const [text, setText] = useState('');
     const [label, setLabel] = React.useState('오늘');
 
@@ -168,11 +166,11 @@ function TodoCreate({onChange}:ITodoCreate) {
             done: false,
             label,
         }
-        onChange(data);
+        onTodoCreate(data);
         setText('');
     }
 
-    const handleLabel= (event: any) => {
+    const handleLabel = (event: any) => {
         console.log(event.target.value);
         setLabel(event.target.value as string);
     };
@@ -206,6 +204,10 @@ function TodoCreate({onChange}:ITodoCreate) {
     );
 }
 
+interface ITodoTemplate {
+    children?: React.ReactNode;
+}
+
 function TodoTemplate(props: ITodoTemplate) {
     const nextId = useRef<number>(2);
 
@@ -223,22 +225,6 @@ function TodoTemplate(props: ITodoTemplate) {
         // console.log(event.target);
         // return state.filter(todo => todo.id !== action.id);
     }
-    // function handleChange2(event: any) {
-    //     if (todo.trim() === '') {
-    //         console.log('node data...');
-    //         return;
-    //     }
-    //     console.log(nextId.current);
-    //     const data = {
-    //         id: nextId.current,
-    //         text: todo,
-    //         done: false,
-    //         label: label,
-    //     }
-    //     nextId.current++;
-    //     setInputs([data, ...inputs]);
-    //     setTodo('');
-    // }
     const [inputs, setInputs] = useState<Array<ITodo>>(initialTodos);
 
     const [deleteTodo, setDeleteTodo] = useState<Number>(0);
@@ -248,7 +234,7 @@ function TodoTemplate(props: ITodoTemplate) {
         // console.log(event.target.value);
     }
 
-    function addTodo(todo:ITodo){
+    function handleTodoCreate(todo: ITodo) {
         todo.id = nextId.current;
         nextId.current++;
         setInputs([todo, ...inputs]);
@@ -276,7 +262,7 @@ function TodoTemplate(props: ITodoTemplate) {
                     ))}
                 </TableBody>
             </Table>
-            <TodoCreate onChange={addTodo}/>
+            <TodoCreate onTodoCreate={handleTodoCreate} />
         </>
     )
 }
