@@ -1,3 +1,17 @@
+# 문법
+* arrow function
+* https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+* event function naming
+* https://jaketrent.com/post/naming-event-handlers-react
+* https://blog.sonim1.com/220
+* typescript-cheatsheet
+* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example
+* type vs interface
+* https://medium.com/humanscape-tech/type-vs-interface-%EC%96%B8%EC%A0%9C-%EC%96%B4%EB%96%BB%EA%B2%8C-f36499b0de50
+* https://blog.logrocket.com/types-vs-interfaces-in-typescript/
+
+# refactoring
+* TodoTemplate: event naming, 함수분리
 
 # textinput
 * icon
