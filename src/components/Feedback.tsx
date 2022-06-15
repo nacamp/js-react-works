@@ -31,7 +31,7 @@ export function Toast(props:IFeedback) {
 
   return (
     <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
-    <Alert variant="filled" severity={props.severity} onClose={handleClose}>This is an error message!</Alert>
+    <Alert variant="filled" severity={props.severity} onClose={handleClose}>{props?.message}</Alert>
   </Snackbar>
   )
 }
