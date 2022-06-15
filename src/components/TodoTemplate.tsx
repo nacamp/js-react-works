@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
+// import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -17,6 +17,9 @@ import Chip from '@mui/material/Chip';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+// import Snackbar from '@mui/material/Snackbar';
+// import Alert from '@mui/material/Alert';
+// import { queryByPlaceholderText } from '@testing-library/react';
 import {
     useQuery,
     useMutation,
@@ -24,9 +27,11 @@ import {
     QueryClient,
     QueryClientProvider,
     QueryCache,
-  } from 'react-query'
-import {useGetTodo, usePutTodo} from '../hooks/api';
-import { queryByPlaceholderText } from '@testing-library/react';
+} from 'react-query'
+import { useGetTodo, usePutTodo } from '../hooks/api';
+
+// import Fallback from '../components/Fallback';
+import {Fallback, Toast} from '../components/Feedback';
 
 const initialTodos = [
     {
@@ -111,12 +116,17 @@ function TodoTemplate(props: ITodoTemplate) {
     const [todoList, setTodoList] = useState<Array<ITodo>>([]);
     const [reload, toggleReload] = useState(true);
     const [todoId, setTodoId] = useState(20220614);
+    const [fallback, setFallback] = useState<boolean>(false);
+    const [openToast, setOpenToast] = React.useState(false);
+    const queryClient = useQueryClient();
+    const responseGetTodo: any = useGetTodo(todoId);
+    const mutaionPutTodo: any = usePutTodo(todoId, { data: todoList });
+
     function handleDoneClick(event: React.ChangeEvent<HTMLInputElement>, id: Number) {
         console.log('checked: ', id, event.target.checked);
         const newTodoList = todoList.map<ITodo>((todo) =>
             todo.id === id ? { ...todo, done: event.target.checked } : todo
         );
-        // console.log(newTodoList);
         setTodoList(newTodoList);
     }
 
@@ -129,66 +139,55 @@ function TodoTemplate(props: ITodoTemplate) {
         nextId.current++;
         setTodoList([todo, ...todoList]);
     }
-    const { data, isSuccess, isLoading, refetch , status}: any = useGetTodo(todoId);
-    const  putTodoMutaion : any = usePutTodo(todoId, { data : todoList});
-    // const  putTodoMutaion : any = useMutation('putTodo', (data) => putTodo(todoId, data), {
-    //     onSuccess: () => {
-    //         console.log("putTodo");
-    //         console.log(data); // undefined
-    //         // setTodoList(data.data);
-    //       }
-    // });
-    const queryClient = useQueryClient();
-    // const query = useQuery('todos', getTodo, '20220614');
-    // const { data, isSuccess }: any = useQuery(['getTodo', '20220614'] ,getTodo, );
+
+    function handleClose(event?: React.SyntheticEvent | Event, reason?: string) {
+        setOpenToast(false);
+    }
+
     async function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
-        putTodoMutaion.mutate({ data : todoList});
-        // toggleReload(!reload);
-        // await putTodo(20220614, {
-        //     // id : '20220614',
-        //     data : todoList
-        // });
-        // putTodoMutaion.mutate({ data : todoList});
-        // refetch();
+        setFallback(true);
+        mutaionPutTodo.mutate({ data: todoList });
+    }
 
-
-        // // const query = queryCache.find('getTodo');
-        // // queryCache.clear();
-
+    async function handleReload(event: React.MouseEvent<HTMLElement>, text: string) {
+        setFallback(true);
         // queryClient.invalidateQueries('getTodo');
-        // // queryClient.invalidateQueries(['getTodo']);
-        // // queryClient.invalidateQueries();
-        // console.log(11111111);
-        //     // const x  = await getTodo(202206145);
-        //     // // const url = "http://localhost:3000/todos/20220614";
-        //     // // fetch(url,{
-        //     // //     headers: {
-        //     // //         'Content-Type': 'application/json',
-        //     // //         'Origin': 'http://localhost:3000'
-        //     // //     }
-        //     // // })
-        //     // // .then((response) => response.json())
-        //     // // .then(console.log);
-        //     // console.log(x);
+        responseGetTodo.refetch();
+        // 리로드인경우 responseGetTodo에서 가저욘자료가 바꾸지 않아서 render가 안됨, 그래서 toggle처리
+        toggleReload(!reload);
     }
 
     useEffect(() => {
-        if(isSuccess){
-            console.log(1111);
-            nextId.current = 1 +  Math.max(...data.data.map( (o:ITodo) => o.id));
-            console.log('max:', nextId.current );
-            setTodoList(data.data);
+        setFallback(true);
+        if (responseGetTodo.isSuccess) {
+            nextId.current = 1 + Math.max(...responseGetTodo.data.data.map((o: ITodo) => o.id));
+            // console.log('max:', nextId.current);
+            setTodoList(responseGetTodo.data.data);
         }
-        console.log(2222);
+        if(!responseGetTodo.isLoading){
+            setFallback(false);
+        }
+    }, [responseGetTodo.data,responseGetTodo.isLoading, reload])
 
-      }, [ data, reload])
+    useEffect(() => {
+        if (responseGetTodo.isError) {
+            setFallback(false);
+            setOpenToast(true);
+        }
+    }, [responseGetTodo.isError])
 
+    useEffect(() => {
+        if (mutaionPutTodo.isLoading){
+            setFallback(true);
+        }else{
+            setFallback(false);
+            console.log(mutaionPutTodo.data)
+            queryClient.invalidateQueries('getTodo');
+        }
+    }, [mutaionPutTodo.data])
 
     return (
         <>
-        {/* {isSuccess && data.data.map((row:ITodo) => (
-            <div>{row.id},{row.text}</div>
-        ))} */}
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
@@ -205,6 +204,9 @@ function TodoTemplate(props: ITodoTemplate) {
             </Table>
             <TodoCreate onTodoCreate={handleTodoCreate} />
             <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
+            <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
+            <Fallback open={fallback} />
+            <Toast open={openToast} severity="error" message='자료를 가져올수 없습니다.' onClose={handleClose}/>
         </>
     )
 }

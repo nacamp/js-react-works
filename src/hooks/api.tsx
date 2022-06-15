@@ -24,9 +24,9 @@ export const useGetTodo =  (id: any) => {
 };
 
 export const putTodo = async (id: any, payload: any) => {
-  console.log('yyyy');
+  // console.log('yyyy');
   // console.log(payload);
-  console.log(JSON.stringify(payload))
+  // console.log(JSON.stringify(payload))
   const url = "http://localhost:3000/todos/";
   const response = await fetch(`${url}${id}`, {
     method: 'PUT',
