@@ -13,14 +13,36 @@
 * https://blog.logrocket.com/types-vs-interfaces-in-typescript/
 
 
+# dialog
+* https://medium.com/the-clever-dev/how-to-size-and-position-the-material-ui-mui-dialog-component-a5601cedc1c9
+* https://mui.com/material-ui/react-dialog/
+* https://mui.com/material-ui/api/paper/
+
+# progress
+* https://mui.com/material-ui/react-progress/
+# snackbar, alert
+* https://mui.com/material-ui/react-snackbar/
+* https://mui.com/material-ui/react-alert/
+
 # network
-* react-query
-'''
+## react-query, fetch
+```
 https://react-query.tanstack.com/quick-start
-https://velog.io/@kimhyo_0218/React-Query-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%BF%BC%EB%A6%AC-useMutation-%EA%B8%B0%EB%B3%B8-%ED%8E%B8
+async await
+https://tylerclark.dev/react-query/
+https://kyounghwan01.github.io/blog/React/react-query/basic/#usequery
+https://merrily-code.tistory.com/76
+```
+## fetch
+* https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch
+* https://rapidapi.com/guides/fetch-api-async-await
+* https://velog.io/@eunbinn/Axios-vs-Fetch
+* https://blog.logrocket.com/axios-vs-fetch-best-http-requests/
 
-
-todo
+## json-server
+* https://www.npmjs.com/package/json-server
+```
+자료
     {
       "id": 20220614,
       "data" : [
@@ -28,24 +50,9 @@ todo
         { "id": 2, "text": "프로젝트 생성하기", "done": true, "label" : "내일" } 
       ]
     }
-
-
-정확한의미 미파악
-https://kyounghwan01.github.io/blog/React/react-query/basic/#usequery
-https://merrily-code.tistory.com/76
-
-
-fetch
-https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch
-https://rapidapi.com/guides/fetch-api-async-await?utm_source=google&utm_medium=cpc&utm_campaign=DSA&gclid=Cj0KCQjwwJuVBhCAARIsAOPwGATEfnOg8OyJRcY_Obe3iJn-hJqh93_8A1hrh6DUCBFWpcJXqxRR13kaAlv_EALw_wcB
-https://velog.io/@eunbinn/Axios-vs-Fetch
-https://blog.logrocket.com/axios-vs-fetch-best-http-requests/
-
-package.json proxy
+package.json proxy 설정
 https://react.vlpt.us/redux-middleware/09-cors-and-proxy.html
-'''
-* json-server
-'''
+
 json-server --watch /Users/jimmy/vscode/js-react-works/db.json --port 5000
 curl http://localhost:5000/todos/20220614
 curl -d '{"id": 5,"title": "json-server4","author": "typicode"}'  \
@@ -53,12 +60,8 @@ curl -d '{"id": 5,"title": "json-server4","author": "typicode"}'  \
 -X POST http://localhost:5000/posts
 curl http://localhost:5000/posts/5
 
-https://www.npmjs.com/package/json-server
 https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=wideeyed&logNo=221350638501
-'''
-
-# refactoring
-* TodoTemplate: event naming, 함수분리
+```
 
 # textinput
 * icon
