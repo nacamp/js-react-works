@@ -1,10 +1,15 @@
 import { Box, CircularProgress, Dialog, Typography } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertColor } from '@mui/material/Alert';
 
-interface IFallback {
+interface IFeedback {
     open: boolean;
+    onClose?: () => void;
+    message?: string;
+    severity?: AlertColor;
 }
 
-function Fallback(props:IFallback) {
+export function Fallback(props:IFeedback) {
     return (
       <Dialog open={props.open}
         PaperProps={{ elevation: 0, style: { background: 'transparent' } }}
@@ -18,13 +23,27 @@ function Fallback(props:IFallback) {
       </Dialog>
     )
 }
+
+export function Toast(props:IFeedback) {
+  const handleClose = () => {
+    props.onClose?.();
+  };
+
+  return (
+    <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
+    <Alert variant="filled" severity={props.severity} onClose={handleClose}>This is an error message!</Alert>
+  </Snackbar>
+  )
+}
+
 /*
 case const:
 import { FC } from "react";
 export const Fallback: FC<{ open: any; }> = ({ open }) => {
 export const Fallback: FC<IFallback> = ({ open }) => {
 */
-export default Fallback;
+// export function Fallback;
+// export function Toast;
 /*
 sx={{ '& .MuiBackdrop-root': { backgroundColor: 'rgba(0, 0, 0, 0.7)' }, }}
 style=>, display: 'flex', justifyContent: 'center', alignItems: 'center'
