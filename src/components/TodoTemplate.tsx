@@ -111,7 +111,6 @@ interface ITodoTemplate {
 }
 
 function TodoTemplate(props: ITodoTemplate) {
-    console.log('TodoTemplate');
     const nextId = useRef<number>(0);
     const [todoList, setTodoList] = useState<Array<ITodo>>([]);
     const [reload, toggleReload] = useState(true);
@@ -144,12 +143,12 @@ function TodoTemplate(props: ITodoTemplate) {
         setOpenToast(false);
     }
 
-    async function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
+    function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
         setFallback(true);
         mutaionPutTodo.mutate({ data: todoList });
     }
 
-    async function handleReload(event: React.MouseEvent<HTMLElement>, text: string) {
+    function handleReload(event: React.MouseEvent<HTMLElement>, text: string) {
         setFallback(true);
         // queryClient.invalidateQueries('getTodo');
         responseGetTodo.refetch();
