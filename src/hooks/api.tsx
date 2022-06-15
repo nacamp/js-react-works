@@ -1,41 +1,46 @@
+import {
+  useQuery,
+  useMutation,
+} from 'react-query'
+
 export const getTodo = async (id: any) => {
-    console.log('xxxx');
-    const url = "http://localhost:3000/todos/";
-    const response = await fetch( `${url}${id}`,{
-        method: 'GET',
-    });
-    if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-    return response.json();
-};
- 
-export const putTodo = async (id: any, payload:any) => {
-    console.log('yyyy');
-    // console.log(payload);
-    console.log(JSON.stringify(payload))
-    const url = "http://localhost:3000/todos/";
-    const response = await fetch( `${url}${id}`,{
-        method: 'PUT',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload)
-    });
-    if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-    return response.json();
+  const url = "http://localhost:3000/todos/";
+  const response = await fetch(`${url}${id}`, {
+    method: 'GET',
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return response.json();
 };
 
-  /*
-  import { useQuery, UseQueryResult } from "react-query";
-useQuery(['todos', todoId], async () => {
-    const response = await fetch('/todos/' + todoId)
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
+export const useGetTodo =  (id: any) => {
+  return useQuery('getTodo', async () => await getTodo(id), {
+    onSuccess: () => {
+      // console.log("Get data!");
+      // console.log(data); // undefined
     }
-    return response.json()
-  })
-  const query = useQuery('todos', getTodos)
-  */
+  });
+};
+
+export const putTodo = async (id: any, payload: any) => {
+  console.log('yyyy');
+  // console.log(payload);
+  console.log(JSON.stringify(payload))
+  const url = "http://localhost:3000/todos/";
+  const response = await fetch(`${url}${id}`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json", //필수
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return response.json();
+};
+
+export const usePutTodo =  (id: any, payload:any) => {
+  return useMutation('putTodo', async () => await putTodo(id, payload)); 
+};

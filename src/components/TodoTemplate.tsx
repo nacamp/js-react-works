@@ -25,7 +25,7 @@ import {
     QueryClientProvider,
     QueryCache,
   } from 'react-query'
-import {getTodo, putTodo} from '../hooks/api';
+import {useGetTodo, usePutTodo} from '../hooks/api';
 import { queryByPlaceholderText } from '@testing-library/react';
 
 const initialTodos = [
@@ -106,6 +106,7 @@ interface ITodoTemplate {
 }
 
 function TodoTemplate(props: ITodoTemplate) {
+    console.log('TodoTemplate');
     const nextId = useRef<number>(0);
     const [todoList, setTodoList] = useState<Array<ITodo>>([]);
     const [reload, toggleReload] = useState(true);
@@ -128,35 +129,32 @@ function TodoTemplate(props: ITodoTemplate) {
         nextId.current++;
         setTodoList([todo, ...todoList]);
     }
-    const { data, isSuccess, isLoading, refetch , status}: any = useQuery('getTodo', () => getTodo(todoId), {
-        onSuccess: () => {
-            console.log("Get data!");
-            console.log(data); // undefined
-            // setTodoList(data.data);
-          }
-    });
-    const  putTodoMutaion : any = useMutation('putTodo', (data) => putTodo(todoId, data), {
-        onSuccess: () => {
-            console.log("putTodo");
-            console.log(data); // undefined
-            // setTodoList(data.data);
-          }
-    });
+    const { data, isSuccess, isLoading, refetch , status}: any = useGetTodo(todoId);
+    const  putTodoMutaion : any = usePutTodo(todoId, { data : todoList});
+    // const  putTodoMutaion : any = useMutation('putTodo', (data) => putTodo(todoId, data), {
+    //     onSuccess: () => {
+    //         console.log("putTodo");
+    //         console.log(data); // undefined
+    //         // setTodoList(data.data);
+    //       }
+    // });
     const queryClient = useQueryClient();
     // const query = useQuery('todos', getTodo, '20220614');
     // const { data, isSuccess }: any = useQuery(['getTodo', '20220614'] ,getTodo, );
     async function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
+        putTodoMutaion.mutate({ data : todoList});
+        // toggleReload(!reload);
         // await putTodo(20220614, {
         //     // id : '20220614',
         //     data : todoList
         // });
-        putTodoMutaion.mutate({ data : todoList});
-
+        // putTodoMutaion.mutate({ data : todoList});
+        // refetch();
 
 
         // // const query = queryCache.find('getTodo');
         // // queryCache.clear();
-        // toggleReload(!reload);
+
         // queryClient.invalidateQueries('getTodo');
         // // queryClient.invalidateQueries(['getTodo']);
         // // queryClient.invalidateQueries();
