@@ -24,7 +24,7 @@ import Orders from './Orders';
 import Title from './Title';
 import { Route, Routes } from 'react-router-dom';
 import TodoTemplate from './components/TodoTemplate';
-
+import dayjs from 'dayjs';
 
 
 function Copyright(props: any) {
@@ -97,7 +97,7 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  console.log(dayjs(new Date()).format('YYYYMMDD'));
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -173,38 +173,12 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <div>test1</div>
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <div>test2</div>
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Routes>
                     <Route path='/' element={<Orders />} />
-                    <Route path='/b' element={<TodoTemplate > template...</TodoTemplate>} />
+                    <Route path='/b' element={<TodoTemplate id={Number(dayjs(new Date()).format('YYYYMMDD'))}> template...</TodoTemplate>} />
+                    <Route path='/c' element={<TodoTemplate id={20220614}> template...</TodoTemplate>} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}

@@ -17,6 +17,11 @@ import Chip from '@mui/material/Chip';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import 'dayjs/locale/ko';
+import dayjs from 'dayjs';
+
 // import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@mui/material/Alert';
 // import { queryByPlaceholderText } from '@testing-library/react';
@@ -28,10 +33,10 @@ import {
     QueryClientProvider,
     QueryCache,
 } from 'react-query'
-import { useGetTodo, usePutTodo } from '../hooks/api';
+import { useGetTodo, usePutTodo, usePostTodo } from '../hooks/api';
 
 // import Fallback from '../components/Fallback';
-import {Fallback, Toast} from '../components/Feedback';
+import { Fallback, Toast } from '../components/Feedback';
 
 const initialTodos = [
     {
@@ -108,18 +113,20 @@ function TodoCreate({ onTodoCreate }: ITodoCreate) {
 
 interface ITodoTemplate {
     children?: React.ReactNode;
+    id: number;
 }
 
 function TodoTemplate(props: ITodoTemplate) {
     const nextId = useRef<number>(0);
     const [todoList, setTodoList] = useState<Array<ITodo>>([]);
     const [reload, toggleReload] = useState(true);
-    const [todoId, setTodoId] = useState(20220614);
+    const [todoId, setTodoId] = useState(props.id);
     const [fallback, setFallback] = useState<boolean>(false);
     const [openToast, setOpenToast] = React.useState(false);
     const queryClient = useQueryClient();
     const responseGetTodo: any = useGetTodo(todoId);
     const mutaionPutTodo: any = usePutTodo(todoId, { data: todoList });
+    const mutaionPostTodo: any = usePostTodo({ id:todoId, data: todoList });
 
     function handleDoneClick(event: React.ChangeEvent<HTMLInputElement>, id: Number) {
         console.log('checked: ', id, event.target.checked);
@@ -145,7 +152,12 @@ function TodoTemplate(props: ITodoTemplate) {
 
     function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
         setFallback(true);
-        mutaionPutTodo.mutate({ data: todoList });
+        if (responseGetTodo.data.id){
+            mutaionPutTodo.mutate({ data: todoList });
+        }else{
+            mutaionPostTodo.mutate({ id:todoId, data: todoList });
+        }
+
     }
 
     function handleReload(event: React.MouseEvent<HTMLElement>, text: string) {
@@ -159,14 +171,18 @@ function TodoTemplate(props: ITodoTemplate) {
     useEffect(() => {
         setFallback(true);
         if (responseGetTodo.isSuccess) {
-            nextId.current = 1 + Math.max(...responseGetTodo.data.data.map((o: ITodo) => o.id));
-            // console.log('max:', nextId.current);
-            setTodoList(responseGetTodo.data.data);
+            if(responseGetTodo.data.id){
+                nextId.current = 1 + Math.max(...responseGetTodo.data.data.map((o: ITodo) => o.id));
+                setTodoList(responseGetTodo.data.data);
+            }else{
+                nextId.current = 1;
+                setTodoList([]);
+            }
         }
-        if(!responseGetTodo.isLoading){
+        if (!responseGetTodo.isLoading) {
             setFallback(false);
         }
-    }, [responseGetTodo.data,responseGetTodo.isLoading, reload])
+    }, [responseGetTodo.data, responseGetTodo.isLoading, reload])
 
     useEffect(() => {
         if (responseGetTodo.isError) {
@@ -176,17 +192,31 @@ function TodoTemplate(props: ITodoTemplate) {
     }, [responseGetTodo.isError])
 
     useEffect(() => {
-        if (mutaionPutTodo.isLoading){
+        if (mutaionPutTodo.isLoading) {
             setFallback(true);
-        }else{
+        } else {
             setFallback(false);
             console.log(mutaionPutTodo.data)
             queryClient.invalidateQueries('getTodo');
         }
     }, [mutaionPutTodo.data])
 
+    useEffect(() => {
+        if (mutaionPostTodo.isLoading) {
+            setFallback(true);
+        } else {
+            setFallback(false);
+            console.log(mutaionPostTodo.data)
+            queryClient.invalidateQueries('getTodo');
+        }
+    }, [mutaionPostTodo.data])
+
     return (
         <>
+            <Typography variant='h4'>
+                {dayjs(String(todoId)).format('YYYY년MM월DD일')}
+            </Typography>
+
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
@@ -205,7 +235,7 @@ function TodoTemplate(props: ITodoTemplate) {
             <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
             <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
             <Fallback open={fallback} />
-            <Toast open={openToast} severity="error" message='자료를 가져올수 없습니다.' onClose={handleClose}/>
+            <Toast open={openToast} severity="error" message='자료를 가져올수 없습니다.' onClose={handleClose} />
         </>
     )
 }
