@@ -33,19 +33,11 @@ import {
     QueryClientProvider,
     QueryCache,
 } from 'react-query'
-import { useGetTodo, usePutTodo, usePostTodo } from '../hooks/api';
+import { useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
 
 // import Fallback from '../components/Fallback';
 import { Fallback, Toast } from '../components/Feedback';
 
-const initialTodos = [
-    {
-        id: 1,
-        text: '프로젝트 생성하기',
-        done: true,
-        label: '오늘',
-    },
-];
 interface ITodo {
     id: number, // Number error
     text: String,
@@ -55,10 +47,11 @@ interface ITodo {
 
 type ITodoCreate = {
     onTodoCreate: (todo: ITodo) => void;
+    showLabel?: boolean;
 }
 
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
-function TodoCreate({ onTodoCreate }: ITodoCreate) {
+function TodoCreate({ showLabel, onTodoCreate }: ITodoCreate) {
     const [text, setText] = useState('');
     const [label, setLabel] = React.useState('오늘');
 
@@ -86,17 +79,25 @@ function TodoCreate({ onTodoCreate }: ITodoCreate) {
     return (
         <>
             <Grid container spacing={2}>
+
                 <Grid item xs={2}>
-                    <Select
-                        value={label}
-                        label="분류"
-                        onChange={handleLabel}
-                    >
-                        <MenuItem value={'오늘'}>오늘</MenuItem>
-                        <MenuItem value={'주'}>주</MenuItem>
-                        <MenuItem value={'달'}>달</MenuItem>
-                    </Select>
+                    {!!showLabel &&
+                        <Select
+                            value={label}
+                            label="분류"
+                            onChange={handleLabel}
+                        >
+                            <MenuItem value={'오늘'}>오늘</MenuItem>
+                            <MenuItem value={'주'}>주</MenuItem>
+                            <MenuItem value={'달'}>달</MenuItem>
+                        </Select>
+                    }
+                    {!showLabel &&
+                        <span>routine</span>
+                    }
                 </Grid>
+
+
                 <Grid item xs={9}>
                     <TextField fullWidth label="할일" value={text} variant="standard" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setText(event.target.value);
@@ -112,9 +113,25 @@ function TodoCreate({ onTodoCreate }: ITodoCreate) {
     );
 }
 
+interface ITodoTitle {
+    id: number;
+}
+function TodoTitle(props: ITodoTitle) {
+    return (
+        <Typography variant='h4'>
+            {dayjs(String(props.id)).format('YYYY년MM월DD일')}
+        </Typography>
+    );
+};
+
 interface ITodoTemplate {
     children?: React.ReactNode;
-    id: number;
+    id: number | string;
+    name?: string;
+    onGet: (id: any) => void;
+    onPut: (id: any, payload: any) => void;
+    onPost: (payload: any) => void;
+    showLabel?: boolean
 }
 
 function TodoTemplate(props: ITodoTemplate) {
@@ -125,9 +142,9 @@ function TodoTemplate(props: ITodoTemplate) {
     const [fallback, setFallback] = useState<boolean>(false);
     const [openToast, setOpenToast] = React.useState(false);
     const queryClient = useQueryClient();
-    const responseGetTodo: any = useGetTodo(todoId);
-    const mutaionPutTodo: any = usePutTodo(todoId, { data: todoList });
-    const mutaionPostTodo: any = usePostTodo({ id:todoId, data: todoList });
+    const responseGet: any = props?.onGet(todoId);
+    const mutaionPut: any = props?.onPut(todoId, { data: todoList });
+    const mutaionPost: any = props?.onPost({ id: todoId, data: todoList });
 
     function handleDoneClick(event: React.ChangeEvent<HTMLInputElement>, id: Number) {
         console.log('checked: ', id, event.target.checked);
@@ -153,10 +170,10 @@ function TodoTemplate(props: ITodoTemplate) {
 
     function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
         setFallback(true);
-        if (responseGetTodo.data.id){
-            mutaionPutTodo.mutate({ data: todoList });
-        }else{
-            mutaionPostTodo.mutate({ id:todoId, data: todoList });
+        if (responseGet.data.id !== undefined) {
+            mutaionPut.mutate({ data: todoList });
+        } else {
+            mutaionPost.mutate({ id: todoId, data: todoList });
         }
 
     }
@@ -164,65 +181,85 @@ function TodoTemplate(props: ITodoTemplate) {
     function handleReload(event: React.MouseEvent<HTMLElement>, text: string) {
         setFallback(true);
         // queryClient.invalidateQueries('getTodo');
-        responseGetTodo.refetch();
+        responseGet.refetch();
         // 리로드인경우 responseGetTodo에서 가저욘자료가 바꾸지 않아서 render가 안됨, 그래서 toggle처리
         toggleReload(!reload);
     }
 
     useEffect(() => {
         setFallback(true);
-        if (responseGetTodo.isSuccess) {
-            if(responseGetTodo.data.id){
-                nextId.current = 1 + Math.max(...responseGetTodo.data.data.map((o: ITodo) => o.id));
-                setTodoList(responseGetTodo.data.data);
-            }else{
+        if (responseGet.isSuccess) {
+            if (responseGet.data.data !== undefined) {
+                nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
+                setTodoList(responseGet.data.data);
+            } else {
                 nextId.current = 1;
                 setTodoList([]);
+                // nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
+                // setTodoList(responseGet.data.data);
             }
         }
-        if (!responseGetTodo.isLoading) {
+        if (!responseGet.isLoading) {
             setFallback(false);
         }
-    }, [responseGetTodo.data, responseGetTodo.isLoading, reload])
+    }, [responseGet.data, responseGet.isLoading, reload])
+
+
+    // useEffect(() => {
+    //     setFallback(true);
+    //     if (responseGet.isSuccess) {
+    //         if (responseGet.data.id !== undefined) {
+    //             nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
+    //             setTodoList(responseGet.data.data);
+    //         } else {
+    //             // nextId.current = 1;
+    //             // setTodoList([]);
+    //             nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
+    //             setTodoList(responseGet.data.data);
+    //         }
+    //     }
+    //     if (!responseGet.isLoading) {
+    //         setFallback(false);
+    //     }
+    // }, [responseGet.data, responseGet.isLoading, reload])
 
     useEffect(() => {
-        if (responseGetTodo.isError) {
+        if (responseGet.isError) {
             setFallback(false);
             setOpenToast(true);
         }
-    }, [responseGetTodo.isError])
+    }, [responseGet.isError])
 
     useEffect(() => {
-        if (mutaionPutTodo.isLoading) {
+        if (mutaionPut.isLoading) {
             setFallback(true);
         } else {
             setFallback(false);
-            console.log(mutaionPutTodo.data)
-            queryClient.invalidateQueries('getTodo');
+            console.log(mutaionPut.data)
+            // queryClient.invalidateQueries('getRoutine');
+            // queryClient.invalidateQueries('getTodo');
         }
-    }, [mutaionPutTodo.data])
+    }, [mutaionPut.data])
 
     useEffect(() => {
-        if (mutaionPostTodo.isLoading) {
+        if (mutaionPost.isLoading) {
             setFallback(true);
         } else {
             setFallback(false);
-            console.log(mutaionPostTodo.data)
-            queryClient.invalidateQueries('getTodo');
+            console.log(mutaionPost.data)
+            // queryClient.invalidateQueries('getRoutine');
+            // queryClient.invalidateQueries('getTodo');
         }
-    }, [mutaionPostTodo.data])
+    }, [mutaionPost.data])
 
     return (
         <>
-            <Typography variant='h4'>
-                {dayjs(String(todoId)).format('YYYY년MM월DD일')}
-            </Typography>
-
+            {props.children}
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
                         <TableRow key={row.id}>
-                            <TableCell><FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} label={row.text} /> <Chip label={row.label} />  </TableCell>
+                            <TableCell><FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} label={row.text} /> {props.showLabel && <Chip label={row.label} />} </TableCell>
                             <TableCell align="right" >
                                 <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
                                     <DeleteIcon />
@@ -232,7 +269,7 @@ function TodoTemplate(props: ITodoTemplate) {
                     ))}
                 </TableBody>
             </Table>
-            <TodoCreate onTodoCreate={handleTodoCreate} />
+            <TodoCreate onTodoCreate={handleTodoCreate} showLabel={props.showLabel} />
             <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
             <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
             <Fallback open={fallback} />
@@ -241,4 +278,17 @@ function TodoTemplate(props: ITodoTemplate) {
     )
 }
 
-export default TodoTemplate;
+interface IDefaultTodoTemplate {
+    id: number;
+}
+
+function DefaultTodoTemplate(props: IDefaultTodoTemplate) {
+    return (
+        <TodoTemplate id={props.id} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} showLabel={true}> <TodoTitle id={props.id} /></TodoTemplate>
+    )
+}
+
+export {
+    TodoTemplate, DefaultTodoTemplate as default
+}
+
