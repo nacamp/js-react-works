@@ -47,13 +47,15 @@ interface ITodo {
 
 type ITodoCreate = {
     onTodoCreate: (todo: ITodo) => void;
-    showLabel?: boolean;
+    // showLabel?: boolean;
+    // defaultLabel?: string;
+    routineLabel?: string;
 }
 
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
-function TodoCreate({ showLabel, onTodoCreate }: ITodoCreate) {
+function TodoCreate({ onTodoCreate, routineLabel }: ITodoCreate) {
     const [text, setText] = useState('');
-    const [label, setLabel] = React.useState('오늘');
+    const [label, setLabel] = React.useState(!!routineLabel?routineLabel:'오늘');
 
     function handleAdd(event: any) {
         if (text.trim() === '') {
@@ -81,19 +83,19 @@ function TodoCreate({ showLabel, onTodoCreate }: ITodoCreate) {
             <Grid container spacing={2}>
 
                 <Grid item xs={2}>
-                    {!!showLabel &&
+                    {!routineLabel &&
                         <Select
                             value={label}
                             label="분류"
                             onChange={handleLabel}
                         >
                             <MenuItem value={'오늘'}>오늘</MenuItem>
-                            <MenuItem value={'주'}>주</MenuItem>
-                            <MenuItem value={'달'}>달</MenuItem>
+                            <MenuItem value={'매주'}>매주</MenuItem>
+                            <MenuItem value={'매달'}>매달</MenuItem>
                         </Select>
                     }
-                    {!showLabel &&
-                        <span>routine</span>
+                    {!!routineLabel &&
+                        <span>{routineLabel}</span>
                     }
                 </Grid>
 
@@ -131,7 +133,7 @@ interface ITodoTemplate {
     onGet: (id: any) => void;
     onPut: (id: any, payload: any) => void;
     onPost: (payload: any) => void;
-    showLabel?: boolean
+    routineLabel?: string
 }
 
 function TodoTemplate(props: ITodoTemplate) {
@@ -259,7 +261,7 @@ function TodoTemplate(props: ITodoTemplate) {
                 <TableBody>
                     {todoList.map((row) => (
                         <TableRow key={row.id}>
-                            <TableCell><FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} label={row.text} /> {props.showLabel && <Chip label={row.label} />} </TableCell>
+                            <TableCell><FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} label={row.text} /> {!props.routineLabel && <Chip label={row.label} />} </TableCell>
                             <TableCell align="right" >
                                 <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
                                     <DeleteIcon />
@@ -269,7 +271,7 @@ function TodoTemplate(props: ITodoTemplate) {
                     ))}
                 </TableBody>
             </Table>
-            <TodoCreate onTodoCreate={handleTodoCreate} showLabel={props.showLabel} />
+            <TodoCreate onTodoCreate={handleTodoCreate} routineLabel={props.routineLabel}/>
             <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
             <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
             <Fallback open={fallback} />
@@ -284,7 +286,7 @@ interface IDefaultTodoTemplate {
 
 function DefaultTodoTemplate(props: IDefaultTodoTemplate) {
     return (
-        <TodoTemplate id={props.id} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} showLabel={true}> <TodoTitle id={props.id} /></TodoTemplate>
+        <TodoTemplate id={props.id} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={props.id} /></TodoTemplate>
     )
 }
 
