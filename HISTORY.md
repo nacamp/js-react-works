@@ -11,7 +11,8 @@
 * type vs interface
 * https://medium.com/humanscape-tech/type-vs-interface-%EC%96%B8%EC%A0%9C-%EC%96%B4%EB%96%BB%EA%B2%8C-f36499b0de50
 * https://blog.logrocket.com/types-vs-interfaces-in-typescript/
-
+* export
+* https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/export
 
 # jwt
 ```
@@ -132,6 +133,7 @@ https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=wideeyed&logNo
 * https://reactrouter.com/docs/en/v6/getting-started/overview
 * https://typescript.tv/react/upgrade-to-react-router-v6/
 * https://kkj6670.github.io/board/react/react-router-dom-v6
+* https://velog.io/@velopert/react-router-v6-tutorial
 
 # 페이지구조
 * mui
