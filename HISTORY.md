@@ -13,6 +13,61 @@
 * https://blog.logrocket.com/types-vs-interfaces-in-typescript/
 
 
+# jwt
+```
+
+curl -d '{"email": "olivier@mail.com","password": "bestPassw0rd"}'  \
+-H "Content-Type: application/json" \
+-X POST http://localhost:5000/register
+
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9saXZpZXJAbWFpbC5jb20iLCJpYXQiOjE2NTUzNzg4NTIsImV4cCI6MTY1NTM4MjQ1Miwic3ViIjoiMSJ9.qKJFIrkkMkCA0XTJV0oO2U2AdZEQINwqoteK4yT__Bc",
+  "user": {
+    "email": "olivier@mail.com",
+    "id": 1
+  }
+}%
+
+curl -d '{"email": "olivier@mail.com","password": "bestPassw0rd"}'  \
+-H "Content-Type: application/json" \
+-X POST http://localhost:5000/login
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9saXZpZXJAbWFpbC5jb20iLCJpYXQiOjE2NTUzNzg5NTcsImV4cCI6MTY1NTM4MjU1Nywic3ViIjoiMSJ9.H2tT8fALZ0vosWBSFt3sE68jpn1eEJy-i_wLl32AwxA",
+  "user": {
+    "email": "olivier@mail.com",
+    "id": 1
+  }
+}
+
+curl -i -H "Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9saXZpZXJAbWFpbC5jb20iLCJpYXQiOjE2NTUzNzg5NTcsImV4cCI6MTY1NTM4MjU1Nywic3ViIjoiMSJ9.H2tT8fALZ0vosWBSFt3sE68jpn1eEJy-i_wLl32AwxA" -H "Content-Type: application/json" http://localhost:5000/600/users/1
+
+
+curl -i -H "Authorization:  Bearer 1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9saXZpZXJAbWFpbC5jb20iLCJpYXQiOjE2NTUzNzg5NTcsImV4cCI6MTY1NTM4MjU1Nywic3ViIjoiMSJ9.H2tT8fALZ0vosWBSFt3sE68jpn1eEJy-i_wLl32AwxA" -H "Content-Type: application/json" http://localhost:5000/600/users/1
+
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9saXZpZXJAbWFpbC5jb20iLCJpYXQiOjE2NTUzNzg5NTcsImV4cCI6MTY1NTM4MjU1Nywic3ViIjoiMSJ9.H2tT8fALZ0vosWBSFt3sE68jpn1eEJy-i_wLl32AwxA",
+  "user": {
+    "email": "olivier@mail.com",
+    "id": 1
+  }
+}%
+
+https://jwt.io/
+https://velopert.com/2389
+
+
+curl http://localhost:5000/posts/5
+
+
+json-server-auth --watch /Users/jimmy/vscode/js-react-works/db.json --port 5000
+
+
+npm install -g json-server-auth
+npm install -g express
+https://www.npmjs.com/package/json-server-auth
+```
+
+
 # dialog
 * https://medium.com/the-clever-dev/how-to-size-and-position-the-material-ui-mui-dialog-component-a5601cedc1c9
 * https://mui.com/material-ui/react-dialog/
@@ -60,6 +115,7 @@ curl -d '{"id": 5,"title": "json-server4","author": "typicode"}'  \
 -X POST http://localhost:5000/posts
 curl http://localhost:5000/posts/5
 
+npm install -g json-server
 https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=wideeyed&logNo=221350638501
 ```
 

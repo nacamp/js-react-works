@@ -57,6 +57,7 @@ type ITodoCreate = {
     onTodoCreate: (todo: ITodo) => void;
 }
 
+// TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
 function TodoCreate({ onTodoCreate }: ITodoCreate) {
     const [text, setText] = useState('');
     const [label, setLabel] = React.useState('오늘');

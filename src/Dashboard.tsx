@@ -23,8 +23,10 @@ import { MainListItems, mainListItems2, secondaryListItems } from './listItems';
 import Orders from './Orders';
 import Title from './Title';
 import { Route, Routes } from 'react-router-dom';
-import TodoTemplate from './components/TodoTemplate';
 import dayjs from 'dayjs';
+import TodoTemplate from './components/TodoTemplate';
+import SignIn from './components/SignIn';
+
 
 
 function Copyright(props: any) {
@@ -179,6 +181,7 @@ function DashboardContent() {
                     <Route path='/' element={<Orders />} />
                     <Route path='/b' element={<TodoTemplate id={Number(dayjs(new Date()).format('YYYYMMDD'))}> template...</TodoTemplate>} />
                     <Route path='/c' element={<TodoTemplate id={20220614}> template...</TodoTemplate>} />
+                    <Route path='/login' element={<SignIn/>} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}

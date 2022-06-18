@@ -11,11 +11,13 @@ import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router';
-
+import { getToken, removeToken } from './components/Token';
 
 export function MainListItems() {
+  // TODO: 리다이렉트시 매뉴선택되게 해야 됨
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  // const token = window.sessionStorage.getItem("token");
 
   return (
     <React.Fragment>
@@ -25,18 +27,35 @@ export function MainListItems() {
         </ListItemIcon>
         <ListItemText primary="대쉬보드" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/b') }}>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Orders" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customers" />
-      </ListItemButton>
+
+      {!getToken() &&
+        <>
+
+          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/login') }}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="LOGIN" />
+          </ListItemButton>
+        </>
+      }
+      {!!getToken() &&
+        <>
+          <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/b') }}>
+            <ListItemIcon>
+              <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="TODO" />
+          </ListItemButton>
+          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); removeToken(); navigate('/login') }}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="LOGOUT" />
+          </ListItemButton>
+        </>
+
+      }
       <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />
