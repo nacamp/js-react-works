@@ -39,7 +39,7 @@ export const getTodo = async (id: any) => {
 };
 
 export const useGetTodo = (id: any) => {
-  return useQuery('getTodo', async () => await getTodo(id), {
+  return useQuery(['getTodo',id], async () => await getTodo(id), {
     onSuccess: () => {
       // console.log("Get data!");
       // console.log(data); // undefined
@@ -68,7 +68,7 @@ export const getRoutine = async (id: any) => {
 };
 
 export const useGetRoutine = (id: any) => {
-  return useQuery('getRoutine', async () => await getRoutine(id), {
+  return useQuery(['getRoutine', id], async () => await getRoutine(id), {
     onSuccess: () => {
       // console.log("Get data!");
       // console.log(data); // undefined
@@ -93,7 +93,7 @@ export const putTodo = async (id: any, payload: any) => {
 };
 
 export const usePutTodo = (id: any, payload: any) => {
-  return useMutation('putTodo', async () => await putTodo(id, payload));
+  return useMutation(['putTodo', id], async () => await putTodo(id, payload));
 };
 
 
@@ -113,7 +113,7 @@ export const putRoutine = async (id: any, payload: any) => {
 };
 
 export const usePutRoutine = (id: any, payload: any) => {
-  return useMutation('putRoutine', async () => await putRoutine(id, payload));
+  return useMutation(['putRoutine',id], async () => await putRoutine(id, payload));
 };
 
 
