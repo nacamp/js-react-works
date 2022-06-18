@@ -261,7 +261,17 @@ function TodoTemplate(props: ITodoTemplate) {
                 <TableBody>
                     {todoList.map((row) => (
                         <TableRow key={row.id}>
-                            <TableCell><FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} label={row.text} /> {!props.routineLabel && <Chip label={row.label} />} </TableCell>
+                            <TableCell>
+                                {!!props.routineLabel &&
+                                    <span>{row.text}</span>
+                                }
+                                {!props.routineLabel&&
+                                <>
+                                <FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} label={row.text} /> 
+                                <Chip label={row.label} />
+                                </>
+                                } 
+                            </TableCell>
                             <TableCell align="right" >
                                 <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
                                     <DeleteIcon />
