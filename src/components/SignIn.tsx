@@ -104,7 +104,7 @@ export default function SignIn() {
                 console.log(window.sessionStorage.getItem("token"));
                 //이동
                 setToken(mutaionSignIn.data?.accessToken);
-                navigate('/b');
+                navigate('/todos');
             }
             // setFallback(false);
             // console.log(mutaionPutTodo.data)
