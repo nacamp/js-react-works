@@ -24,9 +24,9 @@ import Orders from './Orders';
 import Title from './Title';
 import { Route, Routes } from 'react-router-dom';
 import dayjs from 'dayjs';
-import TodoTemplate from './components/TodoTemplate';
+import DefaultTodoTemplate from './components/TodoTemplate';
 import SignIn from './components/SignIn';
-
+import RoutineTodo from './components/RoutineTodo';
 
 
 function Copyright(props: any) {
@@ -179,8 +179,9 @@ function DashboardContent() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Routes>
                     <Route path='/' element={<Orders />} />
-                    <Route path='/b' element={<TodoTemplate id={Number(dayjs(new Date()).format('YYYYMMDD'))}> template...</TodoTemplate>} />
-                    <Route path='/c' element={<TodoTemplate id={20220614}> template...</TodoTemplate>} />
+                    <Route path='/b' element={<DefaultTodoTemplate id={Number(dayjs(new Date()).format('YYYYMMDD'))}/>} />
+                    <Route path='/c' element={<DefaultTodoTemplate id={20220614}/>} />
+                    <Route path='/routine' element={<RoutineTodo/>} />
                     <Route path='/login' element={<SignIn/>} />
                     <Route path='' element={<Orders />} />
                   </Routes>

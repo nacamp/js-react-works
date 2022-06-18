@@ -4,6 +4,7 @@ import {
   useMutation,
 } from 'react-query'
 import { getToken, removeToken } from '../components/Token';
+import dayjs from 'dayjs';
 
 function makeJwtHeader(){
   const token = getToken();
@@ -17,6 +18,7 @@ function makeJwtHeader(){
 
 export const getTodo = async (id: any) => {
   const url = "http://localhost:3000/todos/";
+  console.log(dayjs(id+'').day());
 
   const response = await fetch(`${url}${id}`, {
     method: 'GET',
@@ -27,7 +29,8 @@ export const getTodo = async (id: any) => {
 
   if (!response.ok) {
     if (response.status === 404) {
-      return {}
+      const r = await getRoutine(dayjs(id+'').day());
+      return {data:r.data}
     } else {
       throw new Error('Network response was not ok')
     }
@@ -43,6 +46,36 @@ export const useGetTodo = (id: any) => {
     }
   });
 };
+
+export const getRoutine = async (id: any) => {
+  const url = "http://localhost:3000/routines/";
+
+  const response = await fetch(`${url}${id}`, {
+    method: 'GET',
+    headers: {
+     ...makeJwtHeader()
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      return {data:[]}
+    } else {
+      throw new Error('Network response was not ok')
+    }
+  }
+  return response.json();
+};
+
+export const useGetRoutine = (id: any) => {
+  return useQuery('getRoutine', async () => await getRoutine(id), {
+    onSuccess: () => {
+      // console.log("Get data!");
+      // console.log(data); // undefined
+    }
+  });
+};
+
 
 export const putTodo = async (id: any, payload: any) => {
   const url = "http://localhost:3000/todos/";
@@ -64,6 +97,26 @@ export const usePutTodo = (id: any, payload: any) => {
 };
 
 
+export const putRoutine = async (id: any, payload: any) => {
+  const url = "http://localhost:3000/routines/";
+  const response = await fetch(`${url}${id}`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json", //필수
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return response.json();
+};
+
+export const usePutRoutine = (id: any, payload: any) => {
+  return useMutation('putRoutine', async () => await putRoutine(id, payload));
+};
+
+
 export const postTodo = async (payload: any) => {
   const url = "http://localhost:3000/todos";
   const response = await fetch(`${url}`, {
@@ -81,6 +134,26 @@ export const postTodo = async (payload: any) => {
 
 export const usePostTodo = (payload: any) => {
   return useMutation('postTodo', async () => await postTodo(payload));
+};
+
+
+export const postRoutine = async (payload: any) => {
+  const url = "http://localhost:3000/routines";
+  const response = await fetch(`${url}`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json", //필수
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return response.json();
+};
+
+export const usePostRoutine = (payload: any) => {
+  return useMutation('postRoutine', async () => await postRoutine(payload));
 };
 
 

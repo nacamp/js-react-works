@@ -47,7 +47,13 @@ export function MainListItems() {
             </ListItemIcon>
             <ListItemText primary="TODO" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); removeToken(); navigate('/login') }}>
+          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/routine') }}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="ROUTINE" />
+          </ListItemButton>
+          <ListItemButton selected={selectedIndex === 3} onClick={() => { setSelectedIndex(3); removeToken(); navigate('/login') }}>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
