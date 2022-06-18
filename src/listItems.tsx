@@ -41,7 +41,7 @@ export function MainListItems() {
       }
       {!!getToken() &&
         <>
-          <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/b') }}>
+          <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/todos') }}>
             <ListItemIcon>
               <ShoppingCartIcon />
             </ListItemIcon>

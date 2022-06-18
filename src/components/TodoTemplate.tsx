@@ -21,6 +21,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
 
 // import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@mui/material/Alert';
@@ -237,7 +238,7 @@ function TodoTemplate(props: ITodoTemplate) {
             setFallback(true);
         } else {
             setFallback(false);
-            console.log(mutaionPut.data)
+            // console.log(mutaionPut.data)
             // queryClient.invalidateQueries('getRoutine');
             // queryClient.invalidateQueries('getTodo');
         }
@@ -248,7 +249,7 @@ function TodoTemplate(props: ITodoTemplate) {
             setFallback(true);
         } else {
             setFallback(false);
-            console.log(mutaionPost.data)
+            // console.log(mutaionPost.data)
             // queryClient.invalidateQueries('getRoutine');
             // queryClient.invalidateQueries('getTodo');
         }
@@ -290,17 +291,19 @@ function TodoTemplate(props: ITodoTemplate) {
     )
 }
 
-interface IDefaultTodoTemplate {
-    id: number;
-}
+// interface IDefaultTodoTemplate {
+//     id?: number;
+// }
 
-function DefaultTodoTemplate(props: IDefaultTodoTemplate) {
+function TodoTemplatePage() {
+    const { id } = useParams();
+    const nid =  !!id?  Number(id) : Number(dayjs(new Date()).format('YYYYMMDD'));
     return (
-        <TodoTemplate id={props.id} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={props.id} /></TodoTemplate>
+        <TodoTemplate id={nid} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={nid} /></TodoTemplate>
     )
 }
 
 export {
-    TodoTemplate, DefaultTodoTemplate as default
+    TodoTemplate, TodoTemplatePage as default
 }
 
