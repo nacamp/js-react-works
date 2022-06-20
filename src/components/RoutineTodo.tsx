@@ -1,6 +1,6 @@
-import {Divider, Typography}  from '@mui/material';
-
-import {TodoTemplate}  from './TodoTemplate'
+import { Divider, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import { TodoTemplate } from './TodoTemplate'
 import { useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
 
 interface IRoutineTitle {
@@ -13,28 +13,22 @@ function RoutineTitle(props: IRoutineTitle) {
         </Typography>
     );
 };
- 
-
 
 function RoutineTodo() {
-
+    const RoutineList = [
+        { id: 0, name: '일' }, { id: 1, name: '월' }, { id: 2, name: '화' }, { id: 3, name: '수' }, { id: 4, name: '목' }, { id: 5, name: '금' }, { id: 6, name: '토' },
+    ];
     return (
         <>
-            <TodoTemplate id={0} name='일' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='일' /></TodoTemplate>
-            <Divider/>
-            <TodoTemplate id={1} name='월' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='월' /></TodoTemplate>
-            <Divider/>
-            <TodoTemplate id={2} name='화' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='화' /></TodoTemplate>
-            <Divider/>
-            <TodoTemplate id={3} name='수' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='수' /></TodoTemplate>
-            <Divider/>
-            <TodoTemplate id={4} name='목' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='목' /></TodoTemplate>
-            <Divider/>
-            <TodoTemplate id={5} name='금' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='금' /></TodoTemplate>
-            <Divider/>
-            <TodoTemplate id={6} name='토' onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'><RoutineTitle name='토' /></TodoTemplate>
+            {RoutineList.map((row) => (
+                <Box sx={{ m: 2, p: 2, border: 1, borderColor: '#f4f4f4' }}>
+                    <TodoTemplate id={row.id} name={row.name} onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'>
+                        <RoutineTitle name={row.name} />
+                    </TodoTemplate>
+                </Box>
+            ))}
         </>
-    )
-
+    );
 }
+
 export default RoutineTodo;

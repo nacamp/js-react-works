@@ -86,7 +86,7 @@ function TodoCreate({ onTodoCreate, routineLabel }: ITodoCreate) {
 
                 <Grid item xs={2}>
                     {!routineLabel &&
-                        <FormControl variant="standard" sx={{ m: 1, mt:2, minWidth: 100 }}>
+                        <FormControl variant="standard" sx={{ m: 1, mt: 2, minWidth: 100 }}>
                             <Select
                                 value={label}
                                 label="분류"
@@ -124,8 +124,8 @@ interface ITodoTitle {
 }
 function TodoTitle(props: ITodoTitle) {
     return (
-        <Typography variant='h4'>
-            {dayjs(String(props.id)).format('YYYY년MM월DD일')}
+        <Typography variant='h5'>
+            {dayjs(String(props.id)).format('YYYY년 MM월 DD일')}
         </Typography>
     );
 };
@@ -284,7 +284,7 @@ function TodoTemplate(props: ITodoTemplate) {
                 </Grid>
                 <Grid item xs={2} >
                     <Box display="flex" justifyContent="flex-end">
-                        <Button variant="contained" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
+                        <Button size='small' variant="outlined" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
                     </Box>
                 </Grid>
             </Grid>
@@ -313,15 +313,15 @@ function TodoTemplate(props: ITodoTemplate) {
                 </TableBody>
             </Table>
             <TodoCreate onTodoCreate={handleTodoCreate} routineLabel={props.routineLabel} />
-            <Grid container spacing={2} >
+            <Grid container spacing={2} sx={{ mt: 0.5 }} >
                 <Grid item xs={6}>
                     <Box display="flex" justifyContent="flex-end">
-                        <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
+                        <Button variant="outlined" onClick={(e) => handleSave(e, "clicked")}>save</Button>
                     </Box>
                 </Grid>
                 <Grid item xs={6} >
                     <Box display="flex" justifyContent="flex-start">
-                        <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
+                        <Button variant="outlined" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
                     </Box>
                 </Grid>
             </Grid>

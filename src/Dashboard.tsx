@@ -30,6 +30,7 @@ import RoutineTodo from './components/RoutineTodo';
 import path from 'path';
 
 
+
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -105,9 +106,10 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar style={{ background: '#bcbcbc' }} position="absolute" open={open}>
+        <AppBar sx={{ bgcolor: 'white' }} position="absolute" open={open}>
           <Toolbar
             sx={{
+              color: 'black',
               pr: '24px', // keep right padding when drawer closed
             }}
           >
@@ -156,7 +158,7 @@ function DashboardContent() {
           <List component="nav">
 
             <MainListItems />
-{/* 
+            {/* 
             <Divider sx={{ my: 1 }} />
             {secondaryListItems} */}
           </List>
@@ -180,10 +182,10 @@ function DashboardContent() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Routes>
                     <Route path='/' element={<Orders />} />
-                    <Route path='/todos' element={<TodoTemplatePage/>} />
-                    <Route path='/routine' element={<RoutineTodo/>} />
-                    <Route path='/login' element={<SignIn/>} />
-                    <Route path='/todos/:id' element={<TodoTemplatePage/>} />
+                    <Route path='/todos' element={<TodoTemplatePage />} />
+                    <Route path='/routine' element={<RoutineTodo />} />
+                    <Route path='/login' element={<SignIn />} />
+                    <Route path='/todos/:id' element={<TodoTemplatePage />} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}
