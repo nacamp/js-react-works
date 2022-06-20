@@ -22,6 +22,7 @@ import Box from '@mui/material/Box';
 import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
+import copy from 'copy-to-clipboard';
 
 // import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@mui/material/Alert';
@@ -189,6 +190,18 @@ function TodoTemplate(props: ITodoTemplate) {
         toggleReload(!reload);
     }
 
+    function handleCopy(event: React.MouseEvent<HTMLElement>, text: string) {
+        const x = todoList.reduce(function(a, b) {return a + ["", "\r"][+!!a.length] + b.text;}, "");
+        copy(x);
+        // // todoList.map()
+        // const x = todoList.reduce(function(a, b) {return a + ["", "\r"][+!!a.length] + b.text;}, "");
+        // // todoList.forEach(e => console.log(e.text));
+        // // console.log(JSON.stringify(todoList));
+        // // console.log(todoList);
+        // console.log(x);
+    }
+
+
     useEffect(() => {
         setFallback(true);
         if (responseGet.isSuccess) {
@@ -258,6 +271,7 @@ function TodoTemplate(props: ITodoTemplate) {
     return (
         <>
             {props.children}
+            <Button variant="contained" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
