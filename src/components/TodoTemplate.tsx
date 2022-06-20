@@ -151,7 +151,7 @@ function TodoTemplate(props: ITodoTemplate) {
     const mutaionPost: any = props?.onPost({ id: todoId, data: todoList });
 
     function handleDoneClick(event: React.ChangeEvent<HTMLInputElement>, id: Number) {
-        console.log('checked: ', id, event.target.checked);
+        // console.log('checked: ', id, event.target.checked);
         const newTodoList = todoList.map<ITodo>((todo) =>
             todo.id === id ? { ...todo, done: event.target.checked } : todo
         );
@@ -268,7 +268,13 @@ function TodoTemplate(props: ITodoTemplate) {
         }
     }, [mutaionPost.data])
 
+    const checkedStyle = {
+        color: 'grey',
+        textDecorationLine: 'line-through'
+    }
+    
     return (
+        
         <>
             {props.children}
             <Button variant="contained" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
@@ -282,7 +288,7 @@ function TodoTemplate(props: ITodoTemplate) {
                                 }
                                 {!props.routineLabel&&
                                 <>
-                                <FormControlLabel value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} checked={row.done} label={row.text} /> 
+                                <FormControlLabel style={!!row.done?checkedStyle:{}} value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} checked={row.done} label={row.text} /> 
                                 <Chip label={row.label} />
                                 </>
                                 } 
