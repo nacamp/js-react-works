@@ -10,6 +10,9 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Link from '@mui/material/Link';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import { useNavigate } from 'react-router';
 import { getToken, removeToken } from './components/Token';
 
@@ -21,19 +24,19 @@ export function MainListItems() {
 
   return (
     <React.Fragment>
-      <ListItemButton selected={selectedIndex === 0} onClick={() => { setSelectedIndex(0); navigate('/') }}>
+      {/* <ListItemButton selected={selectedIndex === 0} onClick={() => { setSelectedIndex(0); navigate('/') }}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="대쉬보드" />
-      </ListItemButton>
+      </ListItemButton> */}
 
       {!getToken() &&
         <>
 
           <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/login') }}>
             <ListItemIcon>
-              <PeopleIcon />
+              <LoginIcon />
             </ListItemIcon>
             <ListItemText primary="LOGIN" />
           </ListItemButton>
@@ -43,32 +46,32 @@ export function MainListItems() {
         <>
           <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/todos') }}>
             <ListItemIcon>
-              <ShoppingCartIcon />
+              <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="TODAY" />
           </ListItemButton>
           <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/routine') }}>
             <ListItemIcon>
-              <PeopleIcon />
+              <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="ROUTINE" />
           </ListItemButton>
           <ListItemButton selected={selectedIndex === 4} onClick={() => { setSelectedIndex(4); navigate('/todos/20000101') }}>
             <ListItemIcon>
-              <PeopleIcon />
+              <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="FUTURE" />
           </ListItemButton>
           <ListItemButton selected={selectedIndex === 3} onClick={() => { setSelectedIndex(3); removeToken(); navigate('/login') }}>
             <ListItemIcon>
-              <PeopleIcon />
+              <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="LOGOUT" />
+            <ListItemText primary="Logout" />
           </ListItemButton>
         </>
 
       }
-      <ListItemButton>
+      {/* <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
@@ -79,7 +82,7 @@ export function MainListItems() {
           <LayersIcon />
         </ListItemIcon>
         <ListItemText primary="Integrations" />
-      </ListItemButton>
+      </ListItemButton> */}
     </React.Fragment>
   )
 };

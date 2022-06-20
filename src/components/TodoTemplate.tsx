@@ -10,7 +10,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
+import FormControl from '@mui/material/FormControl';
 // import FormLabel from '@mui/material/FormLabel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Chip from '@mui/material/Chip';
@@ -57,7 +57,7 @@ type ITodoCreate = {
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
 function TodoCreate({ onTodoCreate, routineLabel }: ITodoCreate) {
     const [text, setText] = useState('');
-    const [label, setLabel] = React.useState(!!routineLabel?routineLabel:'오늘');
+    const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : '오늘');
 
     function handleAdd(event: any) {
         if (text.trim() === '') {
@@ -86,15 +86,17 @@ function TodoCreate({ onTodoCreate, routineLabel }: ITodoCreate) {
 
                 <Grid item xs={2}>
                     {!routineLabel &&
-                        <Select
-                            value={label}
-                            label="분류"
-                            onChange={handleLabel}
-                        >
-                            <MenuItem value={'오늘'}>오늘</MenuItem>
-                            <MenuItem value={'매주'}>매주</MenuItem>
-                            <MenuItem value={'매달'}>매달</MenuItem>
-                        </Select>
+                        <FormControl variant="standard" sx={{ m: 1, mt:2, minWidth: 100 }}>
+                            <Select
+                                value={label}
+                                label="분류"
+                                onChange={handleLabel}
+                            >
+                                <MenuItem value={'오늘'}>오늘</MenuItem>
+                                <MenuItem value={'매주'}>매주</MenuItem>
+                                <MenuItem value={'매달'}>매달</MenuItem>
+                            </Select>
+                        </FormControl>
                     }
                     {!!routineLabel &&
                         <span>{routineLabel}</span>
@@ -191,7 +193,7 @@ function TodoTemplate(props: ITodoTemplate) {
     }
 
     function handleCopy(event: React.MouseEvent<HTMLElement>, text: string) {
-        const x = todoList.reduce(function(a, b) {return a + ["", "\r"][+!!a.length] + b.text;}, "");
+        const x = todoList.reduce(function (a, b) { return a + ["", "\r"][+!!a.length] + b.text; }, "");
         copy(x);
         // // todoList.map()
         // const x = todoList.reduce(function(a, b) {return a + ["", "\r"][+!!a.length] + b.text;}, "");
@@ -272,12 +274,20 @@ function TodoTemplate(props: ITodoTemplate) {
         color: 'grey',
         textDecorationLine: 'line-through'
     }
-    
+
     return (
-        
+
         <>
-            {props.children}
-            <Button variant="contained" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
+            <Grid container>
+                <Grid item xs={10}>
+                    {props.children}
+                </Grid>
+                <Grid item xs={2} >
+                    <Box display="flex" justifyContent="flex-end">
+                        <Button variant="contained" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
+                    </Box>
+                </Grid>
+            </Grid>
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
@@ -286,12 +296,12 @@ function TodoTemplate(props: ITodoTemplate) {
                                 {!!props.routineLabel &&
                                     <span>{row.text}</span>
                                 }
-                                {!props.routineLabel&&
-                                <>
-                                <FormControlLabel style={!!row.done?checkedStyle:{}} value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} checked={row.done} label={row.text} /> 
-                                <Chip label={row.label} />
-                                </>
-                                } 
+                                {!props.routineLabel &&
+                                    <>
+                                        <FormControlLabel style={!!row.done ? checkedStyle : {}} value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} checked={row.done} label={row.text} />
+                                        <Chip label={row.label} />
+                                    </>
+                                }
                             </TableCell>
                             <TableCell align="right" >
                                 <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
@@ -302,9 +312,19 @@ function TodoTemplate(props: ITodoTemplate) {
                     ))}
                 </TableBody>
             </Table>
-            <TodoCreate onTodoCreate={handleTodoCreate} routineLabel={props.routineLabel}/>
-            <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
-            <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
+            <TodoCreate onTodoCreate={handleTodoCreate} routineLabel={props.routineLabel} />
+            <Grid container spacing={2} >
+                <Grid item xs={6}>
+                    <Box display="flex" justifyContent="flex-end">
+                        <Button variant="contained" onClick={(e) => handleSave(e, "clicked")}>save</Button>
+                    </Box>
+                </Grid>
+                <Grid item xs={6} >
+                    <Box display="flex" justifyContent="flex-start">
+                        <Button variant="contained" onClick={(e) => handleReload(e, "clicked")}>reload</Button>
+                    </Box>
+                </Grid>
+            </Grid>
             <Fallback open={fallback} />
             <Toast open={openToast} severity="error" message='자료를 가져올수 없습니다.' onClose={handleClose} />
         </>
@@ -317,7 +337,7 @@ function TodoTemplate(props: ITodoTemplate) {
 
 function TodoTemplatePage() {
     const { id } = useParams();
-    const nid =  !!id?  Number(id) : Number(dayjs(new Date()).format('YYYYMMDD'));
+    const nid = !!id ? Number(id) : Number(dayjs(new Date()).format('YYYYMMDD'));
     return (
         <TodoTemplate id={nid} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={nid} /></TodoTemplate>
     )
