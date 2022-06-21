@@ -18,8 +18,6 @@ function makeJwtHeader(){
 
 export const getTodo = async (id: any) => {
   const url = "http://localhost:3000/todos/";
-  console.log(dayjs(id+'').day());
-
   const response = await fetch(`${url}${id}`, {
     method: 'GET',
     headers: {
@@ -182,17 +180,3 @@ export const useSignIn = (payload: any) => {
   // console.log('useSignIn:input:',payload);
   return useMutation('signIn', async () => await signIn(payload));
 };
-
-function aa() {
-  console.log('xxxxx');
-}
-export const xxxSignIn2 = (payload: any) => {
-  console.log('useSignIn2:input:', payload);
-  return aa();
-};
-
-// export const useSignIn =  (payload:any) => {
-//   return useQuery('signIn', async () => await signIn(payload), {
-//     enabled: false
-//   });
-// };

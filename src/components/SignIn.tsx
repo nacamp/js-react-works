@@ -22,7 +22,7 @@ import {
     QueryCache,
 } from 'react-query'
 import { useNavigate } from 'react-router';
-import { useSignIn, xxxSignIn2 } from '../hooks/api';
+import { useSignIn} from '../hooks/api';
 import { setToken } from './Token';
 import { setTokenSourceMapRange } from 'typescript';
 
@@ -47,7 +47,7 @@ export default function SignIn() {
     const [password, setPassword] = useState<string>();
 
     const mutaionSignIn: any = useSignIn({email,password});
-    xxxSignIn2({email,password});
+
     // const responseSignIn: any = useSignIn({email,password});
     // const mutaionSignIn: any = useSignIn({email:email, password:password});
     // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
