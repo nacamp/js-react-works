@@ -231,7 +231,6 @@ function Calendar({ yearMonth }: ICalendar) {
     const chunkSize = 7;
     // fill();
     useEffect(() => {
-        console.log(yearMonth);
         fill();
     }, [yearMonth])
     function handleClose() {
@@ -285,7 +284,24 @@ function Calendar({ yearMonth }: ICalendar) {
 }
 
 function CalendarPage() {
+    const years = ["2022", "2023", "2024"];
+    const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    const [year, setYear] = React.useState('2022');
+    const [month, setMonth] = React.useState('06');
 
+    const handleYear = (event: any) => {
+        setYear(event.target.value as string);
+    };
+    const handleMonth = (event: any) => {
+        setMonth(event.target.value as string);
+    };
+    /*
+                        {days7x6.map((row, i) => (
+                        <Grid key={i} container item spacing={3}>
+                            <FormRow dates={row} onOpen={handleOpen} />
+                        </Grid>
+                    ))}
+    */
     // let todoList = new Array(7 * 6).fill(1).map((arr, i) => {  // (arr: 현재값, i:인덱스)
     //     return { 'id': i }
     // });
@@ -299,7 +315,41 @@ function CalendarPage() {
     // const nid = !!id ? Number(id) : Number(dayjs(new Date()).format('YYYYMMDD'));
     // const todoList = [ {id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6}  ]
     return (
-        <Calendar yearMonth='202206' />
+        <>
+            <Grid container spacing={2}>
+                <Grid item xs={2}>
+                    <FormControl variant="standard" sx={{ m: 1, mt: 2, minWidth: 100 }}>
+                        <Select
+                            value={year}
+                            label="분류"
+                            onChange={handleYear}
+                        >
+                            {years.map((row, i) => (
+                                <MenuItem key={i} value={row}>{row}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={2}>
+                    <FormControl variant="standard" sx={{ m: 1, mt: 2, minWidth: 100 }}>
+                        <Select
+                            value={month}
+                            label="분류"
+                            onChange={handleMonth}
+                        >
+                            {months.map((row, i) => (
+                                <MenuItem key={i} value={row}>{row}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={7}>
+
+                </Grid>
+            </Grid>
+            <Calendar yearMonth={year+month} />
+        </>
+
     );
 }
 
