@@ -14,6 +14,13 @@
 * export
 * https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/export
 
+# react
+* React.useState does not reload state from props
+* https://stackoverflow.com/questions/54865764/react-usestate-does-not-reload-state-from-props
+* Warning: Each child in a list should have a unique "key" prop
+* key="uniqueId1" 사용
+* https://crong-dev.tistory.com/47
+
 # jwt
 ```
 

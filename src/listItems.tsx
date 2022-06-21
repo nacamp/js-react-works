@@ -48,21 +48,27 @@ export function MainListItems() {
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
-            <ListItemText primary="TODAY" />
+            <ListItemText primary="Today" />
           </ListItemButton>
           <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/routine') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
-            <ListItemText primary="ROUTINE" />
+            <ListItemText primary="Routine" />
           </ListItemButton>
           <ListItemButton selected={selectedIndex === 4} onClick={() => { setSelectedIndex(4); navigate('/todos/20000101') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
-            <ListItemText primary="FUTURE" />
+            <ListItemText primary="Future" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 3} onClick={() => { setSelectedIndex(3); removeToken(); navigate('/login') }}>
+          <ListItemButton selected={selectedIndex === 5} onClick={() => { setSelectedIndex(5); navigate('/calendar') }}>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon />
+            </ListItemIcon>
+            <ListItemText primary="Calendar" />
+          </ListItemButton>
+          <ListItemButton selected={selectedIndex === 6} onClick={() => { setSelectedIndex(6); removeToken(); navigate('/login') }}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>

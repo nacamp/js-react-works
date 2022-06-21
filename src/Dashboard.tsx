@@ -28,7 +28,7 @@ import TodoTemplatePage from './components/TodoTemplate';
 import SignIn from './components/SignIn';
 import RoutineTodo from './components/RoutineTodo';
 import path from 'path';
-
+import Calendar from './containers/Calendar';
 
 
 function Copyright(props: any) {
@@ -186,6 +186,7 @@ function DashboardContent() {
                     <Route path='/routine' element={<RoutineTodo />} />
                     <Route path='/login' element={<SignIn />} />
                     <Route path='/todos/:id' element={<TodoTemplatePage />} />
+                    <Route path='/calendar' element={<Calendar />} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}

@@ -67,7 +67,6 @@ function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
             console.log('node data...');
             return;
         }
-        console.log(text);
         const data = {
             id: 0,
             text,
@@ -186,7 +185,6 @@ function TodoTemplate(props: ITodoTemplate) {
     }
 
     function handleChildText(text: string) {
-        console.log('handleChildText', text);
         setChildText(text);
     }
 
@@ -198,7 +196,6 @@ function TodoTemplate(props: ITodoTemplate) {
         setFallback(true);
         if(childText !==''){
             setOpenToast({...openToast, open:true, severity:'warning', message:'저장이 안된 todo 항목이 있습니다.' });
-            console.log(childText, 'xxxx');
         }
         if (responseGet.data.id !== undefined) {
             mutaionPut.mutate({ data: todoList });
@@ -368,6 +365,6 @@ function TodoTemplatePage() {
 }
 
 export {
-    TodoTemplate, TodoTemplatePage as default
+   TodoTitle, TodoTemplate, TodoTemplatePage as default
 }
 
