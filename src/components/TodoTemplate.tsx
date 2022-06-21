@@ -231,7 +231,7 @@ function TodoTemplate(props: ITodoTemplate) {
     useEffect(() => {
         setFallback(true);
         if (responseGet.isSuccess) {
-            if (responseGet.data.data !== undefined) {
+            if (responseGet.data.data !== undefined && responseGet.data.data.length > 0) {
                 nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
                 setTodoList(responseGet.data.data);
             } else {
