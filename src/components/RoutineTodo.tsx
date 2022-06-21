@@ -21,7 +21,7 @@ function RoutineTodo() {
     return (
         <>
             {RoutineList.map((row) => (
-                <Box sx={{ m: 2, p: 2, border: 1, borderColor: '#f4f4f4' }}>
+                <Box key={row.id} sx={{ m: 2, p: 2, border: 1, borderColor: '#f4f4f4' }}>
                     <TodoTemplate id={row.id} name={row.name} onGet={useGetRoutine} onPut={usePutRoutine} onPost={usePostRoutine} routineLabel='매주'>
                         <RoutineTitle name={row.name} />
                     </TodoTemplate>
