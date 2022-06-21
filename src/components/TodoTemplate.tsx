@@ -156,6 +156,9 @@ function TodoTemplate(props: ITodoTemplate) {
     const [todoList, setTodoList] = useState<Array<ITodo>>([]);
     const [reload, toggleReload] = useState(true);
     const [todoId, setTodoId] = useState(props.id);
+    useEffect(() => {
+        setTodoId(props.id)
+    }, [props.id])
     const [fallback, setFallback] = useState<boolean>(false);
     const [openToast, setOpenToast] = React.useState<IToast>({open:false, severity:'error', message:'에러발생' });
     const [childText, setChildText] = useState<string>('');
