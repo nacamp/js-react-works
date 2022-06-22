@@ -31,7 +31,7 @@ import path from 'path';
 import Calendar from './containers/Calendar';
 import LabelPage from './containers/Label';
 import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine, useGetLabel } from './hooks/api';
-
+import { useState, useRef, useEffect } from 'react';
 
 function Copyright(props: any) {
   return (
@@ -99,10 +99,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const responseLabel: any = useGetLabel(0);
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  useEffect(() => {
+    console.log('reload');
+    //responseLabel.refetch();
+  }, [])
+
   console.log(dayjs(new Date()).format('YYYYMMDD'));
   return (
     <ThemeProvider theme={mdTheme}>

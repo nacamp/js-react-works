@@ -195,7 +195,7 @@ export const useGetLabel = (id: any) => {
     } else if (r.isSuccess) {
       console.log('success...');
       const d = r?.data;
-      const remainedTodos = d.data.filter((label: any) => !!label.done);
+      const remainedTodos = d.data.filter((label: any) => !label.done);
       setLabelList([].concat(remainedTodos));
     }
   }, [r.data])
@@ -227,7 +227,7 @@ export const usePutLabel = (id: any, payload: any) => {
     } else if (r.isSuccess) {
       console.log('success...');
       const d = r?.data;
-      const remainedTodos = d.data.filter((label: any) => !!label.done);
+      const remainedTodos = d.data.filter((label: any) => !label.done);
       setLabelList([].concat(remainedTodos));
     }
   }, [r.data])
