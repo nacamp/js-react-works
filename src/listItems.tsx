@@ -80,6 +80,12 @@ export function MainListItems() {
             </ListItemIcon>
             <ListItemText primary="Logout" />
           </ListItemButton>
+          <ListItemButton selected={selectedIndex === 8} onClick={() => { setSelectedIndex(8); navigate('/playground') }}>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon />
+            </ListItemIcon>
+            <ListItemText primary="Playground" />
+          </ListItemButton>
         </>
 
       }

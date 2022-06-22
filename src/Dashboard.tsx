@@ -30,6 +30,7 @@ import RoutineTodo from './components/RoutineTodo';
 import path from 'path';
 import Calendar from './containers/Calendar';
 import LabelPage from './containers/Label';
+import Playground from './containers/Playground';
 import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine, useGetLabel } from './hooks/api';
 import { useState, useRef, useEffect } from 'react';
 
@@ -197,6 +198,7 @@ function DashboardContent() {
                     <Route path='/todos/:id' element={<TodoTemplatePage />} />
                     <Route path='/calendar' element={<Calendar />} />
                     <Route path='/label' element={<LabelPage />} />
+                    <Route path='/playground' element={<Playground />} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}
