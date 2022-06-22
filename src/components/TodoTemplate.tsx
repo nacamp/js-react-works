@@ -325,7 +325,7 @@ function TodoTemplate(props: ITodoTemplate) {
                                 {!props.routineLabel &&
                                     <>
                                         <FormControlLabel style={!!row.done ? checkedStyle : {}} value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} checked={row.done} label={row.text} />
-                                        <Chip label={row.label} />
+                                        {row.label!=='오늘' && <Chip label={row.label}/>}
                                     </>
                                 }
                             </TableCell>
