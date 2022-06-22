@@ -61,7 +61,12 @@ type ITodoCreate = {
 function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
     const labelList = useRecoilValue(labelListState);
     const [text, setText] = useState('');
-    const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : '오늘');
+    const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : '');
+    useEffect(() => {
+        if (labelList.length > 0) {
+            setLabel('오늘')
+        }
+    }, [labelList])
 
     function handleAdd(event: any) {
         if (text.trim() === '') {
@@ -92,7 +97,7 @@ function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
                         <FormControl variant="standard" sx={{ m: 1, mt: 2, minWidth: 100 }}>
                             <Select
                                 value={label}
-                                label="분류"
+                                label=""
                                 onChange={handleLabel}
                             >
                                 {labelList.map((item: any, i) => (
