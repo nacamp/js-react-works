@@ -24,7 +24,7 @@ import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 import { AlertColor } from '@mui/material/Alert';
-
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 // import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@mui/material/Alert';
 // import { queryByPlaceholderText } from '@testing-library/react';
@@ -36,7 +36,7 @@ import {
     QueryClientProvider,
     QueryCache,
 } from 'react-query'
-import { useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
+import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
 
 // import Fallback from '../components/Fallback';
 import { Fallback, Toast } from '../components/Feedback';
@@ -51,7 +51,7 @@ interface ITodo {
 
 type ITodoCreate = {
     onTodoCreate: (todo: ITodo) => void;
-    onChange: (text:string) => void;
+    onChange: (text: string) => void;
     // showLabel?: boolean;
     // defaultLabel?: string;
     routineLabel?: string;
@@ -59,6 +59,7 @@ type ITodoCreate = {
 
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
 function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
+    const labelList = useRecoilValue(labelListState);
     const [text, setText] = useState('');
     const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : '오늘');
 
@@ -86,7 +87,6 @@ function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
     return (
         <>
             <Grid container spacing={2}>
-
                 <Grid item xs={2}>
                     {!routineLabel &&
                         <FormControl variant="standard" sx={{ m: 1, mt: 2, minWidth: 100 }}>
@@ -95,9 +95,9 @@ function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
                                 label="분류"
                                 onChange={handleLabel}
                             >
-                                <MenuItem value={'오늘'}>오늘</MenuItem>
-                                <MenuItem value={'매주'}>매주</MenuItem>
-                                <MenuItem value={'매달'}>매달</MenuItem>
+                                {labelList.map((item: any, i) => (
+                                    <MenuItem key={i} value={item.text}>{item.text}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     }
@@ -144,7 +144,7 @@ interface ITodoTemplate {
     routineLabel?: string
 }
 
-interface IToast{
+interface IToast {
     open: boolean;
     severity: AlertColor;
     message: string;
@@ -159,7 +159,7 @@ function TodoTemplate(props: ITodoTemplate) {
         setTodoId(props.id)
     }, [props.id])
     const [fallback, setFallback] = useState<boolean>(false);
-    const [openToast, setOpenToast] = React.useState<IToast>({open:false, severity:'error', message:'에러발생' });
+    const [openToast, setOpenToast] = React.useState<IToast>({ open: false, severity: 'error', message: '에러발생' });
     const [childText, setChildText] = useState<string>('');
     const queryClient = useQueryClient();
     const responseGet: any = props?.onGet(todoId);
@@ -189,13 +189,13 @@ function TodoTemplate(props: ITodoTemplate) {
     }
 
     function handleClose(event?: React.SyntheticEvent | Event, reason?: string) {
-        setOpenToast({...openToast, open:false});
+        setOpenToast({ ...openToast, open: false });
     }
 
     function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
         setFallback(true);
-        if(childText !==''){
-            setOpenToast({...openToast, open:true, severity:'warning', message:'저장이 안된 todo 항목이 있습니다.' });
+        if (childText !== '') {
+            setOpenToast({ ...openToast, open: true, severity: 'warning', message: '저장이 안된 todo 항목이 있습니다.' });
         }
         if (responseGet.data.id !== undefined) {
             mutaionPut.mutate({ data: todoList });
@@ -265,7 +265,7 @@ function TodoTemplate(props: ITodoTemplate) {
     useEffect(() => {
         if (responseGet.isError) {
             setFallback(false);
-            setOpenToast({...openToast, open:true});
+            setOpenToast({ ...openToast, open: true });
         }
     }, [responseGet.isError])
 
@@ -333,7 +333,7 @@ function TodoTemplate(props: ITodoTemplate) {
                     ))}
                 </TableBody>
             </Table>
-            <TodoCreate onTodoCreate={handleTodoCreate}  onChange={handleChildText} routineLabel={props.routineLabel} />
+            <TodoCreate onTodoCreate={handleTodoCreate} onChange={handleChildText} routineLabel={props.routineLabel} />
             <Grid container spacing={2} sx={{ mt: 0.5 }} >
                 <Grid item xs={6}>
                     <Box display="flex" justifyContent="flex-end">
@@ -365,6 +365,6 @@ function TodoTemplatePage() {
 }
 
 export {
-   TodoTitle, TodoTemplate, TodoTemplatePage as default
+    TodoTitle, TodoTemplate, TodoTemplatePage as default
 }
 

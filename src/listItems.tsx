@@ -68,7 +68,13 @@ export function MainListItems() {
             </ListItemIcon>
             <ListItemText primary="Calendar" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 6} onClick={() => { setSelectedIndex(6); removeToken(); navigate('/login') }}>
+          <ListItemButton selected={selectedIndex === 6} onClick={() => { setSelectedIndex(6); navigate('/label') }}>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon />
+            </ListItemIcon>
+            <ListItemText primary="Label" />
+          </ListItemButton>
+          <ListItemButton selected={selectedIndex === 7} onClick={() => { setSelectedIndex(7); removeToken(); navigate('/login') }}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>

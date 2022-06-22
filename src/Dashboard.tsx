@@ -29,6 +29,8 @@ import SignIn from './components/SignIn';
 import RoutineTodo from './components/RoutineTodo';
 import path from 'path';
 import Calendar from './containers/Calendar';
+import LabelPage from './containers/Label';
+import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine, useGetLabel } from './hooks/api';
 
 
 function Copyright(props: any) {
@@ -187,6 +189,7 @@ function DashboardContent() {
                     <Route path='/login' element={<SignIn />} />
                     <Route path='/todos/:id' element={<TodoTemplatePage />} />
                     <Route path='/calendar' element={<Calendar />} />
+                    <Route path='/label' element={<LabelPage />} />
                     <Route path='' element={<Orders />} />
                   </Routes>
                   {/* <Orders /> */}

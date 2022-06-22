@@ -5,10 +5,12 @@ import {
 } from 'react-query'
 import { getToken, removeToken } from '../components/Token';
 import dayjs from 'dayjs';
+import { atom, selector, useRecoilState, useSetRecoilState } from 'recoil';
+import React, { useState, useRef, useEffect } from 'react';
 
-function makeJwtHeader(){
+function makeJwtHeader() {
   const token = getToken();
-  if(token){
+  if (token) {
     // express
     return { "x-access-token": token };
     // return { "Authorization": `Bearer ${token}` };
@@ -21,14 +23,14 @@ export const getTodo = async (id: any) => {
   const response = await fetch(`${url}${id}`, {
     method: 'GET',
     headers: {
-     ...makeJwtHeader()
+      ...makeJwtHeader()
     },
   });
 
   if (!response.ok) {
     if (response.status === 404) {
-      const r = await getRoutine(dayjs(id+'').day());
-      return {data:r.data}
+      const r = await getRoutine(dayjs(id + '').day());
+      return { data: r.data }
     } else {
       throw new Error('Network response was not ok')
     }
@@ -37,7 +39,7 @@ export const getTodo = async (id: any) => {
 };
 
 export const useGetTodo = (id: any) => {
-  return useQuery(['getTodo',id], async () => await getTodo(id), {
+  return useQuery(['getTodo', id], async () => await getTodo(id), {
     onSuccess: () => {
       // console.log("Get data!");
       // console.log(data); // undefined
@@ -51,13 +53,13 @@ export const getRoutine = async (id: any) => {
   const response = await fetch(`${url}${id}`, {
     method: 'GET',
     headers: {
-     ...makeJwtHeader()
+      ...makeJwtHeader()
     },
   });
 
   if (!response.ok) {
     if (response.status === 404) {
-      return {data:[]}
+      return { data: [] }
     } else {
       throw new Error('Network response was not ok')
     }
@@ -111,7 +113,7 @@ export const putRoutine = async (id: any, payload: any) => {
 };
 
 export const usePutRoutine = (id: any, payload: any) => {
-  return useMutation(['putRoutine',id], async () => await putRoutine(id, payload));
+  return useMutation(['putRoutine', id], async () => await putRoutine(id, payload));
 };
 
 
@@ -153,6 +155,85 @@ export const postRoutine = async (payload: any) => {
 export const usePostRoutine = (payload: any) => {
   return useMutation('postRoutine', async () => await postRoutine(payload));
 };
+
+
+export const labelListState = atom({
+  key: 'labelListState',
+  default: []
+})
+export const getLabel = async () => {
+  const url = "http://localhost:3000/label";
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      ...makeJwtHeader()
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      return { data: [] }
+    } else {
+      throw new Error('Network response was not ok')
+    }
+  }
+  return response.json();
+};
+
+export const useGetLabel = (id: any) => {
+  const setLabelList = useSetRecoilState(labelListState);
+  const r = useQuery(['getLabel', id], async () => await getLabel(), {
+    onSuccess: () => {
+      // console.log("Get data!");
+      // console.log(data); // undefined
+    }
+  });
+  useEffect(() => {
+    if (r.isLoading) {
+      console.log('loading...');
+    } else if (r.isSuccess) {
+      console.log('success...');
+      const d = r?.data;
+      const remainedTodos = d.data.filter((label: any) => !!label.done);
+      setLabelList([].concat(remainedTodos));
+    }
+  }, [r.data])
+  return r;
+};
+
+export const putLabel = async (id: any, payload: any) => {
+  const url = "http://localhost:3000/label";
+  // console.log('putLabel', id, payload);
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json", //필수
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return response.json();
+};
+
+export const usePutLabel = (id: any, payload: any) => {
+  const r = useMutation(['putLabel', id], async () => await putLabel(id, { id, data: payload?.data }));
+  const setLabelList = useSetRecoilState(labelListState);
+  useEffect(() => {
+    if (r.isLoading) {
+      console.log('loading...');
+    } else if (r.isSuccess) {
+      console.log('success...');
+      const d = r?.data;
+      const remainedTodos = d.data.filter((label: any) => !!label.done);
+      setLabelList([].concat(remainedTodos));
+    }
+  }, [r.data])
+  return r;
+};
+
 
 
 /*

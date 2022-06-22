@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Dashboard from './Dashboard'
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import {
   useQuery,
   useMutation,
@@ -14,11 +15,13 @@ import {
 const queryClient = new QueryClient();
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Dashboard />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 }
 
