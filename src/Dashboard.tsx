@@ -96,8 +96,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-
-const mdTheme = createTheme();
+ 
 
 function DashboardContent() {
   const responseLabel: any = useGetLabel(0);
@@ -113,13 +112,11 @@ function DashboardContent() {
 
   console.log(dayjs(new Date()).format('YYYYMMDD'));
   return (
-    <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar sx={{ bgcolor: 'white' }} position="absolute" open={open}>
+        <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              color: 'black',
               pr: '24px', // keep right padding when drawer closed
             }}
           >
@@ -208,7 +205,6 @@ function DashboardContent() {
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
   );
 }
 

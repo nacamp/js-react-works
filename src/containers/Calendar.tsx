@@ -276,10 +276,9 @@ function TodoDialog(props: SimpleDialogProps) {
     };
     return ( //sx={{ bgcolor: 'white' }}
         <Dialog onClose={handleClose} open={open} fullScreen >
-            <AppBar sx={{ position: 'relative', bgcolor: 'white' }}>
+            <AppBar sx={{ position: 'relative'}}>
                 <Toolbar>
                     <IconButton
-                        sx={{ color: 'black' }}
                         edge="start"
                         color="inherit"
                         onClick={handleClose}
@@ -287,7 +286,7 @@ function TodoDialog(props: SimpleDialogProps) {
                     >
                         <CloseIcon />
                     </IconButton>
-                    <Typography sx={{ ml: 2, flex: 1, color: 'black' }} variant="h6" component="div">
+                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         Close
                     </Typography>
 
