@@ -77,13 +77,8 @@ function BoxButton({ date, onOpen }: IBoxButton) {
     }
 
     return (
-        <Button onClick={(e) => handleOpen(e, date)} variant="outlined" style={{ display: "block", textAlign: "left" }}>
-            <Typography
-                variant="h5"
-            >
-                Text2
-            </Typography>
-            <Typography variant="h6"> {date}</Typography>
+        <Button sx={{ pb: 8, textAlign: "left", color: 'black', width: 2 / 2, height: 2 / 2, display: "block" }} onClick={(e) => handleOpen(e, date)} variant="text" >
+            <Typography variant="body2"> {date}</Typography>
         </Button>
     )
 
@@ -103,7 +98,7 @@ function FormRow({ dates, onOpen }: IFormRow) {
     return (
         <>
             {dates.map((row: any) => (
-                <Grid key={row} item xs={12 / 7}>
+                <Grid key={row} item xs={12 / 7} spacing={0} style={{ border: "1px dotted grey" }} >
                     <BoxButton date={row} onOpen={handleOpen} />
                 </Grid>
             ))}
@@ -149,6 +144,7 @@ function Calendar({ yearMonth }: ICalendar) {
     const [open, setOpen] = useState(false);
     const [todoId, setTodoId] = useState(0);
     const weekSize = 7;
+    const weekNames = ['일', '월', '화', '수', '목', '금', '토'];
     useEffect(() => {
         const days = fillDay(yearMonth + '01');
         const s7x6 = [];
@@ -169,9 +165,18 @@ function Calendar({ yearMonth }: ICalendar) {
     return (
         <>
             <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={1}>
+                <Grid container spacing={0}>
+                    <Grid key={-1} container item spacing={0} >
+                        {weekNames.map((row: any, i) => (
+                            <Grid key={i} item xs={12 / 7} spacing={2} >
+                                <Typography variant="h6" align='center' >
+                                    {row}
+                                </Typography>
+                            </Grid>
+                        ))}
+                    </Grid>
                     {days7x6.map((row, i) => (
-                        <Grid key={i} container item spacing={3}>
+                        <Grid key={i} container item spacing={0} >
                             <FormRow dates={row} onOpen={handleOpen} />
                         </Grid>
                     ))}
@@ -225,7 +230,6 @@ function CalendarPage() {
                     </FormControl>
                 </Grid>
                 <Grid item xs={7}>
-
                 </Grid>
             </Grid>
             <Calendar yearMonth={year + month} />
@@ -233,30 +237,6 @@ function CalendarPage() {
 
     );
 }
-
-
-// const drawerWidth: number = 240;
-// interface AppBarProps extends MuiAppBarProps {
-//     open?: boolean;
-//   }
-
-//   const AppBar = styled(MuiAppBar, {
-//     shouldForwardProp: (prop) => prop !== 'open',
-//   })<AppBarProps>(({ theme, open }) => ({
-//     zIndex: theme.zIndex.drawer + 1,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.leavingScreen,
-//     }),
-//     ...(open && {
-//       marginLeft: drawerWidth,
-//       width: `calc(100% - ${drawerWidth}px)`,
-//       transition: theme.transitions.create(['width', 'margin'], {
-//         easing: theme.transitions.easing.sharp,
-//         duration: theme.transitions.duration.enteringScreen,
-//       }),
-//     }),
-//   }));
 
 export interface SimpleDialogProps {
     open: boolean;
@@ -271,12 +251,9 @@ function TodoDialog(props: SimpleDialogProps) {
         onClose();
     };
 
-    const handleListItemClick = (value: string) => {
-        //onClose(value);
-    };
     return ( //sx={{ bgcolor: 'white' }}
         <Dialog onClose={handleClose} open={open} fullScreen >
-            <AppBar sx={{ position: 'relative'}}>
+            <AppBar sx={{ position: 'relative' }}>
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -289,14 +266,12 @@ function TodoDialog(props: SimpleDialogProps) {
                     <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                         Close
                     </Typography>
-
                 </Toolbar>
             </AppBar>
-            <Box sx={{m:2}}>
+            <Box sx={{ m: 2 }}>
                 <TodoTemplate id={todoId} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={todoId} /></TodoTemplate>
             </Box>
         </Dialog>
-
     );
 
 }
