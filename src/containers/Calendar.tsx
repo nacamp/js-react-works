@@ -253,7 +253,7 @@ function TodoDialog(props: SimpleDialogProps) {
 
     return ( //sx={{ bgcolor: 'white' }}
         <Dialog onClose={handleClose} open={open} fullScreen >
-            <AppBar sx={{ position: 'relative' }}>
+            <AppBar sx={{ position: 'relative' }} >
                 <Toolbar>
                     <IconButton
                         edge="start"
