@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { TextField, InputAdornment } from "@mui/material";
-
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+// import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import AppBar from '@mui/material/AppBar';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
@@ -25,7 +27,6 @@ import { useParams } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 import { AlertColor } from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -33,7 +34,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
+
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -233,6 +234,30 @@ function CalendarPage() {
     );
 }
 
+
+// const drawerWidth: number = 240;
+// interface AppBarProps extends MuiAppBarProps {
+//     open?: boolean;
+//   }
+
+//   const AppBar = styled(MuiAppBar, {
+//     shouldForwardProp: (prop) => prop !== 'open',
+//   })<AppBarProps>(({ theme, open }) => ({
+//     zIndex: theme.zIndex.drawer + 1,
+//     transition: theme.transitions.create(['width', 'margin'], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen,
+//     }),
+//     ...(open && {
+//       marginLeft: drawerWidth,
+//       width: `calc(100% - ${drawerWidth}px)`,
+//       transition: theme.transitions.create(['width', 'margin'], {
+//         easing: theme.transitions.easing.sharp,
+//         duration: theme.transitions.duration.enteringScreen,
+//       }),
+//     }),
+//   }));
+
 export interface SimpleDialogProps {
     open: boolean;
     todoId: number;
@@ -249,12 +274,12 @@ function TodoDialog(props: SimpleDialogProps) {
     const handleListItemClick = (value: string) => {
         //onClose(value);
     };
-    return (
+    return ( //sx={{ bgcolor: 'white' }}
         <Dialog onClose={handleClose} open={open} fullScreen >
-
-            <AppBar sx={{ position: 'relative' }}>
+            <AppBar sx={{ position: 'relative', bgcolor: 'white' }}>
                 <Toolbar>
                     <IconButton
+                        sx={{ color: 'black' }}
                         edge="start"
                         color="inherit"
                         onClick={handleClose}
@@ -262,17 +287,15 @@ function TodoDialog(props: SimpleDialogProps) {
                     >
                         <CloseIcon />
                     </IconButton>
-                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                        Sound
+                    <Typography sx={{ ml: 2, flex: 1, color: 'black' }} variant="h6" component="div">
+                        Close
                     </Typography>
-                    <Button autoFocus color="inherit" onClick={handleClose}>
-                        save
-                    </Button>
+
                 </Toolbar>
             </AppBar>
-            <TodoTemplate id={todoId} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={todoId} /></TodoTemplate>
-
-
+            <Box sx={{m:2}}>
+                <TodoTemplate id={todoId} onGet={useGetTodo} onPut={usePutTodo} onPost={usePostTodo} > <TodoTitle id={todoId} /></TodoTemplate>
+            </Box>
         </Dialog>
 
     );
