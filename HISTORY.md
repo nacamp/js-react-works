@@ -13,13 +13,38 @@
 * https://blog.logrocket.com/types-vs-interfaces-in-typescript/
 * export
 * https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/export
+* catch(error:any)
+* String, Number => string, number로 사용
 
-# react
+# react troubleshooting
 * React.useState does not reload state from props
 * https://stackoverflow.com/questions/54865764/react-usestate-does-not-reload-state-from-props
 * Warning: Each child in a list should have a unique "key" prop
 * key="uniqueId1" 사용
 * https://crong-dev.tistory.com/47
+* Maximum Update Depth Exceeded, useState 참조방법
+* https://typeofnan.dev/fix-the-maximum-update-depth-exceeded-error-in-react/
+* < useState에서 {x}[x] 자기자신을 변경하고 참조에서 문제발생
+
+# mui troubleshooting
+* Warning: Failed prop type: The prop `spacing` of `Grid` can only be used together with the `container` prop
+* grid item의  spacing 제거
+
+# theme
+* https://mui.com/material-ui/customization/theming/
+* https://mui.com/material-ui/customization/color/
+* https://www.w3schools.com/colors/colors_rgb.asp
+```
+기본테마, 추가속성, 컴포넌트별 변경
+```
+
+# recoil
+* https://recoiljs.org/ko/docs/api-reference/core/RecoilRoot
+* https://velog.io/@dldngus5/TILReact-%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EA%B3%A0%EB%AF%BC-Context-Recoil
+
+# dayjs
+* https://day.js.org/
+* https://jsikim1.tistory.com/196
 
 # jwt
 ```
