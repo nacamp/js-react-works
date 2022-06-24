@@ -31,6 +31,7 @@ import path from 'path';
 import Calendar from './containers/Calendar';
 import LabelPage from './containers/Label';
 import Playground from './containers/Playground';
+import Future from './containers/Future';
 import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine, useGetLabel } from './hooks/api';
 import { useState, useRef, useEffect } from 'react';
 
@@ -107,7 +108,7 @@ function DashboardContent() {
     setOpen(!open);
   };
   useEffect(() => {
-    console.log('reload');
+    // console.log('reload');
     //responseLabel.refetch();
   }, [])
   function handleMenuClick(name:string){
@@ -198,6 +199,7 @@ function DashboardContent() {
                   <Route path='/todos/:id' element={<TodoTemplatePage />} />
                   <Route path='/calendar' element={<Calendar />} />
                   <Route path='/label' element={<LabelPage />} />
+                  <Route path='/future' element={<Future />} />
                   <Route path='/playground' element={<Playground />} />
                   <Route path='' element={<Orders />} />
                 </Routes>

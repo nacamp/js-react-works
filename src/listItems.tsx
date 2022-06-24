@@ -26,9 +26,7 @@ export function MenuListItems({onClick}:IMenuListItems) {
   // const token = window.sessionStorage.getItem("token");
 
   React.useEffect(() => {
-    console.log(location.pathname);
     if(location.pathname === '/todos'){
-      console.log('here');
       setSelectedIndex(1);
       onClick('Today');
     }
@@ -60,7 +58,7 @@ export function MenuListItems({onClick}:IMenuListItems) {
             </ListItemIcon>
             <ListItemText primary="Routine" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 4} onClick={() => { setSelectedIndex(4);  onClick('Future'); navigate('/todos/20000101') }}>
+          <ListItemButton selected={selectedIndex === 4} onClick={() => { setSelectedIndex(4);  onClick('Future'); navigate('/future') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
