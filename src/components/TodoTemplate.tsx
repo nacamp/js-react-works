@@ -327,7 +327,7 @@ function TodoTemplate(props: ITodoTemplate) {
                     {todoList.map((row) => (
                         <TableRow key={row.id}>
                             <TableCell>
-                                {!!props.routineLabel &&
+                                {!!props.routineLabel && editId !== row.id &&
                                     <span>{row.text}</span>
                                 }
                                 {!props.routineLabel && editId !== row.id &&
@@ -336,7 +336,7 @@ function TodoTemplate(props: ITodoTemplate) {
                                         {row.label !== '오늘' && <Chip label={row.label} />}
                                     </>
                                 }
-                                {!props.routineLabel && editId === row.id &&
+                                {editId === row.id &&
                                     <>
                                         <TextField fullWidth label="할일" value={editText} variant="standard" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                             setEditText(event.target.value);
