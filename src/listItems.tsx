@@ -13,74 +13,78 @@ import Link from '@mui/material/Link';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { getToken, removeToken } from './components/Token';
 
-export function MainListItems() {
-  // TODO: 리다이렉트시 매뉴선택되게 해야 됨
+type IMenuListItems = {
+  onClick: (text: string) => void;
+}
+export function MenuListItems({onClick}:IMenuListItems) {
   const navigate = useNavigate();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  let location = useLocation();
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
   // const token = window.sessionStorage.getItem("token");
+
+  React.useEffect(() => {
+    console.log(location.pathname);
+    if(location.pathname === '/todos'){
+      console.log('here');
+      setSelectedIndex(1);
+      onClick('Today');
+    }
+  }, [location]);
 
   return (
     <React.Fragment>
-      {/* <ListItemButton selected={selectedIndex === 0} onClick={() => { setSelectedIndex(0); navigate('/') }}>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="대쉬보드" />
-      </ListItemButton> */}
-
       {!getToken() &&
         <>
-
-          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/login') }}>
+          <ListItemButton selected={true} onClick={() => { setSelectedIndex(2); onClick('Login');  navigate('/login') }}>
             <ListItemIcon>
               <LoginIcon />
             </ListItemIcon>
-            <ListItemText primary="LOGIN" />
+            <ListItemText primary="Login" />
           </ListItemButton>
         </>
       }
       {!!getToken() &&
         <>
-          <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); navigate('/todos') }}>
+          <ListItemButton selected={selectedIndex === 1} onClick={() => { setSelectedIndex(1); onClick('Today'); navigate('/todos') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="Today" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2); navigate('/routine') }}>
+          <ListItemButton selected={selectedIndex === 2} onClick={() => { setSelectedIndex(2);  onClick('Routine'); navigate('/routine') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="Routine" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 4} onClick={() => { setSelectedIndex(4); navigate('/todos/20000101') }}>
+          <ListItemButton selected={selectedIndex === 4} onClick={() => { setSelectedIndex(4);  onClick('Future'); navigate('/todos/20000101') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="Future" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 5} onClick={() => { setSelectedIndex(5); navigate('/calendar') }}>
+          <ListItemButton selected={selectedIndex === 5} onClick={() => { setSelectedIndex(5);  onClick('Calendar'); navigate('/calendar') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="Calendar" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 6} onClick={() => { setSelectedIndex(6); navigate('/label') }}>
+          <ListItemButton selected={selectedIndex === 6} onClick={() => { setSelectedIndex(6);  onClick('Label'); navigate('/label') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>
             <ListItemText primary="Label" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 7} onClick={() => { setSelectedIndex(7); removeToken(); navigate('/login') }}>
+          <ListItemButton selected={selectedIndex === 7} onClick={() => { setSelectedIndex(1);  onClick('Login'); removeToken(); navigate('/login') }}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary="Logout" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 8} onClick={() => { setSelectedIndex(8); navigate('/playground') }}>
+          <ListItemButton selected={selectedIndex === 8} onClick={() => { setSelectedIndex(8);  onClick('Playground'); navigate('/playground') }}>
             <ListItemIcon>
               <PlaylistAddCheckIcon />
             </ListItemIcon>

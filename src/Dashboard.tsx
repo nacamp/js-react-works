@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { MainListItems, mainListItems2, secondaryListItems } from './listItems';
+import { MenuListItems } from './listItems';
 // import Chart from './Chart';
 // import Deposits from './Deposits';
 import Orders from './Orders';
@@ -96,12 +96,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
- 
+
 
 function DashboardContent() {
   const responseLabel: any = useGetLabel(0);
 
   const [open, setOpen] = React.useState(true);
+  const [menuName, setMenuName] = React.useState('');
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -109,102 +110,104 @@ function DashboardContent() {
     console.log('reload');
     //responseLabel.refetch();
   }, [])
+  function handleMenuClick(name:string){
+    setMenuName(name);
+  }
 
-  console.log(dayjs(new Date()).format('YYYYMMDD'));
   return (
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="absolute" open={open}>
+        <Toolbar
+          sx={{
+            pr: '24px', // keep right padding when drawer closed
+          }}
+        >
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              marginRight: '36px',
+              ...(open && { display: 'none' }),
             }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Dashboard
-            </Typography>
-            {/* <IconButton color="inherit">
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 1 }}
+          >
+            {menuName}
+          </Typography>
+          {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton> */}
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-
-            <MainListItems />
-            {/* 
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems} */}
-          </List>
-        </Drawer>
-        <Box
-          component="main"
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: [1],
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Routes>
-                    <Route path='/' element={<Orders />} />
-                    <Route path='/todos' element={<TodoTemplatePage />} />
-                    <Route path='/routine' element={<RoutineTodo />} />
-                    <Route path='/login' element={<SignIn />} />
-                    <Route path='/todos/:id' element={<TodoTemplatePage />} />
-                    <Route path='/calendar' element={<Calendar />} />
-                    <Route path='/label' element={<LabelPage />} />
-                    <Route path='/playground' element={<Playground />} />
-                    <Route path='' element={<Orders />} />
-                  </Routes>
-                  {/* <Orders /> */}
-                </Paper>
-              </Grid>
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <List component="nav">
+
+          <MenuListItems onClick={handleMenuClick}/>
+          {/* 
+            <Divider sx={{ my: 1 }} />
+            {secondaryListItems} */}
+        </List>
+      </Drawer>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Routes>
+                  <Route path='/' element={<Orders />} />
+                  <Route path='/todos' element={<TodoTemplatePage />} />
+                  <Route path='/routine' element={<RoutineTodo />} />
+                  <Route path='/login' element={<SignIn />} />
+                  <Route path='/todos/:id' element={<TodoTemplatePage />} />
+                  <Route path='/calendar' element={<Calendar />} />
+                  <Route path='/label' element={<LabelPage />} />
+                  <Route path='/playground' element={<Playground />} />
+                  <Route path='' element={<Orders />} />
+                </Routes>
+                {/* <Orders /> */}
+              </Paper>
             </Grid>
-          </Container>
-        </Box>
+          </Grid>
+        </Container>
       </Box>
+    </Box>
   );
 }
 
