@@ -163,12 +163,11 @@ export const labelListState = atom({
 })
 export const getLabel = async () => {
   const url = "http://localhost:3000/label";
-
   const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      ...makeJwtHeader()
-    },
+      method: 'GET',
+      headers: {
+        ...makeJwtHeader()
+      },
   });
 
   if (!response.ok) {
@@ -184,6 +183,9 @@ export const getLabel = async () => {
 export const useGetLabel = (id: any) => {
   const setLabelList = useSetRecoilState(labelListState);
   const r = useQuery(['getLabel', id], async () => await getLabel(), {
+    // enabled: false,
+    // onError: (error) =>
+    //   console.error('xxxxxx'),
     onSuccess: () => {
       // console.log("Get data!");
       // console.log(data); // undefined
@@ -191,14 +193,17 @@ export const useGetLabel = (id: any) => {
   });
   useEffect(() => {
     if (r.isLoading) {
-      console.log('loading...');
+      // console.log('loading...');
+    } else if (r.isError) {
+      // console.log('error...');
     } else if (r.isSuccess) {
-      console.log('success...');
+      // console.log('success...');
       const d = r?.data;
+      // console.log(d);
       const remainedTodos = d.data.filter((label: any) => !label.done);
       setLabelList([].concat(remainedTodos));
     }
-  }, [r.data])
+  }, [r.data, r.isError])
   return r;
 };
 
