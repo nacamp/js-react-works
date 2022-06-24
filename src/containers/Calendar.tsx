@@ -98,7 +98,7 @@ function FormRow({ dates, onOpen }: IFormRow) {
     return (
         <>
             {dates.map((row: any) => (
-                <Grid key={row} item xs={12 / 7} spacing={0} style={{ border: "1px dotted grey" }} >
+                <Grid key={row} item xs={12 / 7} style={{ border: "1px dotted grey" }} >
                     <BoxButton date={row[0]} thisMonth={row[1]} onOpen={handleOpen} />
                 </Grid>
             ))}
@@ -166,9 +166,9 @@ function Calendar({ yearMonth }: ICalendar) {
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={0}>
-                    <Grid key={-1} container item spacing={0} >
+                    <Grid key={-1} container item  >
                         {weekNames.map((row: any, i) => (
-                            <Grid key={i} item xs={12 / 7} spacing={2} >
+                            <Grid key={i} item xs={12 / 7}   >
                                 <Typography variant="h6" align='center' >
                                     {row}
                                 </Typography>
@@ -176,7 +176,7 @@ function Calendar({ yearMonth }: ICalendar) {
                         ))}
                     </Grid>
                     {days7x6.map((row, i) => (
-                        <Grid key={i} container item spacing={0} >
+                        <Grid key={i} container item >
                             <FormRow dates={row} onOpen={handleOpen} />
                         </Grid>
                     ))}
