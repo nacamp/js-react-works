@@ -13,6 +13,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 // import FormLabel from '@mui/material/FormLabel';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
+import CancelIcon from '@mui/icons-material/Cancel';
 import Chip from '@mui/material/Chip';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -44,9 +47,9 @@ import { OfflinePin } from '@mui/icons-material';
 
 interface ITodo {
     id: number, // Number error
-    text: String,
+    text: string,
     done: boolean,
-    label: String
+    label: string
 }
 
 type ITodoCreate = {
@@ -160,6 +163,8 @@ function TodoTemplate(props: ITodoTemplate) {
     const [todoList, setTodoList] = useState<Array<ITodo>>([]);
     const [reload, toggleReload] = useState(true);
     const [todoId, setTodoId] = useState(props.id);
+    const [editId, setEditId] = useState<number>(-1);
+    const [editText, setEditText]  = useState('');
     useEffect(() => {
         setTodoId(props.id)
     }, [props.id])
@@ -182,6 +187,29 @@ function TodoTemplate(props: ITodoTemplate) {
     function handleDelete(id: Number) {
         setTodoList(todoList.filter((value, index) => value.id !== id));
     }
+    function handleEditShow(id: number, text:string) {
+        console.log('handleEditShow', id);
+        setEditId(id);
+        setEditText(text);
+    }
+    function handleEditSave(id: number) {
+        setTodoList(prevState => {
+            const newState = prevState.map(obj => {
+              if (obj.id === id) {
+                return {...obj, text: editText};
+              }
+              return obj;
+            });
+      
+            return newState;
+          });
+        setEditId(-1);
+    }
+    function handleEditCancel(id: number) {
+        console.log(id);
+        setEditId(-1);
+    }
+
 
     function handleTodoCreate(todo: ITodo) {
         todo.id = nextId.current;
@@ -229,7 +257,6 @@ function TodoTemplate(props: ITodoTemplate) {
         // console.log(x);
     }
 
-
     useEffect(() => {
         setFallback(true);
         if (responseGet.isSuccess) {
@@ -247,25 +274,6 @@ function TodoTemplate(props: ITodoTemplate) {
             setFallback(false);
         }
     }, [responseGet.data, responseGet.isLoading, reload])
-
-
-    // useEffect(() => {
-    //     setFallback(true);
-    //     if (responseGet.isSuccess) {
-    //         if (responseGet.data.id !== undefined) {
-    //             nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
-    //             setTodoList(responseGet.data.data);
-    //         } else {
-    //             // nextId.current = 1;
-    //             // setTodoList([]);
-    //             nextId.current = 1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
-    //             setTodoList(responseGet.data.data);
-    //         }
-    //     }
-    //     if (!responseGet.isLoading) {
-    //         setFallback(false);
-    //     }
-    // }, [responseGet.data, responseGet.isLoading, reload])
 
     useEffect(() => {
         if (responseGet.isError) {
@@ -322,18 +330,52 @@ function TodoTemplate(props: ITodoTemplate) {
                                 {!!props.routineLabel &&
                                     <span>{row.text}</span>
                                 }
-                                {!props.routineLabel &&
+                                {!props.routineLabel && editId !== row.id &&
                                     <>
                                         <FormControlLabel style={!!row.done ? checkedStyle : {}} value={row.id} control={<Checkbox onClick={(e: any) => handleDoneClick(e, row.id)} />} checked={row.done} label={row.text} />
-                                        {row.label!=='오늘' && <Chip label={row.label}/>}
+                                        {row.label !== '오늘' && <Chip label={row.label} />}
+                                    </>
+                                }
+                                {!props.routineLabel && editId === row.id &&
+                                    <>
+                                        <TextField fullWidth label="할일" value={editText} variant="standard" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                            setEditText(event.target.value);
+                                        }} required />
                                     </>
                                 }
                             </TableCell>
-                            <TableCell align="right" >
-                                <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
+
+
+                            {editId !== row.id &&
+                                <>
+                                    <TableCell align="right" >
+                                        <IconButton value={row.id} size='small' onClick={() => handleEditShow(row.id, row.text)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell align="right" >
+                                        <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </>
+
+                            }
+                            {editId === row.id &&
+                                <>
+                                    <TableCell align="right" >
+                                        <IconButton value={row.id} size='small' onClick={() => handleEditSave(row.id)}>
+                                            <CheckIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell align="right" >
+                                        <IconButton value={row.id} size='small' onClick={() => handleEditCancel(row.id)}>
+                                            <CancelIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </>
+                            }
+
                         </TableRow>
                     ))}
                 </TableBody>
