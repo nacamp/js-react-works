@@ -51,6 +51,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 // import Box from '@mui/material/Box';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 // import Typography from '@mui/material/Typography';
+import { grey } from '@mui/material/colors';
 import Container from '@mui/material/Container';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TodoTemplate, TodoTitle } from '../components/TodoTemplate'
@@ -66,10 +67,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 interface IBoxButton {
-    date: string,
+    date: string;
+    thisMonth: boolean;
     onOpen: (text: number) => void;
 }
-function BoxButton({ date, onOpen }: IBoxButton) {
+function BoxButton({ date, thisMonth, onOpen }: IBoxButton) {
     function handleOpen(event: React.MouseEvent<HTMLElement>, text: string) {
         console.log(text);
         const id: number = +text;
@@ -77,20 +79,18 @@ function BoxButton({ date, onOpen }: IBoxButton) {
     }
 
     return (
-        <Button sx={{ pb: 8, textAlign: "left", color: 'black', width: 2 / 2, height: 2 / 2, display: "block" }} onClick={(e) => handleOpen(e, date)} variant="text" >
-            <Typography variant="body2"> {date}</Typography>
+        <Button sx={{ pb: 8, textAlign: "left", color: 'black', width: 2 / 2, height: 2 / 2, display: "block", bgcolor: thisMonth ? grey[50] : grey[300] }} onClick={(e) => handleOpen(e, date)} variant="text" >
+            <Typography sx={{  color: dayjs().format('DD') === date ? 'red':'black'}} variant="body2"> {date} </Typography>
         </Button>
     )
 
 }
 
 interface IFormRow {
-    dates: Array<string>
+    dates: Array<Array<[string, number]>>
     onOpen: (text: number) => void;
 }
 function FormRow({ dates, onOpen }: IFormRow) {
-    const todoList = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }]
-
     function handleOpen(id: number) {
         onOpen(id);
     }
@@ -99,7 +99,7 @@ function FormRow({ dates, onOpen }: IFormRow) {
         <>
             {dates.map((row: any) => (
                 <Grid key={row} item xs={12 / 7} spacing={0} style={{ border: "1px dotted grey" }} >
-                    <BoxButton date={row} onOpen={handleOpen} />
+                    <BoxButton date={row[0]} thisMonth={row[1]} onOpen={handleOpen} />
                 </Grid>
             ))}
         </>
@@ -112,7 +112,7 @@ function fillDay(date: string) {
     const weekDay = dayjs(date).day();
     // 전달
     const prevMonth = range(weekDay).map((row) => (
-        dayjs(date).add(-(row + 1), 'day').format('YYYYMMDD')
+        [dayjs(date).add(-(row + 1), 'day').format('DD'), false]
     ));
     array7x6.push(...prevMonth.reverse());
 
@@ -123,7 +123,7 @@ function fillDay(date: string) {
         if (d.month() !== month) {
             break;
         }
-        array7x6.push(d.format('YYYYMMDD'));
+        array7x6.push([d.format('DD'), true]);
     }
 
     // 다음달
@@ -131,7 +131,7 @@ function fillDay(date: string) {
     const currentLength = array7x6.length;
     for (let i = 0; i < 7 * 6 - currentLength; i++) {
         const d = dayjs(nextMonth).add(i, 'day');
-        array7x6.push(d.format('YYYYMMDD'));
+        array7x6.push([d.format('DD'),false]);
     }
     return array7x6;
 }
