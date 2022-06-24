@@ -80,7 +80,7 @@ function BoxButton({ date, thisMonth, onOpen }: IBoxButton) {
 
     return (
         <Button sx={{ pb: 8, textAlign: "left", color: 'black', width: 2 / 2, height: 2 / 2, display: "block", bgcolor: thisMonth ? grey[50] : grey[300] }} onClick={(e) => handleOpen(e, date)} variant="text" >
-            <Typography sx={{  color: dayjs().format('DD') === date ? 'red':'black'}} variant="body2"> {date} </Typography>
+            <Typography sx={{  color: dayjs().format('YYYYMMDD') === date ? 'red':'black'}} variant="body2"> {date.substring(6)} </Typography>
         </Button>
     )
 
@@ -112,7 +112,7 @@ function fillDay(date: string) {
     const weekDay = dayjs(date).day();
     // 전달
     const prevMonth = range(weekDay).map((row) => (
-        [dayjs(date).add(-(row + 1), 'day').format('DD'), false]
+        [dayjs(date).add(-(row + 1), 'day').format('YYYYMMDD'), false]
     ));
     array7x6.push(...prevMonth.reverse());
 
@@ -123,7 +123,7 @@ function fillDay(date: string) {
         if (d.month() !== month) {
             break;
         }
-        array7x6.push([d.format('DD'), true]);
+        array7x6.push([d.format('YYYYMMDD'), true]);
     }
 
     // 다음달
@@ -131,7 +131,7 @@ function fillDay(date: string) {
     const currentLength = array7x6.length;
     for (let i = 0; i < 7 * 6 - currentLength; i++) {
         const d = dayjs(nextMonth).add(i, 'day');
-        array7x6.push([d.format('DD'),false]);
+        array7x6.push([d.format('YYYYMMDD'),false]);
     }
     return array7x6;
 }
