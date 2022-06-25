@@ -159,7 +159,7 @@ export const usePostRoutine = (payload: any) => {
 
 export const labelListState = atom({
   key: 'labelListState',
-  default: []
+  default: [{}],
 })
 export const getLabel = async () => {
   const url = "http://localhost:3000/label";
