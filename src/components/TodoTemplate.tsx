@@ -232,9 +232,9 @@ function TodoTemplate(props: ITodoTemplate) {
             setOpenToast({ ...openToast, open: true, severity: 'warning', message: '저장이 안된 todo 항목이 있습니다.' });
         }
         if (responseGet.data.id !== undefined) {
-            mutaionPut.mutate({ data: todoList });
+            mutaionPut.mutate();
         } else {
-            mutaionPost.mutate({ id: todoId, data: todoList });
+            mutaionPost.mutate();
         }
 
     }
