@@ -46,6 +46,10 @@ https://developer.mozilla.org/ko/docs/Web/CSS/CSS_Transitions/Using_CSS_transiti
 drawer
 https://mui.com/material-ui/api/drawer/
 
+
+css
+https://developer.mozilla.org/ko/docs/Web/CSS
+
 css position (relative, absolute)
 https://creamilk88.tistory.com/197
 https://developer.mozilla.org/ko/docs/Web/CSS/position
@@ -101,6 +105,9 @@ troubleshooting
 https://velog.io/@iamchanii/react-testing-library-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD-80k0olhdm6
 mui select
 https://codesandbox.io/s/cec0z
+
+sample 자세히 안봄
+https://ui.toast.com/weekly-pick/ko_20210630
 ```
 
 # theme
