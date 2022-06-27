@@ -22,6 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
 import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
@@ -166,6 +167,7 @@ function TodoTemplate(props: ITodoTemplate) {
     const [todoId, setTodoId] = useState(props.id);
     const [editId, setEditId] = useState<number>(-1);
     const [editText, setEditText]  = useState('');
+    const [privateTodo, setPrivateTodo]  = useState(false);
     useEffect(() => {
         setTodoId(props.id)
     }, [props.id])
@@ -257,6 +259,24 @@ function TodoTemplate(props: ITodoTemplate) {
         // // console.log(todoList);
         // console.log(x);
     }
+    const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPrivateTodo(event.target.checked);
+        //setChecked(event.target.checked);
+    };
+
+    const isPrivate = (label: string) => {
+        if (!privateTodo) {
+            return false;
+        }
+        if (['회사', '오늘', '매주'].includes(label) ){
+            return false;
+        }
+        return true;
+        // console.log(label, x);
+        // return x;
+        // if( label in // setPrivateTodo(event.target.checked);
+        //setChecked(event.target.checked);
+    };
 
     useEffect(() => {
         setFallback(true);
@@ -317,7 +337,12 @@ function TodoTemplate(props: ITodoTemplate) {
                 <Grid item xs={10}>
                     {props.children}
                 </Grid>
-                <Grid item xs={2} >
+                <Grid item xs={1} >
+                    <Box display="flex" justifyContent="flex-end">
+                    <FormControlLabel control={<Switch onChange={handleChecked}/>} label="private" />
+                    </Box>
+                </Grid>
+                <Grid item xs={1} >
                     <Box display="flex" justifyContent="flex-end">
                         <Button size='small' variant="outlined" onClick={(e) => handleCopy(e, "clicked")}>copy</Button>
                     </Box>
@@ -326,7 +351,7 @@ function TodoTemplate(props: ITodoTemplate) {
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
-                        <TableRow key={row.id}>
+                        <TableRow  key={row.id} sx={  isPrivate(row.label) ? {display:'none'} : {} } >
                             <TableCell>
                                 {!!props.routineLabel && editId !== row.id &&
                                     <span>{row.text}</span>
@@ -353,8 +378,6 @@ function TodoTemplate(props: ITodoTemplate) {
                                         <IconButton value={row.id} size='small' onClick={() => handleEditShow(row.id, row.text)}>
                                             <EditIcon />
                                         </IconButton>
-                                    </TableCell>
-                                    <TableCell align="right" >
                                         <IconButton value={row.id} size='small' onClick={() => handleDelete(row.id)}>
                                             <DeleteIcon />
                                         </IconButton>
@@ -368,8 +391,6 @@ function TodoTemplate(props: ITodoTemplate) {
                                         <IconButton value={row.id} size='small' onClick={() => handleEditSave(row.id)}>
                                             <CheckIcon />
                                         </IconButton>
-                                    </TableCell>
-                                    <TableCell align="right" >
                                         <IconButton value={row.id} size='small' onClick={() => handleEditCancel(row.id)}>
                                             <CancelIcon />
                                         </IconButton>
