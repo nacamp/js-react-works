@@ -1,7 +1,7 @@
-import { Divider, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { TodoTemplate } from './TodoTemplate'
-import { useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
+import { useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
 
 interface IRoutineTitle {
     name: string;

@@ -1,12 +1,11 @@
-import { areArraysEqual } from '@mui/base';
 import {
   useQuery,
   useMutation,
 } from 'react-query'
-import { getToken, removeToken } from '../components/Token';
+import { getToken, } from '../components/Token';
 import dayjs from 'dayjs';
-import { atom, selector, useRecoilState, useSetRecoilState } from 'recoil';
-import React, { useState, useRef, useEffect } from 'react';
+import { atom, useSetRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 function makeJwtHeader() {
   const token = getToken();

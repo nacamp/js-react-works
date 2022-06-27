@@ -1,59 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { TextField, InputAdornment } from "@mui/material";
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-// import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import 'dayjs/locale/ko';
+import dayjs from 'dayjs';
+
+import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-// import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Chip from '@mui/material/Chip';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import 'dayjs/locale/ko';
-import dayjs from 'dayjs';
-import { useParams } from 'react-router-dom';
-import copy from 'copy-to-clipboard';
-import { AlertColor } from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-// import * as React from 'react';
-// import { useState, useRef, useEffect } from 'react';
-// import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-// import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
-// import Grid from '@mui/material/Grid';
-// import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-// import Typography from '@mui/material/Typography';
 import { grey } from '@mui/material/colors';
-import Container from '@mui/material/Container';
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import { TodoTemplate, TodoTitle } from '../components/TodoTemplate'
 import { useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
 import { range } from '../util';
@@ -279,4 +243,3 @@ function TodoDialog(props: SimpleDialogProps) {
 export {
     CalendarPage as default
 }
-

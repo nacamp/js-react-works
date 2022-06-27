@@ -1,17 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { TextField, InputAdornment } from "@mui/material";
+import 'dayjs/locale/ko';
+import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
+import copy from 'copy-to-clipboard';
+import { useRecoilValue } from 'recoil';
+import {
+    useQueryClient,
+} from 'react-query'
+
+import { TextField } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-// import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
@@ -23,28 +30,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
-import 'dayjs/locale/ko';
-import dayjs from 'dayjs';
-import { useParams } from 'react-router-dom';
-import copy from 'copy-to-clipboard';
 import { AlertColor } from '@mui/material/Alert';
-import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
-// import Snackbar from '@mui/material/Snackbar';
-// import Alert from '@mui/material/Alert';
-// import { queryByPlaceholderText } from '@testing-library/react';
-import {
-    useQuery,
-    useMutation,
-    useQueryClient,
-    QueryClient,
-    QueryClientProvider,
-    QueryCache,
-} from 'react-query'
-import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
 
-// import Fallback from '../components/Fallback';
+import { labelListState, useGetTodo, usePutTodo, usePostTodo} from '../hooks/api';
 import { Fallback, Toast } from '../components/Feedback';
-import { OfflinePin } from '@mui/icons-material';
 
 export interface ITodo {
     id: number, // Number error
