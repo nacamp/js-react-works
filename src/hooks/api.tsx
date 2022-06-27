@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
 import {
   useQuery,
   useMutation,
 } from 'react-query'
-import { getToken, } from '../components/Token';
 import dayjs from 'dayjs';
 import { atom, useSetRecoilState } from 'recoil';
-import { useEffect } from 'react';
+
+import { ITodo } from '../components/TodoTemplate';
+import { getToken } from '../components/Token';
+
 
 function makeJwtHeader() {
   const token = getToken();
@@ -155,10 +158,10 @@ export const usePostRoutine = (payload: any) => {
   return useMutation('postRoutine', async () => await postRoutine(payload));
 };
 
-
+const defaultLabelListState: ITodo[] = [];
 export const labelListState = atom({
   key: 'labelListState',
-  default: [{}],
+  default: defaultLabelListState,
 })
 export const getLabel = async () => {
   const url = "http://localhost:3000/label";
