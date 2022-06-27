@@ -12,14 +12,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {
-    useQuery,
-    useMutation,
-    useQueryClient,
-    QueryClient,
-    QueryClientProvider,
-    QueryCache,
-} from 'react-query'
 import { useNavigate } from 'react-router';
 import { useSignIn} from '../hooks/api';
 import { setToken } from './Token';
@@ -47,24 +39,6 @@ export default function SignIn() {
     const [password, setPassword] = useState<string>();
     const mutaionSignIn: any = useSignIn({email,password});
     const responseLabel: any = useGetLabel(0);
-    
-    // const responseSignIn: any = useSignIn({email,password});
-    // const mutaionSignIn: any = useSignIn({email:email, password:password});
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //     responseSignIn.refetch();
-    //     console.log(111);
-    //     // event.preventDefault();
-    //     // const data = new FormData(event.currentTarget);
-    //     // console.log({
-    //     //     email: data.get('email'),
-    //     //     password: data.get('password'),
-    //     // });
-    //     // setEmail( data.get('email')?.toString() );
-    //     // setPassword( data.get('password')?.toString() );
-    //     // console.log(email, password);
-    //     //responseSignIn.refetch();
-    //     // mutaionSignIn.mutate({ email:data.get('email'), password: data.get('password') });
-    // };
 
     const handleEmailChange = (event:any) => {
         setEmail(event.currentTarget.value);
@@ -74,22 +48,9 @@ export default function SignIn() {
         setPassword(event.currentTarget.value);
     }
 
-    // const mutaionSignIn: any = useSignIn({email,password});
-    // // const mutaionSignIn: any = useSignIn({email:email, password:password});
-    //    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        // const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
-        // setEmail( data.get('email')?.toString() );
-        // setPassword( data.get('password')?.toString() );
-        // console.log(email, password);
         mutaionSignIn.mutate();
-        // navigate('/login')
-        // mutaionSignIn.mutate({ email:data.get('email'), password: data.get('password') });
     };
 
     useEffect(() => {
@@ -107,8 +68,6 @@ export default function SignIn() {
                 responseLabel.refetch();
                 navigate('/todos');
             }
-            // setFallback(false);
-            // console.log(mutaionPutTodo.data)
             // queryClient.invalidateQueries('getTodo');
         }
     }, [mutaionSignIn.data, mutaionSignIn.isError])
@@ -136,6 +95,7 @@ export default function SignIn() {
                         margin="normal"
                         required
                         fullWidth
+                        data-testid='email'
                         id="email"
                         label="Email Address"
                         name="email"
@@ -151,6 +111,7 @@ export default function SignIn() {
                         label="Password"
                         type="password"
                         id="password"
+                        data-testid='password'
                         autoComplete="current-password"
                         onChange={handlePasswordChange}
                     />
@@ -162,6 +123,7 @@ export default function SignIn() {
                         // onClick={handleSubmit}
                         type="submit"
                         fullWidth
+                        data-testid='submit'
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >

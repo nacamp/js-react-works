@@ -139,7 +139,7 @@ function fillDay(date: string) {
 interface ICalendar {
     yearMonth: string
 }
-function Calendar({ yearMonth }: ICalendar) {
+export function Calendar({ yearMonth }: ICalendar) {
     const [days7x6, setDays7x6] = useState<Array<any>>([]);
     const [open, setOpen] = useState(false);
     const [todoId, setTodoId] = useState(0);

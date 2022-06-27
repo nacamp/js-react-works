@@ -164,10 +164,10 @@ export const labelListState = atom({
 export const getLabel = async () => {
   const url = "http://localhost:3000/label";
   const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        ...makeJwtHeader()
-      },
+    method: 'GET',
+    headers: {
+      ...makeJwtHeader()
+    },
   });
 
   if (!response.ok) {

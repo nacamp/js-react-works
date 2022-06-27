@@ -15,7 +15,8 @@
 * https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/export
 * catch(error:any)
 * String, Number => string, number로 사용
-
+* not assignable to parameter of type 'never' 
+* https://stackoverflow.com/questions/52423842/what-is-not-assignable-to-parameter-of-type-never-error-in-typescript
 # react troubleshooting
 * React.useState does not reload state from props
 * https://stackoverflow.com/questions/54865764/react-usestate-does-not-reload-state-from-props
@@ -29,6 +30,47 @@
 # mui troubleshooting
 * Warning: Failed prop type: The prop `spacing` of `Grid` can only be used together with the `container` prop
 * grid item의  spacing 제거
+
+# test
+```
+추가설정
+"jest-watch-typeahead": "0.6.5"
+https://github.com/facebook/create-react-app/issues/11043#issuecomment-942472592
+
+리액트의 테스트는 한계가 분명이 있고, MUI를 사용하면 더 테스트가 힘든것 같다.
+
+lib
+https://github.com/testing-library/react-testing-library
+https://www.npmjs.com/package/@testing-library/react
+https://www.npmjs.com/package/@testing-library/jest-dom
+
+tutorial
+https://www.robinwieruch.de/react-testing-library/
+https://www.digitalocean.com/community/tutorials/how-to-test-a-react-app-with-jest-and-react-testing-library
+query
+https://testing-library.com/docs/queries/about
+role
+https://www.w3.org/TR/html-aria/#docconformance
+screen
+https://testing-library.com/docs/queries/about#screen
+event
+https://testing-library.com/docs/user-event/intro/
+https://ph-fritsche.github.io/blog/post/why-userevent
+https://testing-library.com/docs/ecosystem-user-event
+https://github.com/testing-library/user-event
+
+setup
+https://testing-library.com/docs/react-testing-library/setup/
+
+jest
+https://jestjs.io/docs/expect
+https://jestjs.io/docs/mock-functions
+
+troubleshooting
+https://velog.io/@iamchanii/react-testing-library-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD-80k0olhdm6
+mui select
+https://codesandbox.io/s/cec0z
+```
 
 # theme
 * https://mui.com/material-ui/customization/theming/

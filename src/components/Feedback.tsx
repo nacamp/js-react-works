@@ -2,7 +2,7 @@ import { Box, CircularProgress, Dialog, Typography } from "@mui/material";
 import Snackbar from '@mui/material/Snackbar';
 import Alert, { AlertColor } from '@mui/material/Alert';
 
-interface IFeedback {
+export interface IFeedback {
     open: boolean;
     onClose?: () => void;
     message?: string;

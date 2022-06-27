@@ -45,14 +45,14 @@ import { labelListState, useGetTodo, usePutTodo, usePostTodo, useGetRoutine, use
 import { Fallback, Toast } from '../components/Feedback';
 import { OfflinePin } from '@mui/icons-material';
 
-interface ITodo {
+export interface ITodo {
     id: number, // Number error
     text: string,
     done: boolean,
     label: string
 }
 
-type ITodoCreate = {
+export type ITodoCreate = {
     onTodoCreate: (todo: ITodo) => void;
     onChange: (text: string) => void;
     // showLabel?: boolean;
@@ -61,7 +61,7 @@ type ITodoCreate = {
 }
 
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
-function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
+export function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
     const labelList = useRecoilValue(labelListState);
     const [text, setText] = useState('');
     const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : '');
@@ -99,6 +99,7 @@ function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
                     {!routineLabel &&
                         <FormControl variant="standard" sx={{ m: 1, mt: 2, minWidth: 100 }}>
                             <Select
+                                data-testid="todoCreateSelect"
                                 value={label}
                                 label=""
                                 onChange={handleLabel}
