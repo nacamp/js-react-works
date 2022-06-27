@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+//import AppBar , { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -50,6 +51,11 @@ function Copyright(props: any) {
 
 const drawerWidth: number = 240;
 
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -90,9 +96,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
           duration: theme.transitions.duration.leavingScreen,
         }),
         width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
+        // [theme.breakpoints.up('sm')]: {
+        //   width: theme.spacing(9),
+        // },
       }),
     },
   }),
@@ -111,14 +117,14 @@ function DashboardContent() {
     // console.log('reload');
     //responseLabel.refetch();
   }, [])
-  function handleMenuClick(name:string){
+  function handleMenuClick(name: string) {
     setMenuName(name);
   }
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar  open={open}>  {/* position="relative" */}
         <Toolbar
           sx={{
             pr: '24px', // keep right padding when drawer closed
@@ -168,7 +174,7 @@ function DashboardContent() {
         <Divider />
         <List component="nav">
 
-          <MenuListItems onClick={handleMenuClick}/>
+          <MenuListItems onClick={handleMenuClick} />
           {/* 
             <Divider sx={{ my: 1 }} />
             {secondaryListItems} */}

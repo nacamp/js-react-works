@@ -31,6 +31,37 @@
 * Warning: Failed prop type: The prop `spacing` of `Grid` can only be used together with the `container` prop
 * grid item의  spacing 제거
 
+# css
+```
+mui styled
+https://mui.com/system/styled/
+https://stackoverflow.com/questions/69730364/what-is-the-purpose-of-shouldforwardprop-option-in-styled
+
+mui transitions
+https://mui.com/material-ui/customization/transitions/
+css transition
+https://www.w3schools.com/css/css3_transitions.asp
+https://developer.mozilla.org/ko/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions
+
+drawer
+https://mui.com/material-ui/api/drawer/
+
+css position (relative, absolute)
+https://creamilk88.tistory.com/197
+https://developer.mozilla.org/ko/docs/Web/CSS/position
+
+css calc
+https://developer.mozilla.org/ko/docs/Web/CSS/calc
+
+&
+https://stackoverflow.com/questions/13608855/what-does-an-before-a-pseudo-element-in-css-mean
+
+import styled from 'styled-components'
+https://styled-components.com/docs/api
+https://react.vlpt.us/styling/03-styled-components.html
+```
+
+
 # test
 ```
 추가설정
