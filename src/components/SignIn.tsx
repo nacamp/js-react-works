@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
-import { useSignIn} from '../hooks/api';
+import { useSignIn } from '../hooks/api';
 import { setToken } from './Token';
 import { useGetLabel } from '../hooks/api';
 import { setTokenSourceMapRange } from 'typescript';
@@ -30,25 +30,27 @@ function Copyright(props: any) {
         </Typography>
     );
 }
+export interface ISignIn {
+    onNavigate: (url: string) => void;
+}
 
+export default function SignIn({ onNavigate }: ISignIn) {
 
-
-export default function SignIn() {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const mutaionSignIn: any = useSignIn({email,password});
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const mutaionSignIn: any = useSignIn({ email, password });
     const responseLabel: any = useGetLabel(0);
 
-    const handleEmailChange = (event:any) => {
+    const handleEmailChange = (event: any) => {
+        console.log(event.currentTarget.value);
         setEmail(event.currentTarget.value);
     }
 
-    const handlePasswordChange = (event:any) => {
+    const handlePasswordChange = (event: any) => {
         setPassword(event.currentTarget.value);
     }
 
-    const handleSubmit = (event:any) => {
+    const handleSubmit = (event: any) => {
         event.preventDefault();
         mutaionSignIn.mutate();
     };
@@ -56,17 +58,17 @@ export default function SignIn() {
     useEffect(() => {
         if (mutaionSignIn.isLoading) {
             console.log('mutaionSignIn.isLoading:', mutaionSignIn.isLoading);
-        }else if(mutaionSignIn.isError){
+        } else if (mutaionSignIn.isError) {
             console.log('error......');
         } else {
             console.log('data:', mutaionSignIn.data);
-            if(mutaionSignIn.data?.accessToken){
+            if (mutaionSignIn.data?.accessToken) {
                 // localStorage
                 console.log(window.sessionStorage.getItem("token"));
                 //이동
                 setToken(mutaionSignIn.data?.accessToken);
                 responseLabel.refetch();
-                navigate('/todos');
+                onNavigate('/todos');
             }
             // queryClient.invalidateQueries('getTodo');
         }
@@ -89,7 +91,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-            
+
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
@@ -145,5 +147,16 @@ export default function SignIn() {
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
+    );
+}
+
+
+export function SignInPage() {
+    const navigate = useNavigate();
+    const handleNavigate = (url: string) => {
+        navigate(url);
+    }
+    return (
+        <SignIn onNavigate={handleNavigate} />
     );
 }

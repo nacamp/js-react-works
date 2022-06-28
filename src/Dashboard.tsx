@@ -22,7 +22,7 @@ import { MenuListItems } from './listItems';
 import Orders from './Orders';
 import { Route, Routes } from 'react-router-dom';
 import TodoTemplatePage from './components/TodoTemplate';
-import SignIn from './components/SignIn';
+import {SignInPage} from './components/SignIn';
 import RoutineTodo from './components/RoutineTodo';
 import Calendar from './containers/Calendar';
 import LabelPage from './containers/Label';
@@ -195,7 +195,7 @@ function DashboardContent() {
                   <Route path='/' element={<Orders />} />
                   <Route path='/todos' element={<TodoTemplatePage />} />
                   <Route path='/routine' element={<RoutineTodo />} />
-                  <Route path='/login' element={<SignIn />} />
+                  <Route path='/login' element={<SignInPage />} />
                   <Route path='/todos/:id' element={<TodoTemplatePage />} />
                   <Route path='/calendar' element={<Calendar />} />
                   <Route path='/label' element={<LabelPage />} />
