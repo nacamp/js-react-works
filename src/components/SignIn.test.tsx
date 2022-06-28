@@ -1,36 +1,17 @@
 import '@testing-library/jest-dom'
 //import { render, fireEvent, screen } from '@testing-library/react'
-import { getByRole, fireEvent, render, screen, waitFor, IProps } from '../test/renderWithProviders';
+import { act, getByRole, fireEvent, render, screen, waitFor, IProps } from '../test/renderWithProviders';
 import * as React from 'react'
 import { TodoCreate, TodoTemplate, ITodo } from './TodoTemplate'
-import { useRecoilState} from 'recoil';
+import { useRecoilState } from 'recoil';
 import UserEvent from "@testing-library/user-event";
 import { labelListState, useGetLabel, usePutLabel, usePostRoutine } from '../hooks/api';
 import SignIn from './SignIn';
+import { setHost } from '../config';
+
+setHost('http://localhost:5000');
 
 export const Wrapper: React.FC<IProps> = ({ children }) => {
-    const [labelList, setLabelList] = useRecoilState(labelListState);
-
-    React.useEffect(() => {
-        setLabelList([{
-            "id": 3,
-            "text": "회사",
-            "done": false,
-            "label": "오늘"
-        },
-        {
-            "id": 2,
-            "text": "Pworks",
-            "done": false,
-            "label": "오늘"
-        },
-        {
-            "id": 0,
-            "text": "오늘",
-            "done": false,
-            "label": "오늘"
-        }]);
-    }, []);
     return (
         <>
             {children}
@@ -40,29 +21,33 @@ export const Wrapper: React.FC<IProps> = ({ children }) => {
 
 
 describe('SignIn', () => {
-    const message: string = 'routineLabel';
     const mockFn = jest.fn();
-    test('routineLabel', async () => {
+    test('SignIn', async () => {
+        const handleNavigate = jest.fn();
+
         render(
-        <Wrapper>
-            <SignIn />
-        </Wrapper>
+            <Wrapper>
+                <SignIn onNavigate={handleNavigate} />
+            </Wrapper>
         );
-        const emailField  = screen.getByTestId('email').querySelector('input')
-        if(emailField){
-            fireEvent.change(emailField , {target: { value: 'email.com'}});
+        const emailField = screen.getByTestId('email').querySelector('input')
+        if (emailField) {
+            fireEvent.change(emailField, { target: { value: 'olivier@mail.com' } });
             console.log(emailField?.value)
-            expect(emailField?.value).toBe('email.com');
+            expect(emailField?.value).toBe('olivier@mail.com');
         }
-
-        const passwordField  = screen.getByTestId('email').querySelector('input')
-        if(passwordField){
-            fireEvent.change(passwordField , {target: { value: 'password'}});
+        const passwordField = screen.getByTestId('password').querySelector('input')
+        if (passwordField) {
+            fireEvent.change(passwordField, { target: { value: 'bestPassw0rd' } });
             console.log(passwordField?.value)
-            expect(passwordField?.value).toBe('password');
+            expect(passwordField?.value).toBe('bestPassw0rd');
         }
-
         UserEvent.click(screen.getByTestId("submit"));
+        await waitFor(() => {
+            expect(handleNavigate).toHaveBeenCalledTimes(1);
+            console.log(window.sessionStorage.getItem("token"));
+            expect(window.sessionStorage.getItem("token")).toEqual(expect.anything());
+        });
     });
 
 });
