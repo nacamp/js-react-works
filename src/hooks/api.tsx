@@ -197,8 +197,9 @@ export const useGetLabel = (id: any) => {
       // console.log(d);
       const remainedTodos = d.data.filter((label: any) => !label.done);
       setLabelList([...remainedTodos]);
+      //setLabelList(prevState => ([...remainedTodos]));
     }
-  }, [r.data, r.isError])
+  }, [r.data, r.isError, r.isLoading, r.isSuccess, setLabelList])
   return r;
 };
 
@@ -227,8 +228,9 @@ export const usePutLabel = (id: any, payload: any) => {
       const d = r?.data;
       const remainedTodos = d.data.filter((label: any) => !label.done);
       setLabelList([...remainedTodos]);
+      // setLabelList(prevState => ([...remainedTodos]));
     }
-  }, [r.data])
+  }, [r.data, r.isLoading, r.isSuccess, setLabelList])
   return r;
 };
 

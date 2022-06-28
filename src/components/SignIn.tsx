@@ -71,7 +71,7 @@ export default function SignIn({ onNavigate }: ISignIn) {
             }
             // queryClient.invalidateQueries('getTodo');
         }
-    }, [mutaionSignIn.data, mutaionSignIn.isError])
+    }, [mutaionSignIn.data, mutaionSignIn.isError, onNavigate, mutaionSignIn.isLoading, responseLabel])
 
     return (
         <Container component="main" maxWidth="xs">

@@ -278,12 +278,14 @@ function TodoTemplate(props: ITodoTemplate) {
         if (!responseGet.isLoading) {
             setFallback(false);
         }
-    }, [responseGet.data, responseGet.isLoading, reload])
+    }, [responseGet.data, responseGet.isLoading, responseGet.isSuccess, reload])
 
     useEffect(() => {
+
         if (responseGet.isError) {
             setFallback(false);
-            setOpenToast({ ...openToast, open: true });
+            // setOpenToast({ ...openToast, open: true });
+            setOpenToast(prevState => ({ ...prevState, open: true }));
         }
     }, [responseGet.isError])
 
@@ -296,7 +298,7 @@ function TodoTemplate(props: ITodoTemplate) {
             // queryClient.invalidateQueries('getRoutine');
             // queryClient.invalidateQueries('getTodo');
         }
-    }, [mutaionPut.data])
+    }, [mutaionPut.data, mutaionPut.isLoading])
 
     useEffect(() => {
         if (mutaionPost.isLoading) {
@@ -307,7 +309,7 @@ function TodoTemplate(props: ITodoTemplate) {
             // queryClient.invalidateQueries('getRoutine');
             // queryClient.invalidateQueries('getTodo');
         }
-    }, [mutaionPost.data])
+    }, [mutaionPost.data, mutaionPost.isLoading])
 
     const checkedStyle = {
         color: 'grey',
