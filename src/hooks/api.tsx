@@ -8,6 +8,7 @@ import { atom, useSetRecoilState } from 'recoil';
 
 import { ITodo } from '../components/TodoTemplate';
 import { getToken } from '../components/Token';
+import { getHost } from '../config';
 
 
 function makeJwtHeader() {
@@ -21,8 +22,7 @@ function makeJwtHeader() {
 }
 
 export const getTodo = async (id: any) => {
-  const url = "http://localhost:3000/todos/";
-  const response = await fetch(`${url}${id}`, {
+  const response = await fetch(`${getHost()}/todos/${id}`, {
     method: 'GET',
     headers: {
       ...makeJwtHeader()
@@ -50,9 +50,7 @@ export const useGetTodo = (id: any) => {
 };
 
 export const getRoutine = async (id: any) => {
-  const url = "http://localhost:3000/routines/";
-
-  const response = await fetch(`${url}${id}`, {
+  const response = await fetch(`${getHost()}/routines/${id}`, {
     method: 'GET',
     headers: {
       ...makeJwtHeader()
@@ -80,8 +78,7 @@ export const useGetRoutine = (id: any) => {
 
 
 export const putTodo = async (id: any, payload: any) => {
-  const url = "http://localhost:3000/todos/";
-  const response = await fetch(`${url}${id}`, {
+  const response = await fetch(`${getHost()}/todos/${id}`, {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json", //필수
@@ -100,8 +97,7 @@ export const usePutTodo = (id: any, payload: any) => {
 
 
 export const putRoutine = async (id: any, payload: any) => {
-  const url = "http://localhost:3000/routines/";
-  const response = await fetch(`${url}${id}`, {
+  const response = await fetch(`${getHost()}/routines/${id}`, {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json", //필수
@@ -120,8 +116,7 @@ export const usePutRoutine = (id: any, payload: any) => {
 
 
 export const postTodo = async (payload: any) => {
-  const url = "http://localhost:3000/todos";
-  const response = await fetch(`${url}`, {
+  const response = await fetch(`${getHost()}/todos`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json", //필수
@@ -140,8 +135,7 @@ export const usePostTodo = (payload: any) => {
 
 
 export const postRoutine = async (payload: any) => {
-  const url = "http://localhost:3000/routines";
-  const response = await fetch(`${url}`, {
+  const response = await fetch(`${getHost()}/routines`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json", //필수
@@ -164,8 +158,7 @@ export const labelListState = atom({
   default: defaultLabelListState,
 })
 export const getLabel = async () => {
-  const url = "http://localhost:3000/label";
-  const response = await fetch(url, {
+  const response = await fetch(`${getHost()}/label`, {
     method: 'GET',
     headers: {
       ...makeJwtHeader()
@@ -210,9 +203,7 @@ export const useGetLabel = (id: any) => {
 };
 
 export const putLabel = async (id: any, payload: any) => {
-  const url = "http://localhost:3000/label";
-  // console.log('putLabel', id, payload);
-  const response = await fetch(url, {
+  const response = await fetch(`${getHost()}/label`, {
     method: 'PUT',
     headers: {
       "Content-Type": "application/json", //필수
@@ -249,8 +240,7 @@ curl -d '{"email": "olivier@mail.com","password": "bestPassw0rd"}'  \
 -X POST http://localhost:5000/login
 */
 export const signIn = async (payload: any) => {
-  const url = "http://localhost:3000/login";
-  const response = await fetch(`${url}`, {
+  const response = await fetch(`${getHost()}/login`, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json", //필수
