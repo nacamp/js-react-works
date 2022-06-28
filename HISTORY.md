@@ -18,6 +18,10 @@
 * not assignable to parameter of type 'never' 
 * https://stackoverflow.com/questions/52423842/what-is-not-assignable-to-parameter-of-type-never-error-in-typescript
 # react troubleshooting
+* exhaustive-deps
+* https://bobbyhadz.com/blog/react-hooks-exhaustive-deps
+* https://kyounghwan01.github.io/blog/React/exhaustive-deps-warning/
+* 함수형 업데이트, 상태값
 * React.useState does not reload state from props
 * https://stackoverflow.com/questions/54865764/react-usestate-does-not-reload-state-from-props
 * Warning: Each child in a list should have a unique "key" prop
