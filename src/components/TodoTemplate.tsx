@@ -4,10 +4,6 @@ import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 import { useRecoilValue } from 'recoil';
-import {
-    useQueryClient,
-} from 'react-query'
-
 import { TextField } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
@@ -32,7 +28,7 @@ import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
 import { AlertColor } from '@mui/material/Alert';
 
-import { labelListState, useGetTodo, usePutTodo, usePostTodo} from '../hooks/api';
+import { labelListState, useGetTodo, usePutTodo, usePostTodo } from '../hooks/api';
 import { Fallback, Toast } from '../components/Feedback';
 
 export interface ITodo {
@@ -155,15 +151,14 @@ function TodoTemplate(props: ITodoTemplate) {
     const [reload, toggleReload] = useState(true);
     const [todoId, setTodoId] = useState(props.id);
     const [editId, setEditId] = useState<number>(-1);
-    const [editText, setEditText]  = useState('');
-    const [privateTodo, setPrivateTodo]  = useState(false);
+    const [editText, setEditText] = useState('');
+    const [privateTodo, setPrivateTodo] = useState(false);
     useEffect(() => {
         setTodoId(props.id)
     }, [props.id])
     const [fallback, setFallback] = useState<boolean>(false);
     const [openToast, setOpenToast] = React.useState<IToast>({ open: false, severity: 'error', message: '에러발생' });
     const [childText, setChildText] = useState<string>('');
-    const queryClient = useQueryClient();
     const responseGet: any = props?.onGet(todoId);
     const mutaionPut: any = props?.onPut(todoId, { data: todoList });
     const mutaionPost: any = props?.onPost({ id: todoId, data: todoList });
@@ -179,7 +174,7 @@ function TodoTemplate(props: ITodoTemplate) {
     function handleDelete(id: Number) {
         setTodoList(todoList.filter((value, index) => value.id !== id));
     }
-    function handleEditShow(id: number, text:string) {
+    function handleEditShow(id: number, text: string) {
         console.log('handleEditShow', id);
         setEditId(id);
         setEditText(text);
@@ -187,14 +182,14 @@ function TodoTemplate(props: ITodoTemplate) {
     function handleEditSave(id: number) {
         setTodoList(prevState => {
             const newState = prevState.map(obj => {
-              if (obj.id === id) {
-                return {...obj, text: editText};
-              }
-              return obj;
+                if (obj.id === id) {
+                    return { ...obj, text: editText };
+                }
+                return obj;
             });
-      
+
             return newState;
-          });
+        });
         setEditId(-1);
     }
     function handleEditCancel(id: number) {
@@ -257,7 +252,7 @@ function TodoTemplate(props: ITodoTemplate) {
         if (!privateTodo) {
             return false;
         }
-        if (['회사', '오늘', '매주'].includes(label) ){
+        if (['회사', '오늘', '매주'].includes(label)) {
             return false;
         }
         return true;
@@ -328,7 +323,7 @@ function TodoTemplate(props: ITodoTemplate) {
                 </Grid>
                 <Grid item xs={1} >
                     <Box display="flex" justifyContent="flex-end">
-                    <FormControlLabel control={<Switch onChange={handleChecked}/>} label="private" />
+                        <FormControlLabel control={<Switch onChange={handleChecked} />} label="private" />
                     </Box>
                 </Grid>
                 <Grid item xs={1} >
@@ -340,7 +335,7 @@ function TodoTemplate(props: ITodoTemplate) {
             <Table size="small">
                 <TableBody>
                     {todoList.map((row) => (
-                        <TableRow  key={row.id} sx={  isPrivate(row.label) ? {display:'none'} : {} } >
+                        <TableRow key={row.id} sx={isPrivate(row.label) ? { display: 'none' } : {}} >
                             <TableCell>
                                 {!!props.routineLabel && editId !== row.id &&
                                     <span>{row.text}</span>

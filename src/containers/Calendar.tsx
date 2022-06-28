@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
 
-import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
@@ -11,7 +10,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Dialog from '@mui/material/Dialog';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -19,16 +17,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import { grey } from '@mui/material/colors';
 
 import { TodoTemplate, TodoTitle } from '../components/TodoTemplate'
-import { useGetTodo, usePutTodo, usePostTodo, useGetRoutine, usePutRoutine, usePostRoutine } from '../hooks/api';
+import { useGetTodo, usePutTodo, usePostTodo } from '../hooks/api';
 import { range } from '../util';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+// const Item = styled(Paper)(({ theme }) => ({
+//     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+//     ...theme.typography.body2,
+//     padding: theme.spacing(1),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary,
+// }));
 
 interface IBoxButton {
     date: string;
@@ -44,7 +42,7 @@ function BoxButton({ date, thisMonth, onOpen }: IBoxButton) {
 
     return (
         <Button sx={{ pb: 8, textAlign: "left", color: 'black', width: 2 / 2, height: 2 / 2, display: "block", bgcolor: thisMonth ? grey[50] : grey[300] }} onClick={(e) => handleOpen(e, date)} variant="text" >
-            <Typography sx={{  color: dayjs().format('YYYYMMDD') === date ? 'red':'black'}} variant="body2"> {date.substring(6)} </Typography>
+            <Typography sx={{ color: dayjs().format('YYYYMMDD') === date ? 'red' : 'black' }} variant="body2"> {date.substring(6)} </Typography>
         </Button>
     )
 
@@ -95,7 +93,7 @@ function fillDay(date: string) {
     const currentLength = array7x6.length;
     for (let i = 0; i < 7 * 6 - currentLength; i++) {
         const d = dayjs(nextMonth).add(i, 'day');
-        array7x6.push([d.format('YYYYMMDD'),false]);
+        array7x6.push([d.format('YYYYMMDD'), false]);
     }
     return array7x6;
 }

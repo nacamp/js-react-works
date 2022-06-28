@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import { styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -14,7 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
@@ -22,26 +21,25 @@ import { MenuListItems } from './listItems';
 import Orders from './Orders';
 import { Route, Routes } from 'react-router-dom';
 import TodoTemplatePage from './components/TodoTemplate';
-import {SignInPage} from './components/SignIn';
+import { SignInPage } from './components/SignIn';
 import RoutineTodo from './components/RoutineTodo';
 import Calendar from './containers/Calendar';
 import LabelPage from './containers/Label';
 import Playground from './containers/Playground';
 import Future from './containers/Future';
-import { useGetLabel } from './hooks/api';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright(props: any) {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const drawerWidth: number = 240;
 
@@ -100,8 +98,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 function DashboardContent() {
-  const responseLabel: any = useGetLabel(0);
-
   const [open, setOpen] = React.useState(true);
   const [menuName, setMenuName] = React.useState('');
   const toggleDrawer = () => {
@@ -118,7 +114,7 @@ function DashboardContent() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar  open={open}>  {/* position="relative" */}
+      <AppBar open={open}>  {/* position="relative" */}
         <Toolbar
           sx={{
             pr: '24px', // keep right padding when drawer closed
