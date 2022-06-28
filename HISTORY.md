@@ -93,6 +93,12 @@ https://testing-library.com/docs/user-event/intro/
 https://ph-fritsche.github.io/blog/post/why-userevent
 https://testing-library.com/docs/ecosystem-user-event
 https://github.com/testing-library/user-event
+act, await
+https://stackoverflow.com/questions/68364947/react-testing-library-waitfor-vs-act
+https://www.daleseo.com/react-testing-library-async/
+? act
+https://flyingsquirrel.medium.com/testing-library-react%EC%9D%98-act%EB%8A%94-%EC%96%B8%EC%A0%9C-%EC%8D%A8%EC%95%BC%ED%95%A0%EA%B9%8C-c6036a8cd4b3
+https://flyingsquirrel.medium.com/when-should-i-use-act-in-react-testing-library-d7dd22a3340e
 
 setup
 https://testing-library.com/docs/react-testing-library/setup/

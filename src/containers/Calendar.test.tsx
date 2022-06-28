@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import {Calendar} from './Calendar';
 
 describe('Calendar', () => {
-    test('Calendar', async () => {
+    test('Calendar', () => {
         render(
         <Calendar yearMonth='202206'/>
         );
