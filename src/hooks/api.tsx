@@ -158,11 +158,12 @@ export const labelListState = atom({
   default: defaultLabelListState,
 })
 export const getLabel = async () => {
+  console.log(`${getHost()}/label`);
   const response = await fetch(`${getHost()}/label`, {
     method: 'GET',
-    headers: {
-      ...makeJwtHeader()
-    },
+    // headers: {
+    //   ...makeJwtHeader()
+    // },
   });
 
   if (!response.ok) {
@@ -188,18 +189,18 @@ export const useGetLabel = (id: any) => {
   });
   useEffect(() => {
     if (r.isLoading) {
-      // console.log('loading...');
+      console.log('loading...');
     } else if (r.isError) {
-      // console.log('error...');
+      console.log('error...');
     } else if (r.isSuccess) {
       // console.log('success...');
       const d = r?.data;
-      // console.log(d);
+      console.log(d);
       const remainedTodos = d.data.filter((label: any) => !label.done);
       setLabelList([...remainedTodos]);
       //setLabelList(prevState => ([...remainedTodos]));
     }
-  }, [r.data, r.isError, r.isLoading, r.isSuccess, setLabelList])
+  }, [r.data, r.isError, r.isLoading, r.isSuccess])
   return r;
 };
 
