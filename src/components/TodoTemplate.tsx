@@ -28,7 +28,7 @@ import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
 import { AlertColor } from '@mui/material/Alert';
 
-import { labelListState, useGetTodo, usePutTodo, usePostTodo } from '../hooks/api';
+import { labelListState, useGetLabel, useGetTodo, usePutTodo, usePostTodo } from '../hooks/api';
 import { Fallback, Toast } from '../components/Feedback';
 
 export interface ITodo {
@@ -48,6 +48,7 @@ export type ITodoCreate = {
 
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
 export function TodoCreate({ onTodoCreate, onChange, routineLabel }: ITodoCreate) {
+    const responseLabel: any = useGetLabel(0); //초기설정, 이게없으면 리로드시 라벨이 없다.
     const labelList = useRecoilValue(labelListState);
     const [text, setText] = useState('');
     const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : '');
