@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import ReactNumberFormat from './ReactNumberFormat';
+import MuiTextField from './MuiTextField';
+
 
 
 function Playground() {
@@ -8,6 +10,7 @@ function Playground() {
         <>
             <div>playground</div>
             <ReactNumberFormat />
+            <MuiTextField />
         </>
     );
 
