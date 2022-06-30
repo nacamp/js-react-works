@@ -82,15 +82,14 @@ export function MenuListItems({ onClick }: IMenuListItems) {
             </ListItemIcon>
             <ListItemText primary="Logout" />
           </ListItemButton>
-          <ListItemButton selected={selectedIndex === 8} onClick={() => { setSelectedIndex(8); onClick('Playground'); navigate('/playground') }}>
-            <ListItemIcon>
-              <PlaylistAddCheckIcon />
-            </ListItemIcon>
-            <ListItemText primary="Playground" />
-          </ListItemButton>
         </>
-
       }
+      <ListItemButton selected={selectedIndex === 100} onClick={() => { setSelectedIndex(100); onClick('Playground'); navigate('/playground') }}>
+        <ListItemIcon>
+          <PlaylistAddCheckIcon />
+        </ListItemIcon>
+        <ListItemText primary="Playground" />
+      </ListItemButton>
       {/* <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />

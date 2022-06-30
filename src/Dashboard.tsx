@@ -25,7 +25,7 @@ import { SignInPage } from './components/SignIn';
 import RoutineTodo from './components/RoutineTodo';
 import Calendar from './containers/Calendar';
 import LabelPage from './containers/Label';
-import Playground from './containers/Playground';
+import Playground from './Playground';
 import Future from './containers/Future';
 
 // function Copyright(props: any) {
