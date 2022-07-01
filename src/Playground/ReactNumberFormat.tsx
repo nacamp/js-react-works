@@ -3,6 +3,10 @@ import NumberFormat, { NumberFormatProps, NumberFormatValues } from 'react-numbe
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+
 /*
 https://mui.com/material-ui/api/text-field/
 https://mui.com/material-ui/api/input/
@@ -13,33 +17,6 @@ todo
 https://stackoverflow.com/questions/60080038/send-props-to-number-format-material-ui-textfield
 https://codesandbox.io/s/react-hook-form-v6-controller-qsd8r
 */
-
-// https://stackoverflow.com/questions/60080038/send-props-to-number-format-material-ui-textfield
-interface ICustomNumberFormat extends NumberFormatProps {
-    textField?: TextFieldProps
-}
-function CustomNumberFormat(props: ICustomNumberFormat) {
-    const [state, setState] = useState(10000);
-    return (
-        <NumberFormat
-            {...props}
-            // value={2456981}
-            className="foo"
-            displayType={'text'}
-            thousandSeparator={true}
-            prefix={'$'}
-            onValueChange={(values) => {
-                const { formattedValue, value } = values;
-                console.log(`formattedValue : ${formattedValue}, value:${value}`);
-                // formattedValue = $2,223
-                // value ie, 2223
-                // this.setState({ profit: formattedValue });
-            }}
-            renderText={(value: string) => <TextField label={props.textField?.label} value={state} variant="outlined" />}
-        />
-
-    );
-}
 
 // https://stackoverflow.com/questions/68571001/using-react-number-format-cannot-type-more-than-one-symbol-at-once
 // https://codesandbox.io/s/little-cherry-ubcjv?file=/src/App.js:703-1057
@@ -83,9 +60,14 @@ export default function ReactNumberFormat() {
     const [minAssets, setMinAssets] = useState();
     const [state, setState] = useState(10000);
     const msg: string = 'hi';
+    const handleChange = (event: any) => {
+        console.log(event.target.value);
+    };
     return (
         <>
-            <div>react-number-format</div>
+            <Typography variant="h5" >
+                react-number-format
+            </Typography>
             <NumberFormat value={2456981} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             <NumberFormat
                 value={2456981}
@@ -95,53 +77,45 @@ export default function ReactNumberFormat() {
                 prefix={'$'}
                 renderText={(value: string) => <div >{value}</div>}
             />
-            <NumberFormat
-                // value={state}
-                thousandSeparator={true}
-                prefix={'$'}
-                onValueChange={(values) => {
-                    const { formattedValue, value } = values;
-                    console.log(`formattedValue : ${formattedValue}, value:${value}`);
-                    // formattedValue = $2,223
-                    // value ie, 2223
-                    // this.setState({ profit: formattedValue });
-                }}
-            />
-            <NumberFormat
-                // value={state}
-                thousandSeparator={true}
-                prefix={'$'}
-                customInput={TextField}
-                onValueChange={(values) => {
-                    const { formattedValue, value } = values;
-                    console.log(`formattedValue : ${formattedValue}, value:${value}`);
-                    // formattedValue = $2,223
-                    // value ie, 2223
-                    // this.setState({ profit: formattedValue });
-                }}
-            />
-            <CustomNumberFormat value='10000' textField={{ label: "test" }} />
-            <NumberFormat
-                value={2456981}
-                className="foo"
-                displayType={'text'}
-                thousandSeparator={true}
-                prefix={'$'}
-                renderText={(value: string) => <TextField label={msg} variant="outlined" />}
-            />
-
-            <FormControl focused className="col " variant="outlined"  color='error'>
-                <InputLabel className="mText">your label</InputLabel>
-                <NumberFormat customInput={TextField} 
-                    variant="outlined"
-                    thousandSeparator={true} 
-                    // onChange={handleChange}
-                    autoComplete="off"/>
+            <Box sx={{ mt: 2 }} >
+                <NumberFormat
+                    // value={state}
+                    thousandSeparator={true}
+                    prefix={'$'}
+                    onValueChange={(values) => {
+                        const { formattedValue, value } = values;
+                        console.log(`formattedValue : ${formattedValue}, value:${value}`);
+                    }}
+                />
+            </Box>
+            <Box sx={{ mt: 2 }} >
+                <NumberFormat
+                    value={2456981}
+                    className="foo"
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'$'}
+                    renderText={(value: string) => <TextField label={msg} variant="outlined" />}
+                />
+            </Box>
+            <FormControl sx={{ mt: 2 }} size='small' focused className="col " variant="outlined" color='error'>
+                <InputLabel className="mText">FormControl, TextField</InputLabel>
+                <NumberFormat customInput={TextField}
+                    value={state}
+                    thousandSeparator={true}
+                    onChange={handleChange}
+                    autoComplete="off" />
             </FormControl>
-
+            <FormControl sx={{ mt: 2 }} size='small' focused className="col " variant="outlined" color='error'>
+                <InputLabel className="mText">FormControl, Input</InputLabel>
+                <NumberFormat customInput={Input}
+                    // variant="outlined"
+                    value={state}
+                    thousandSeparator={true}
+                    onChange={handleChange}
+                    autoComplete="off" />
+            </FormControl>
         </>
-
-
     );
 
 }
