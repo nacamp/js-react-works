@@ -23,10 +23,11 @@ import { Route, Routes } from 'react-router-dom';
 import TodoTemplatePage from './components/TodoTemplate';
 import { SignInPage } from './components/SignIn';
 import RoutineTodo from './components/RoutineTodo';
-import Calendar from './containers/Calendar';
+import CalendarPage from './containers/Calendar';
 import LabelPage from './containers/Label';
 import Playground from './Playground';
 import Future from './containers/Future';
+import dayjs from 'dayjs';
 
 // function Copyright(props: any) {
 //   return (
@@ -188,12 +189,12 @@ function DashboardContent() {
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                 <Routes>
-                  <Route path='/' element={<Orders />} />
+                  <Route path='/' element={<Orders />} />d
                   <Route path='/todos' element={<TodoTemplatePage />} />
                   <Route path='/routine' element={<RoutineTodo />} />
                   <Route path='/login' element={<SignInPage />} />
                   <Route path='/todos/:id' element={<TodoTemplatePage />} />
-                  <Route path='/calendar' element={<Calendar />} />
+                  <Route path='/calendar' element={<CalendarPage yearMonth={dayjs().format('YYYYMM')} />} />
                   <Route path='/label' element={<LabelPage />} />
                   <Route path='/future' element={<Future />} />
                   <Route path='/playground' element={<Playground />} />

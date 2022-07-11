@@ -149,11 +149,11 @@ export function Calendar({ yearMonth }: ICalendar) {
     )
 }
 
-function CalendarPage() {
+function CalendarPage({ yearMonth }: ICalendar) {
     const years = ["2022", "2023", "2024"];
     const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-    const [year, setYear] = React.useState('2022');
-    const [month, setMonth] = React.useState('06');
+    const [year, setYear] = React.useState(yearMonth.substring(0,4));
+    const [month, setMonth] = React.useState(yearMonth.substring(4,6));
 
     const handleYear = (event: any) => {
         setYear(event.target.value as string);
