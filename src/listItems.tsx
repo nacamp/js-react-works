@@ -90,6 +90,12 @@ export function MenuListItems({ onClick }: IMenuListItems) {
         </ListItemIcon>
         <ListItemText primary="Playground" />
       </ListItemButton>
+      <ListItemButton selected={selectedIndex === 101} onClick={() => { setSelectedIndex(101); onClick('Playground-layout'); navigate('/playground/layout') }}>
+        <ListItemIcon>
+          <PlaylistAddCheckIcon />
+        </ListItemIcon>
+        <ListItemText primary="Playground-layout" />
+      </ListItemButton>
       {/* <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />

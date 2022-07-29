@@ -1,19 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ReactNumberFormat from "./ReactNumberFormat";
+import MuiTextField from "./MuiTextField";
 
-import ReactNumberFormat from './ReactNumberFormat';
-import MuiTextField from './MuiTextField';
 
-
+import Layout from "./Layout";
 
 function Playground() {
+  const { id } = useParams();
+  console.log(id);
+  if (id === "layout")
     return (
-        <>
-            <div>playground</div>
-            <ReactNumberFormat />
-            <MuiTextField />
-        </>
+        <Layout/>
     );
-
+  else
+    return (
+      <>
+        <div>playground</div>
+        <ReactNumberFormat />
+        <MuiTextField />
+      </>
+    );
 }
-
-export { Playground as default }
+export { Playground as default };

@@ -198,6 +198,7 @@ function DashboardContent() {
                   <Route path='/label' element={<LabelPage />} />
                   <Route path='/future' element={<Future />} />
                   <Route path='/playground' element={<Playground />} />
+                  <Route path='/playground/:id' element={<Playground />} />
                   <Route path='' element={<Orders />} />
                 </Routes>
                 {/* <Orders /> */}
