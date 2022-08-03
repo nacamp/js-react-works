@@ -36,7 +36,7 @@ function Layout() {
     );
   };
 
-  const case1 = () => {
+const case1 = () => {
     return (
       <Box height={"80vh"}>
         <Box
@@ -143,5 +143,6 @@ https://mui.com/system/properties/
 
 flex
 https://d2.naver.com/helloworld/8540176
+https://heropy.blog/2018/11/24/css-flexible-box/
 */
 export { Layout as default };
