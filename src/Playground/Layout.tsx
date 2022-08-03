@@ -36,7 +36,7 @@ function Layout() {
     );
   };
 
-const case1 = () => {
+  const case1 = () => {
     return (
       <Box height={"80vh"}>
         <Box
