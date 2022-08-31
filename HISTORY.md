@@ -128,6 +128,55 @@ https://ui.toast.com/weekly-pick/ko_20210630
 기본테마, 추가속성, 컴포넌트별 변경
 ```
 
+# s3
+* https://react-etc.vlpt.us/08.deploy-s3.html
+* https://stackoverflow.com/questions/51218979/react-router-doesnt-work-in-aws-s3-bucket
+```
+-package.json
+"deploy": "aws s3 sync ./build s3://jimmy.widsign.com --profile=default"
+
+profile값은
+cat .aws/config
+[default] 
+
+-bucket
+오류문서: index.html
+리로드시 없는 key라고 나오는 문제해결(react-router 사용시)
+```
+
+# server
+```
+-package.json
+{
+    "name": "my-app",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "json-server-auth": "2.1.0",
+        "json-server": "0.17.0",
+        "cors": "2.8.5"
+    },
+    "scripts": {
+        "start": "node ./app"
+    }
+}
+-app.js
+const jsonServer = require('json-server')
+const cors = require('cors');
+const auth = require('json-server-auth')
+
+const app = jsonServer.create()
+app.use(cors({
+    origin: '*'
+}));
+const router = jsonServer.router('db.json')
+app.db = router.db
+app.use(auth)
+app.use(router)
+app.listen(4000)
+
+```
+
 # recoil
 * https://recoiljs.org/ko/docs/api-reference/core/RecoilRoot
 * https://velog.io/@dldngus5/TILReact-%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EA%B3%A0%EB%AF%BC-Context-Recoil
@@ -208,6 +257,8 @@ https://www.npmjs.com/package/json-server-auth
 https://react-query.tanstack.com/quick-start
 async await
 https://tylerclark.dev/react-query/
+v3
+https://react-query-v3.tanstack.com/
 https://kyounghwan01.github.io/blog/React/react-query/basic/#usequery
 https://merrily-code.tistory.com/76
 ```
