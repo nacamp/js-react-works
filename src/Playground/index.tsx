@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ReactNumberFormat from "./ReactNumberFormat";
 import MuiTextField from "./MuiTextField";
+import RecoilStudy from "./RecoilStudy";
+
 
 
 import Layout from "./Layout";
@@ -19,6 +21,7 @@ function Playground() {
         <div>playground</div>
         <ReactNumberFormat />
         <MuiTextField />
+        <RecoilStudy/>
       </>
     );
 }
