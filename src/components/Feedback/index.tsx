@@ -28,10 +28,15 @@ export function Toast(props: IFeedback) {
   const handleClose = () => {
     props.onClose?.();
   };
-
+  const severity = props?.severity  ?  props?.severity : 'success';
   return (
+    <>
+    {
+      console.log(props?.severity)
+    }
     <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
-      <Alert variant="filled" severity={props.severity} onClose={handleClose}>{props?.message}</Alert>
+      <Alert variant="filled" severity={severity}  onClose={handleClose}>{props?.message}</Alert>
     </Snackbar>
+    </>
   )
 }
