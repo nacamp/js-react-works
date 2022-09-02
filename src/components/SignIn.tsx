@@ -12,10 +12,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useNavigate } from 'react-router';
-import { useSignIn } from '../hooks/api';
-import { setToken } from './Token';
-import { useGetLabel } from '../hooks/api';
 
 function Copyright(props: any) {
     return (
@@ -30,18 +26,14 @@ function Copyright(props: any) {
     );
 }
 export interface ISignIn {
-    onNavigate: (url: string) => void;
+    onSubmit: (email: string, password:string) => void;
 }
 
-export default function SignIn({ onNavigate }: ISignIn) {
-
+export default function SignIn({ onSubmit }: ISignIn) {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const mutaionSignIn: any = useSignIn({ email, password });
-    const responseLabel: any = useGetLabel(0);
 
     const handleEmailChange = (event: any) => {
-        console.log(event.currentTarget.value);
         setEmail(event.currentTarget.value);
     }
 
@@ -51,27 +43,8 @@ export default function SignIn({ onNavigate }: ISignIn) {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        mutaionSignIn.mutate();
+        onSubmit(email, password); //mutaionSignIn.mutate();
     };
-
-    useEffect(() => {
-        if (mutaionSignIn.isLoading) {
-            console.log('mutaionSignIn.isLoading:', mutaionSignIn.isLoading);
-        } else if (mutaionSignIn.isError) {
-            console.log('error......');
-        } else {
-            console.log('data:', mutaionSignIn.data);
-            if (mutaionSignIn.data?.accessToken) {
-                // localStorage
-                console.log(window.sessionStorage.getItem("token"));
-                //이동
-                setToken(mutaionSignIn.data?.accessToken);
-                responseLabel.refetch();
-                onNavigate('/todos');
-            }
-            // queryClient.invalidateQueries('getTodo');
-        }
-    }, [mutaionSignIn.data, mutaionSignIn.isError, onNavigate, mutaionSignIn.isLoading, responseLabel])
 
     return (
         <Container component="main" maxWidth="xs">
@@ -146,16 +119,5 @@ export default function SignIn({ onNavigate }: ISignIn) {
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
-    );
-}
-
-
-export function SignInPage() {
-    const navigate = useNavigate();
-    const handleNavigate = (url: string) => {
-        navigate(url);
-    }
-    return (
-        <SignIn onNavigate={handleNavigate} />
     );
 }

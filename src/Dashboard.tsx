@@ -21,7 +21,7 @@ import { MenuListItems } from './listItems';
 import Orders from './Orders';
 import { Route, Routes } from 'react-router-dom';
 import TodoTemplatePage from './components/TodoTemplate';
-import { SignInPage } from './components/SignIn';
+import { SignInPage } from './pages/SignIn';
 import RoutineTodo from './components/RoutineTodo';
 import CalendarPage from './containers/Calendar';
 import LabelPage from './containers/Label';
