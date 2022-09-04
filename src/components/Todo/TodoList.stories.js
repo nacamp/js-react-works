@@ -2,6 +2,7 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { TodoList } from "../Todo/TodoList";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   component: TodoList,
 };
@@ -18,4 +19,5 @@ Default.args = {
     { id: 5, text: "5번째", done: false, label: "테스트" },
     { id: 6, text: "6번째", done: true, label: "운영" },
   ],
+  setTodoList: action('checked'),
 };

@@ -1,4 +1,8 @@
-import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import "dayjs/locale/ko";
 import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -16,39 +20,26 @@ import Chip from "@mui/material/Chip";
 import { ITodo } from ".";
 
 interface ITodoList {
-  // id: number | string;
   name?: string;
-  // onGet: (id: any) => void;
-  // onPut: (id: any, payload: any) => void;
-  // onPost: (payload: any) => void;
   routineLabel?: string;
   privateTodo: boolean;
-  todoList:Array<ITodo>;
-  //setTodoList:(payload: Array<ITodo>)=> void; // Dispatch<SetStateAction<ITodo[]>>
-  setTodoList: Dispatch<SetStateAction<ITodo[]>>
+  todoList: Array<ITodo>;
+  setTodoList: Dispatch<SetStateAction<ITodo[]>>; // useState 함수를 선언하는법
 }
 
-
-function TodoList({routineLabel, todoList, privateTodo, setTodoList}: ITodoList) {
-  //const [todoList, setTodoList] = useState<Array<ITodo>>(props.todoList);
+function TodoList({
+  routineLabel,
+  todoList,
+  privateTodo,
+  setTodoList,
+}: ITodoList) {
   const [editId, setEditId] = useState<number>(-1);
   const [editText, setEditText] = useState("");
-  // const [privateTodo, setPrivateTodo] = useState(false);
-  const [childText, setChildText] = useState<string>("");
-  // const responseGet: any = props?.onGet(todoId);
-  // const mutaionPut: any = props?.onPut(todoId, { data: todoList });
-  // const mutaionPost: any = props?.onPost({ id: todoId, data: todoList });
-
-  // useEffect(() => {
-  //   setTodoList(props.todoList);
-  // }, [props.todoList])
-
 
   function handleDoneClick(
     event: React.ChangeEvent<HTMLInputElement>,
     id: Number
   ) {
-    // console.log('checked: ', id, event.target.checked);
     const newTodoList = todoList.map<ITodo>((todo) =>
       todo.id === id ? { ...todo, done: event.target.checked } : todo
     );
@@ -58,13 +49,14 @@ function TodoList({routineLabel, todoList, privateTodo, setTodoList}: ITodoList)
   function handleDelete(id: Number) {
     setTodoList(todoList.filter((value, index) => value.id !== id));
   }
+
   function handleEditShow(id: number, text: string) {
-    console.log("handleEditShow", id);
     setEditId(id);
     setEditText(text);
   }
-  function handleEditSave(id: number) { 
-    setTodoList((prevState:ITodo[]):ITodo[] => {
+
+  function handleEditSave(id: number) {
+    setTodoList((prevState: ITodo[]): ITodo[] => {
       const newState = prevState.map((obj) => {
         if (obj.id === id) {
           return { ...obj, text: editText };
@@ -76,6 +68,7 @@ function TodoList({routineLabel, todoList, privateTodo, setTodoList}: ITodoList)
     });
     setEditId(-1);
   }
+
   function handleEditCancel(id: number) {
     console.log(id);
     setEditId(-1);
@@ -89,12 +82,7 @@ function TodoList({routineLabel, todoList, privateTodo, setTodoList}: ITodoList)
       return false;
     }
     return true;
-    // console.log(label, x);
-    // return x;
-    // if( label in // setPrivateTodo(event.target.checked);
-    //setChecked(event.target.checked);
   };
-
 
   const checkedStyle = {
     color: "grey",
@@ -110,9 +98,7 @@ function TodoList({routineLabel, todoList, privateTodo, setTodoList}: ITodoList)
             sx={isPrivate(row.label) ? { display: "none" } : {}}
           >
             <TableCell>
-              {!!routineLabel && editId !== row.id && (
-                <span>{row.text}</span>
-              )}
+              {!!routineLabel && editId !== row.id && <span>{row.text}</span>}
               {!routineLabel && editId !== row.id && (
                 <>
                   <FormControlLabel

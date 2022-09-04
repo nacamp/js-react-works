@@ -10,7 +10,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ITodo } from ".";
 
-
 // TODO: 항목이 하나도 없이 저장시 key에러가 난다. 나중에 수정필요
 function TodoCreate({
   onTodoCreate,
