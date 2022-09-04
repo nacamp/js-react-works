@@ -20,13 +20,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { MenuListItems } from './listItems';
 import Orders from './Orders';
 import { Route, Routes } from 'react-router-dom';
-import TodoTemplatePage from './components/TodoTemplate';
+import TodoTemplatePage from './pages/TodoTemplate';
 import { SignInPage } from './pages/SignIn';
-import RoutineTodo from './components/RoutineTodo';
-import CalendarPage from './containers/Calendar';
-import LabelPage from './containers/Label';
+import RoutineTodo from './pages/RoutineTodo';
+import CalendarPage from './pages/Calendar';
+import LabelPage from './pages/Label';
 import Playground from './Playground';
-import Future from './containers/Future';
+import Future from './pages/Future';
 import dayjs from 'dayjs';
 
 // function Copyright(props: any) {

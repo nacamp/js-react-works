@@ -14,7 +14,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import { useNavigate, useLocation } from 'react-router';
-import { getToken, removeToken } from './components/Token';
+import { getToken, removeToken } from './hooks/Token';
 
 type IMenuListItems = {
   onClick: (text: string) => void;
