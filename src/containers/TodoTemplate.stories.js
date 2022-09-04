@@ -1,24 +1,15 @@
 import React from "react";
-import { action } from "@storybook/addon-actions";
-import { TodoTemplate, TodoTitle } from "./TodoTemplate";
-import {
-  labelListState,
-  useGetLabel,
-  useGetTodo,
-  usePutTodo,
-  usePostTodo,
-} from "../hooks/api";
-import { getHost } from "../config";
-
+// import { action } from "@storybook/addon-actions";
 import { RecoilRoot } from "recoil";
-import { ReactQueryCacheProvider, QueryCache } from "react-query";
-//import { ReactQueryDevtools } from "react-query-devtools";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
-
 import { rest } from "msw";
+
+import { useGetTodo, usePutTodo, usePostTodo } from "../hooks/api";
+import { getHost } from "../config";
+import { TodoTemplate, TodoTitle } from "./TodoTemplate";
 
 const theme = createTheme({
   components: {
@@ -111,50 +102,15 @@ Default.parameters = {
 
       rest.put(`${getHost()}/todos/20220903`, (req, res, ctx) => {
         console.log(req.body);
-        return res(
-          ctx.status(201),
-          ctx.json(req.body)
-        );
+        return res(ctx.status(201), ctx.json(req.body));
       }),
-
     ],
   },
 };
 
-// Default.parameters = {
-//   msw: {
-//     handlers: [
-//       rest.get(`${getHost}/todos/20220903`, (req, res, ctx) => {
-//         return res(
-//           ctx.status(200),
-//           ctx.json({
-//           "status":200,
-//           "data": [
-//               {
-//                   "id": 2,
-//                   "text": "test1111",
-//                   "done": false,
-//                   "label": "위상수학"
-//               },
-//               {
-//                   "id": 1,
-//                   "text": "헬스클럽",
-//                   "done": false,
-//                   "label": "매주"
-//               }
-//           ],
-//           "id": 20220903
-//         }));
-//       }),
-//       rest.get('http://54.180.10.211:3333/label', (req, res, ctx) => {
-//         return res(ctx.status(403));
-//       }),
-//     ],
-//   },
-// };
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: "containers",
+  title: "containers/TodoTemplate",
   component: TodoTemplate,
   decorators: [
     (story) => (
@@ -168,20 +124,3 @@ export default {
     ),
   ],
 };
-
-/*
-data: (2) [{…}, {…}]
-id: 20220903
-  (story) => (
-    <RecoilRoot>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-        {story()}
-        </BrowserRouter>
-      </ThemeProvider>
-    </QueryClientProvider>
-  </RecoilRoot>
-
-  ),
-  */
