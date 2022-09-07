@@ -4,7 +4,7 @@ import SignIn from "./SignIn";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  title: "SignIn",
+  title: 'components/SignIn',
   component: SignIn,
 };
 

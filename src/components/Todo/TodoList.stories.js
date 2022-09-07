@@ -4,6 +4,7 @@ import { TodoList } from "../Todo/TodoList";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+  title: 'components/Todo/TodoList',
   component: TodoList,
 };
 
