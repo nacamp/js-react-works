@@ -2,7 +2,17 @@ import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "../test/renderWithProviders";
 import { useGetTodo, usePutTodo, usePostTodo } from "../hooks/api";
 import { TodoTitle, TodoTemplate } from "./TodoTemplate";
-window.sessionStorage.setItem("token", "bypass");
+
+jest.mock("../hooks/token", () => {
+  const originalModule = jest.requireActual("../hooks/token");
+  return {
+    __esModule: true,
+    ...originalModule,
+    // default: jest.fn(() => 'mocked baz'),
+    getToken: () => "bypass", // jest.fn 울 하면 안된다.
+  };
+});
+
 describe("TodoTemplate", () => {
   test("display todo list", async () => {
     render(
