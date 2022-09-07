@@ -69,6 +69,110 @@ https://styled-components.com/docs/api
 https://react.vlpt.us/styling/03-styled-components.html
 ```
 
+# msw
+* https://github.com/DennisKo/react-msw-demo
+* https://intrepidgeeks.com/tutorial/develop-and-test-response-applications-using-response-queries-msw-and-response-test-libraries
+* https://mswjs.io/docs/getting-started
+
+# storybook
+```
+https://storybook.js.org/tutorials/intro-to-storybook/react/ko/get-started/
+https://velog.io/@juno7803/Storybook-Storybook-200-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0
+
+snapshot issue
+https://github.com/storybookjs/storybook/issues/17985
+
+.env
+root: .env
+process.env.TOKEN
+주의할점 변경사항을 적용할려면 storybook을 재실행해야 한다.
+```
+
+## typescript & craco지원
+```
+typescript와 craco 지원
+package.json
+"storybook-preset-craco": "0.0.6" 추가 
+"webpack": "^5.73.0" 제거
+
+main.js
+module.exports = {
+  stories: [
+    "../src/components/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/containers/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/pages/**/*.stories.@(js|jsx|ts|tsx)",
+  ],
+  staticDirs: ["../public"],
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions",
+    // "@storybook/preset-create-react-app",
+    "storybook-preset-craco",
+  ],
+  framework: "@storybook/react",
+  // core: {
+  //   builder: "@storybook/builder-webpack5",
+  // },
+  features: {
+    interactionsDebugger: true,
+  },
+  typescript: {
+    check: false,
+    checkOptions: {},
+    reactDocgen: "react-docgen-typescript",
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+    },
+  },
+};
+
+preview.js
+import { initialize, mswDecorator } from "msw-storybook-addon";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "../src/storybook/ThemeDecorator"; //theme설정파일
+// Initialize MSW
+initialize();
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export const decorators = [
+  mswDecorator,
+  (Story) => <ThemeProvider theme={theme}>{Story()}</ThemeProvider>,
+];
+
+SplitButton.stories.tsx
+import React from "react";
+import { action } from "@storybook/addon-actions";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+
+import SplitButton from ".";
+
+export default {
+  component: SplitButton,
+} as ComponentMeta<typeof SplitButton>;
+
+const Template: ComponentStory<typeof SplitButton> = (args) => (
+  <SplitButton {...args} />
+);
+
+export const Default = Template.bind({});
+Default.args = {
+  buttons: [
+    {
+      visible: true,
+      disabled: true,
+      label: `visible:true,disabled:true`,
+      onClick: action("clicked"),
+    },
+  ],
+};
+
+https://storybook.js.org/docs/react/writing-stories/args
+https://github.com/storybookjs/storybook/issues/14789
+```
+
 
 # test
 ```
