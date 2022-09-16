@@ -35,6 +35,8 @@
 * Warning: Failed prop type: The prop `spacing` of `Grid` can only be used together with the `container` prop
 * grid item의  spacing 제거
 
+# storybook troubleshooting
+* 돌아가던 사이트가 mock관련된 에러가 나서  yarn init-msw 를 실행하고 나니 정상동작함
 # css
 ```
 mui styled
@@ -223,6 +225,11 @@ https://codesandbox.io/s/cec0z
 sample 자세히 안봄
 https://ui.toast.com/weekly-pick/ko_20210630
 ```
+# error boundary
+* https://react.vlpt.us/basic/26-componentDidCatch-and-sentry.html
+* https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/error_boundaries/
+* https://github.com/bvaughn/react-error-boundary
+* https://reactjs.org/docs/error-boundaries.html#how-about-event-handlers
 
 # theme
 * https://mui.com/material-ui/customization/theming/
