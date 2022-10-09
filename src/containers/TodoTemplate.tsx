@@ -15,9 +15,6 @@ import { AlertColor } from "@mui/material/Alert";
 import {
   labelListState,
   useGetLabel,
-  useGetTodo,
-  usePutTodo,
-  usePostTodo,
 } from "../hooks/api";
 import { Fallback, Toast } from "../components/Feedback";
 
@@ -40,9 +37,9 @@ interface ITodoTemplate {
   children?: React.ReactNode;
   id: number | string;
   name?: string;
-  onGet: (id: any) => void;
-  onPut: (id: any, payload: any) => void;
-  onPost: (payload: any) => void;
+  onGet: (id: any) =>  {isLoading:any, data:any, isSuccess:any, isError:any, refetch:any} ;
+  onPut: (id: any, payload: any) => {isLoading:any, data:any, isSuccess:any, isError:any, mutate:any} ;
+  onPost: (payload: any) => {isLoading:any, data:any, isSuccess:any, isError:any, mutate:any} ;
   routineLabel?: string;
 }
 
@@ -70,10 +67,10 @@ function TodoTemplate(props: ITodoTemplate) {
     message: "에러발생",
   });
   const [childText, setChildText] = useState<string>("");
-  const responseGet: any = props?.onGet(todoId);
-  const mutaionPut: any = props?.onPut(todoId, { data: todoList });
-  const mutaionPost: any = props?.onPost({ id: todoId, data: todoList });
-
+  const {isLoading:isLoadingInGet, data:dataInGet, isSuccess:isSuccessInGet, isError:isErrorInGet, refetch:refetchInGet} = props.onGet(todoId);
+  const {isLoading:isLoadingInPut, data:dataInPut, mutate:mutateInPut} = props.onPut(todoId, { data: todoList });
+  const {isLoading:isLoadingInPost, data:dataInPost, mutate:mutateInPost} =  props.onPost({ id: todoId, data: todoList });
+  
   function handleTodoCreate(todo: ITodo) {
     todo.id = nextId.current;
     nextId.current++;
@@ -99,17 +96,17 @@ function TodoTemplate(props: ITodoTemplate) {
       });
     }
     console.log(todoList);
-    if (responseGet.data.id !== undefined) {
-      mutaionPut.mutate();
+    if (dataInGet.id !== undefined) {
+      mutateInPut();
     } else {
-      mutaionPost.mutate();
+      mutateInPost();
     }
   }
 
   function handleReload(event: React.MouseEvent<HTMLElement>, text: string) {
     setFallback(true);
     // queryClient.invalidateQueries('getTodo');
-    responseGet.refetch();
+    refetchInGet();
     // 리로드인경우 responseGetTodo에서 가저욘자료가 바꾸지 않아서 render가 안됨, 그래서 toggle처리
     toggleReload(!reload);
   }
@@ -126,15 +123,15 @@ function TodoTemplate(props: ITodoTemplate) {
 
   useEffect(() => {
     setFallback(true);
-    if (responseGet.isSuccess) {
+    if (isSuccessInGet) {
       if (
-        responseGet.data.data !== undefined &&
-        responseGet.data.data.length > 0
+        dataInGet.data !== undefined &&
+        dataInGet.data.length > 0
       ) {
         nextId.current =
-          1 + Math.max(...responseGet.data.data.map((o: ITodo) => o.id));
-        setTodoList(responseGet.data.data);
-        console.log(responseGet.data.data);
+          1 + Math.max(...dataInGet.data.map((o: ITodo) => o.id));
+        setTodoList(dataInGet.data);
+        console.log(dataInGet.data);
       } else {
         nextId.current = 1;
         setTodoList([]);
@@ -142,21 +139,21 @@ function TodoTemplate(props: ITodoTemplate) {
         // setTodoList(responseGet.data.data);
       }
     }
-    if (!responseGet.isLoading) {
+    if (!isLoadingInGet) {
       setFallback(false);
     }
-  }, [responseGet.data, responseGet.isLoading, responseGet.isSuccess, reload]);
+  }, [dataInGet, isLoadingInGet, isSuccessInGet, reload]);
 
   useEffect(() => {
-    if (responseGet.isError) {
+    if (isErrorInGet) {
       setFallback(false);
       // setOpenToast({ ...openToast, open: true });
       setOpenToast((prevState) => ({ ...prevState, open: true }));
     }
-  }, [responseGet.isError]);
+  }, [isErrorInGet]);
 
   useEffect(() => {
-    if (mutaionPut.isLoading) {
+    if (isLoadingInPut) {
       setFallback(true);
     } else {
       setFallback(false);
@@ -164,10 +161,10 @@ function TodoTemplate(props: ITodoTemplate) {
       // queryClient.invalidateQueries('getRoutine');
       // queryClient.invalidateQueries('getTodo');
     }
-  }, [mutaionPut.data, mutaionPut.isLoading]);
+  }, [dataInPut, isLoadingInPut]);
 
   useEffect(() => {
-    if (mutaionPost.isLoading) {
+    if (isLoadingInPost) {
       setFallback(true);
     } else {
       setFallback(false);
@@ -175,7 +172,7 @@ function TodoTemplate(props: ITodoTemplate) {
       // queryClient.invalidateQueries('getRoutine');
       // queryClient.invalidateQueries('getTodo');
     }
-  }, [mutaionPost.data, mutaionPost.isLoading]);
+  }, [dataInPost, isLoadingInPost]);
 
   const checkedStyle = {
     color: "grey",
