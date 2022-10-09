@@ -1,45 +1,38 @@
-import React, { useState, useRef, useEffect } from "react";
-import "dayjs/locale/ko";
-import dayjs from "dayjs";
-import { useParams } from "react-router-dom";
-import copy from "copy-to-clipboard";
-import { useRecoilValue } from "recoil";
-import Grid from "@mui/material/Grid";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Switch from "@mui/material/Switch";
-import { AlertColor } from "@mui/material/Alert";
+import React, { useState, useRef, useEffect } from 'react';
+import 'dayjs/locale/ko';
+import dayjs from 'dayjs';
+import copy from 'copy-to-clipboard';
+import { useRecoilValue } from 'recoil';
+import Grid from '@mui/material/Grid';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import { AlertColor } from '@mui/material/Alert';
+import { useNavigate } from 'react-router';
 
-import {
-  labelListState,
-  useGetLabel,
-} from "../hooks/api";
-import { Fallback, Toast } from "../components/Feedback";
+import { labelListState, useGetLabel } from '../hooks/api';
+import { Fallback, Toast } from '../components/Feedback';
 
-import { ITodo } from "../components/Todo";
-import { TodoCreate } from "../components/Todo/TodoCreate";
-import { TodoList } from "../components/Todo/TodoList";
+import { ITodo } from '../components/Todo';
+import { TodoCreate } from '../components/Todo/TodoCreate';
+import { TodoList } from '../components/Todo/TodoList';
 
 interface ITodoTitle {
   id: number;
 }
 function TodoTitle(props: ITodoTitle) {
-  return (
-    <Typography variant="h5">
-      {dayjs(String(props.id)).format("YYYY년 MM월 DD일")}
-    </Typography>
-  );
+  return <Typography variant="h5">{dayjs(String(props.id)).format('YYYY년 MM월 DD일')}</Typography>;
 }
 
 interface ITodoTemplate {
   children?: React.ReactNode;
   id: number | string;
   name?: string;
-  onGet: (id: any) =>  {isLoading:any, data:any, isSuccess:any, isError:any, refetch:any} ;
-  onPut: (id: any, payload: any) => {isLoading:any, data:any, isSuccess:any, isError:any, mutate:any} ;
-  onPost: (payload: any) => {isLoading:any, data:any, isSuccess:any, isError:any, mutate:any} ;
+  onGet: (id: any) => any; //{isLoading:any, data:any, isSuccess:any, isError:any, refetch:any, error:any} ;
+  onPut: (id: any, payload: any) => { isLoading: any; data: any; isSuccess: any; isError: any; mutate: any };
+  onPost: (payload: any) => { isLoading: any; data: any; isSuccess: any; isError: any; mutate: any };
   routineLabel?: string;
 }
 
@@ -50,6 +43,7 @@ interface IToast {
 }
 
 function TodoTemplate(props: ITodoTemplate) {
+  const navigate = useNavigate();
   // //초기설정, 이게없으면 리로드시 라벨이 없다.
   const _ = useGetLabel(0);
   const nextId = useRef<number>(0);
@@ -63,14 +57,25 @@ function TodoTemplate(props: ITodoTemplate) {
   const [fallback, setFallback] = useState<boolean>(false);
   const [openToast, setOpenToast] = React.useState<IToast>({
     open: false,
-    severity: "error",
-    message: "에러발생",
+    severity: 'error',
+    message: '에러발생',
   });
-  const [childText, setChildText] = useState<string>("");
-  const {isLoading:isLoadingInGet, data:dataInGet, isSuccess:isSuccessInGet, isError:isErrorInGet, refetch:refetchInGet} = props.onGet(todoId);
-  const {isLoading:isLoadingInPut, data:dataInPut, mutate:mutateInPut} = props.onPut(todoId, { data: todoList });
-  const {isLoading:isLoadingInPost, data:dataInPost, mutate:mutateInPost} =  props.onPost({ id: todoId, data: todoList });
-  
+  const [childText, setChildText] = useState<string>('');
+  const {
+    isLoading: isLoadingInGet,
+    data: dataInGet,
+    isSuccess: isSuccessInGet,
+    isError: isErrorInGet,
+    refetch: refetchInGet,
+    error: errorInGet,
+  } = props.onGet(todoId);
+  const { isLoading: isLoadingInPut, data: dataInPut, mutate: mutateInPut } = props.onPut(todoId, { data: todoList });
+  const {
+    isLoading: isLoadingInPost,
+    data: dataInPost,
+    mutate: mutateInPost,
+  } = props.onPost({ id: todoId, data: todoList });
+
   function handleTodoCreate(todo: ITodo) {
     todo.id = nextId.current;
     nextId.current++;
@@ -87,12 +92,12 @@ function TodoTemplate(props: ITodoTemplate) {
 
   function handleSave(event: React.MouseEvent<HTMLElement>, text: string) {
     setFallback(true);
-    if (childText !== "") {
+    if (childText !== '') {
       setOpenToast({
         ...openToast,
         open: true,
-        severity: "warning",
-        message: "저장이 안된 todo 항목이 있습니다.",
+        severity: 'warning',
+        message: '저장이 안된 todo 항목이 있습니다.',
       });
     }
     console.log(todoList);
@@ -113,8 +118,8 @@ function TodoTemplate(props: ITodoTemplate) {
 
   function handleCopy(event: React.MouseEvent<HTMLElement>, text: string) {
     const x = todoList.reduce(function (a, b) {
-      return a + ["", "\r"][+!!a.length] + b.text;
-    }, "");
+      return a + ['', '\r'][+!!a.length] + b.text;
+    }, '');
     copy(x);
   }
   const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,12 +129,8 @@ function TodoTemplate(props: ITodoTemplate) {
   useEffect(() => {
     setFallback(true);
     if (isSuccessInGet) {
-      if (
-        dataInGet.data !== undefined &&
-        dataInGet.data.length > 0
-      ) {
-        nextId.current =
-          1 + Math.max(...dataInGet.data.map((o: ITodo) => o.id));
+      if (dataInGet.data !== undefined && dataInGet.data.length > 0) {
+        nextId.current = 1 + Math.max(...dataInGet.data.map((o: ITodo) => o.id));
         setTodoList(dataInGet.data);
         console.log(dataInGet.data);
       } else {
@@ -149,8 +150,11 @@ function TodoTemplate(props: ITodoTemplate) {
       setFallback(false);
       // setOpenToast({ ...openToast, open: true });
       setOpenToast((prevState) => ({ ...prevState, open: true }));
+      if (errorInGet?.message.includes('Token was not found')) {
+        navigate('/login');
+      }
     }
-  }, [isErrorInGet]);
+  }, [isErrorInGet, errorInGet, navigate]);
 
   useEffect(() => {
     if (isLoadingInPut) {
@@ -175,8 +179,8 @@ function TodoTemplate(props: ITodoTemplate) {
   }, [dataInPost, isLoadingInPost]);
 
   const checkedStyle = {
-    color: "grey",
-    textDecorationLine: "line-through",
+    color: 'grey',
+    textDecorationLine: 'line-through',
   };
 
   return (
@@ -187,29 +191,18 @@ function TodoTemplate(props: ITodoTemplate) {
         </Grid>
         <Grid item xs={1}>
           <Box display="flex" justifyContent="flex-end">
-            <FormControlLabel
-              control={<Switch onChange={handleChecked} />}
-              label="private"
-            />
+            <FormControlLabel control={<Switch onChange={handleChecked} />} label="private" />
           </Box>
         </Grid>
         <Grid item xs={1}>
           <Box display="flex" justifyContent="flex-end">
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={(e) => handleCopy(e, "clicked")}
-            >
+            <Button size="small" variant="outlined" onClick={(e) => handleCopy(e, 'clicked')}>
               copy
             </Button>
           </Box>
         </Grid>
       </Grid>
-      <TodoList
-        todoList={todoList}
-        setTodoList={setTodoList}
-        privateTodo={privateTodo}
-      ></TodoList>
+      <TodoList todoList={todoList} setTodoList={setTodoList} privateTodo={privateTodo}></TodoList>
       <TodoCreate
         onTodoCreate={handleTodoCreate}
         onChange={handleChildText}
@@ -219,32 +212,21 @@ function TodoTemplate(props: ITodoTemplate) {
       <Grid container spacing={2} sx={{ mt: 0.5 }}>
         <Grid item xs={6}>
           <Box display="flex" justifyContent="flex-end">
-            <Button
-              variant="outlined"
-              onClick={(e) => handleSave(e, "clicked")}
-            >
+            <Button variant="outlined" onClick={(e) => handleSave(e, 'clicked')}>
               save
             </Button>
           </Box>
         </Grid>
         <Grid item xs={6}>
           <Box display="flex" justifyContent="flex-start">
-            <Button
-              variant="outlined"
-              onClick={(e) => handleReload(e, "clicked")}
-            >
+            <Button variant="outlined" onClick={(e) => handleReload(e, 'clicked')}>
               reload
             </Button>
           </Box>
         </Grid>
       </Grid>
       <Fallback open={fallback} />
-      <Toast
-        open={openToast.open}
-        severity={openToast.severity}
-        message={openToast.message}
-        onClose={handleClose}
-      />
+      <Toast open={openToast.open} severity={openToast.severity} message={openToast.message} onClose={handleClose} />
     </>
   );
 }
