@@ -79,6 +79,7 @@ function TodoCreate({
         <Grid item xs={9}>
           <TextField
             fullWidth
+            multiline
             label="할일"
             value={text}
             variant="standard"
