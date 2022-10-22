@@ -189,7 +189,7 @@ function DashboardContent() {
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                 <Routes>
-                  <Route path='/' element={<Orders />} />d
+                  <Route path='/' element={<Playground />} />
                   <Route path='/todos' element={<TodoTemplatePage />} />
                   <Route path='/routine' element={<RoutineTodo />} />
                   <Route path='/login' element={<SignInPage />} />
@@ -199,7 +199,7 @@ function DashboardContent() {
                   <Route path='/future' element={<Future />} />
                   <Route path='/playground' element={<Playground />} />
                   <Route path='/playground/:id' element={<Playground />} />
-                  <Route path='' element={<Orders />} />
+                  <Route path='' element={<Playground />} />
                 </Routes>
                 {/* <Orders /> */}
               </Paper>
