@@ -37,7 +37,36 @@ export const getTodo = async (id: any) => {
 };
 
 export const useGetTodo = (id: any) => {
-  return useQuery(["getTodo", id], async () => await getTodo(id), {
+  return useQuery(["getTodo", id], async () => getTodo(id), {
+    onSuccess: () => {
+      // console.log("Get data!");
+      // console.log(data); // undefined
+    },
+  });
+};
+
+
+export const getTodoList = async (startId: any, endId: any) => {
+  const response = await fetch(`${getHost()}/todos?id_gte=${startId}&id_lte=${endId}`, {
+    method: "GET",
+    headers: {
+      ...makeJwtHeader(),
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      return { data: [] };
+    } else {
+      throw new Error("Network response was not ok");
+    }
+  }
+  return response.json();
+};
+
+export const useGetTodoList = (startId: any, endId: any, options?:any) => {
+  return useQuery(["getTodoList", startId, endId], async () =>  getTodoList(startId, endId), {
+    ...options,
     onSuccess: () => {
       // console.log("Get data!");
       // console.log(data); // undefined
@@ -64,7 +93,7 @@ export const getRoutine = async (id: any) => {
 };
 
 export const useGetRoutine = (id: any) => {
-  return useQuery(["getRoutine", id], async () => await getRoutine(id), {
+  return useQuery(["getRoutine", id], async () => getRoutine(id), {
     onSuccess: () => {
       // console.log("Get data!");
       // console.log(data); // undefined
@@ -172,7 +201,7 @@ export const getLabel = async () => {
 
 export const useGetLabel = (id: any) => {
   const setLabelList = useSetRecoilState(labelListState);
-  const r = useQuery(["getLabel", id], async () => await getLabel(), {
+  const r = useQuery(["getLabel", id], async () => getLabel(), {
     // enabled: false,
     // onError: (error) =>
     //   console.error('xxxxxx'),
