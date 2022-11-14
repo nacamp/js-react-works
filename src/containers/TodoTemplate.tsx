@@ -73,6 +73,7 @@ function TodoTemplate(props: ITodoTemplate) {
   const {
     isLoading: isLoadingInPost,
     data: dataInPost,
+    isSuccess: isSuccessInPost,
     mutate: mutateInPost,
   } = props.onPost({ id: todoId, data: todoList });
 
@@ -176,7 +177,10 @@ function TodoTemplate(props: ITodoTemplate) {
       // queryClient.invalidateQueries('getRoutine');
       // queryClient.invalidateQueries('getTodo');
     }
-  }, [dataInPost, isLoadingInPost]);
+    if (isSuccessInPost){
+      refetchInGet();
+    }
+  }, [dataInPost, isLoadingInPost, isSuccessInPost, refetchInGet]);
 
   const checkedStyle = {
     color: 'grey',
