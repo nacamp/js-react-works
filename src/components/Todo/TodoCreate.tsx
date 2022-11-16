@@ -27,14 +27,13 @@ function TodoCreate({
   const [text, setText] = useState("");
   const [label, setLabel] = React.useState(!!routineLabel ? routineLabel : "");
   useEffect(() => {
-    if (labelList.length > 0) {
+    if (!routineLabel && labelList.length > 0) {
       setLabel("오늘");
     }
-  }, [labelList]);
+  }, [labelList, routineLabel]);
 
   function handleAdd(event: any) {
     if (text.trim() === "") {
-      console.log("node data...");
       return;
     }
     const data = {
@@ -49,7 +48,6 @@ function TodoCreate({
   }
 
   const handleLabel = (event: any) => {
-    console.log(event.target.value);
     setLabel(event.target.value as string);
   };
 
