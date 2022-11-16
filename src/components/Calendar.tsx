@@ -16,7 +16,7 @@ interface IBoxButton {
 
 function BoxButton({ date, thisMonth, onOpen }: IBoxButton) {
   function handleOpen(event: React.MouseEvent<HTMLElement>, text: string) {
-    console.log(text);
+    // console.log(text);
     const id: number = +text;
     onOpen(id);
   }

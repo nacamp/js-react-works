@@ -101,7 +101,6 @@ function TodoTemplate(props: ITodoTemplate) {
         message: '저장이 안된 todo 항목이 있습니다.',
       });
     }
-    console.log(todoList);
     if (dataInGet.id !== undefined) {
       mutateInPut();
     } else {
@@ -133,7 +132,6 @@ function TodoTemplate(props: ITodoTemplate) {
       if (dataInGet.data !== undefined && dataInGet.data.length > 0) {
         nextId.current = 1 + Math.max(...dataInGet.data.map((o: ITodo) => o.id));
         setTodoList(dataInGet.data);
-        console.log(dataInGet.data);
       } else {
         nextId.current = 1;
         setTodoList([]);

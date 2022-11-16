@@ -13,7 +13,6 @@ function TodoReadOnlyList({ data, onOpen }: { data: any; onOpen: (id: number) =>
     textDecorationLine: 'line-through',
   };
   function handleOpen(event: React.MouseEvent<HTMLElement>, text: string) {
-    console.log(text);
     const id: number = +text;
     onOpen(id);
   }

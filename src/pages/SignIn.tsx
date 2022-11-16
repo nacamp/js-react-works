@@ -20,7 +20,6 @@ export function SignInPage() {
     setPassword(password);
   };
   const handleClose = () => {
-    console.log("close");
     setToast(false);
   };
 
@@ -33,7 +32,6 @@ export function SignInPage() {
 
   useEffect(() => {
     if (mutaionSignIn.isError) {
-      console.log("error......");
       setToast(true);
     }
   }, [mutaionSignIn.isError]);
